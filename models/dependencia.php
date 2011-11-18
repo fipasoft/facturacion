@@ -16,32 +16,32 @@ class Dependencia extends ActiveRecord{
 	protected $publicado;
 
 	private $_cached;
-	
+
 	public function contactos(){
 		$contacto = new Contacto();
-		return	
+		return
 			$contacto->find_all_by_sql(
 				"SELECT
 					contacto.*
-				FROM 
+				FROM
 					contacto
 				INNER JOIN depcontacto ON contacto.id = depcontacto.contacto_id
-				WHERE 
+				WHERE
 				depcontacto.ejercicio_id = '".Session :: get_data( 'eje.id')."' AND
 				depcontacto.dependencia_id = '".$this->id."'
-				"	
+				"
 			);
 	}
 
 	public function conCampania( $ejercicio_id = '' ){
-		
+
 		$dependencias = new Dependencia();
 		$ejercicio_id = ( $ejercicio_id ? $ejercicio_id : Session :: get_data( 'eje.id' ) );
-		
-		return 
+
+		return
 			$dependencias->find_all_by_sql(
 				"SELECT " .
-					"dependencia.* " . 
+					"dependencia.* " .
 				"FROM " .
 					"dependencia " .
 					"Inner Join campania ON campania.dependencia_id = dependencia.id " .
@@ -49,19 +49,19 @@ class Dependencia extends ActiveRecord{
 					( $ejercicio_id = 'ALL' ? '1 ' : "dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ).
 				"GROUP BY " .
 				 	"dependencia.id " .
-				"ORDER BY " . 
+				"ORDER BY " .
 					"dependencia.nombre "
 			);
-		
+
 	}
-	
+
 	public function dependenciasPorEstadoFactura($clave){
 		$dependencias = new Dependencia();
 		return
 		$dependencias->find_all_by_sql(
 					"SELECT
 						dependencia.*
-					FROM 
+					FROM
 						dependencia
 					INNER JOIN factura ON dependencia.id = factura.dependencia_id
 					INNER JOIN festados ON factura.festados_id = festados.id
@@ -93,13 +93,13 @@ class Dependencia extends ActiveRecord{
 		return
 		$dependencias->find_all_by_sql(
 				"SELECT " .
-					"dependencia.id, " . 
-					"dependencia.fiscal_id, " . 
-					"dependencia.ejercicio_id, " . 
-					"dependencia.clave, " . 
-					"dependencia.nombre, " . 
-					"dependencia.saved_at, " . 
-					"dependencia.modified_in, " . 
+					"dependencia.id, " .
+					"dependencia.fiscal_id, " .
+					"dependencia.ejercicio_id, " .
+					"dependencia.clave, " .
+					"dependencia.nombre, " .
+					"dependencia.saved_at, " .
+					"dependencia.modified_in, " .
 					"dependencia.externo " .
 				"FROM " .
 					"dependencia " .
@@ -108,7 +108,7 @@ class Dependencia extends ActiveRecord{
 					( $ejercicio_id == 'ALL' ? '1 ' : "factura.ejercicio_id = '" . $ejercicio_id . "' "  ) .
 				"GROUP BY " .
 				 	"dependencia.id " .
-				"ORDER BY " . 
+				"ORDER BY " .
 					"dependencia.nombre "
 		);
 
@@ -133,18 +133,18 @@ class Dependencia extends ActiveRecord{
 				"WHERE " .
 					"dependencia.id = '" . $this->id . "' " .
 					( $ejercicio_id == 'ALL' ? '' : "AND dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ).
-					"AND ( " . 
+					"AND ( " .
 						"estado.clave = 'FCT-INI' " .
 						"OR estado.clave = 'FCT-LST' " .
 						"OR estado.clave = 'FCT-ENV' " .
 						"OR estado.clave = 'FCT-PAG' " .
 					") "
 					);
-						
+
 					$dependencia = $dependencia[ 0 ];
 
 					$_cached[ __FUNCTION__ ] = $dependencia->facturado;
-						
+
 		}
 
 		return
@@ -154,8 +154,8 @@ class Dependencia extends ActiveRecord{
 	}
 
 	/**
-	 * Obtiene para todas las dependencias del ejercicio los montos facturados 
-	 * 
+	 * Obtiene para todas las dependencias del ejercicio los montos facturados
+	 *
 	 * @param int $ejercicio_id
 	 */
 	public function facturadoPorDependencia( $ejercicio_id = '', $dependencia_id = '' ){
@@ -175,18 +175,18 @@ class Dependencia extends ActiveRecord{
 					"Inner Join estado ON impacto.estado_id = estado.id " .
 				"WHERE " .
 					( $ejercicio_id == 'ALL' ? '' : "AND dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ).
-					"AND ( " . 
+					"AND ( " .
 						"estado.clave = 'FCT-INI' " .
 						"OR estado.clave = 'FCT-LST' " .
 						"OR estado.clave = 'FCT-ENV' " .
 						"OR estado.clave = 'FCT-PAG' " .
 					") "
 					);
-						
+
 					$dependencia = $dependencia[ 0 ];
 
 					$_cached[ __FUNCTION__ ] = $dependencia->facturado;
-						
+
 		}
 
 		return
@@ -194,8 +194,8 @@ class Dependencia extends ActiveRecord{
 
 
 	}
-	
-	
+
+
 	public function facturadoPorMedio( $medio = '', $ejercicio_id = '' ){
 
 		$ejercicio_id = ( $ejercicio_id ? $ejercicio_id : Session :: get_data( 'eje.id' ) );
@@ -218,18 +218,18 @@ class Dependencia extends ActiveRecord{
 					"dependencia.id = '" . $this->id . "' " .
 					( $ejercicio_id == 'ALL' ? '' : "AND dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ).
 					"AND medio.clave = '" . $medio . "' " .
-					"AND ( " . 
+					"AND ( " .
 						"estado.clave = 'FCT-INI' " .
 						"OR estado.clave = 'FCT-LST' " .
 						"OR estado.clave = 'FCT-ENV' " .
 						"OR estado.clave = 'FCT-PAG' " .
 					") "
 					);
-						
+
 					$dependencia = $dependencia[ 0 ];
 
 					$_cached[ __FUNCTION__ ] = $dependencia->facturado;
-						
+
 		}
 
 		return
@@ -259,27 +259,27 @@ class Dependencia extends ActiveRecord{
 					"dependencia.id = '" . $this->id . "' " .
 					( $ejercicio_id == 'ALL' ? '' : "AND dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ) .
 					"AND MONTH( factura.fecha ) = '" . $mes . "' " .
-					"AND ( " . 
+					"AND ( " .
 						"estado.clave = 'FCT-INI' " .
 						"OR estado.clave = 'FCT-LST' " .
 						"OR estado.clave = 'FCT-ENV' " .
 						"OR estado.clave = 'FCT-PAG' " .
 					") "
 					);
-						
+
 					$dependencia = $dependencia[ 0 ];
 
 					$_cached[ __FUNCTION__ ] = $dependencia->facturado;
-						
+
 		}
 
 		return
 		$_cached[ __FUNCTION__ ];
 
 	}
-	
+
 	public function impactosAgrupadosPorFacturar(){
-		
+
 		$estado = new Estado();
 		$estado = $estado->porclave("FCT-INI");
 
@@ -292,7 +292,7 @@ class Dependencia extends ActiveRecord{
 				*
 			FROM
 			(
-				(	
+				(
 					SELECT
 				 		CONCAT( '_', seccion.id, '_', tamanio.id, '_', impresion.id, '_', producto.precio ) AS pseudo_id,
 						GROUP_CONCAT( impacto.id ORDER BY impacto.id DESC SEPARATOR ','  ) AS ids,
@@ -334,35 +334,35 @@ class Dependencia extends ActiveRecord{
 				)
 				UNION ALL
 				(
-				
-				SELECT 
-				 		CONCAT( '_', spot.duracion, '_', programa.id, '_', producto.precio ) AS pseudo_id, 
+
+				SELECT
+				 		CONCAT( '_', spot.duracion, '_', programa.id, '_', producto.precio ) AS pseudo_id,
 						GROUP_CONCAT( impacto.id ORDER BY impacto.id DESC SEPARATOR ','  ) AS ids,
 						campania.id AS campania_id,
 						campania.nombre AS campania_nombre,
 						solicitud.id AS solicitud_id,
 						CONCAT( SUBSTRING( medio.clave, 1, 3 ) , '-', LPAD( solicitud.clave, 3, '0' ) ) AS solicitud_clave,
-						medio.clave AS medio_clave, 
-						proveedor.nombre AS proveedor_nombre, 
+						medio.clave AS medio_clave,
+						proveedor.nombre AS proveedor_nombre,
 						CONCAT( programa.nombre, ' (', canal.nombre, ')' ) AS canal_info,
 						CONCAT( 'SPOT ', spot.duracion, '\"' ) AS producto_info,
 						COUNT( impacto.id ) AS cantidad,
 						producto.precio AS producto_precio
-					FROM 
+					FROM
 						impacto
 						Inner Join estado ON impacto.estado_id = estado.id
 						Inner Join solicitud ON impacto.solicitud_id = solicitud.id
 						Inner Join campania ON solicitud.campania_id = campania.id
 						Inner Join producto ON impacto.producto_id = producto.id
-						Inner Join spot ON spot.producto_id = producto.id 
-						Inner Join proveedor ON producto.proveedor_id = proveedor.id  
-						Inner Join medio ON medio.id = proveedor.medio_id 
-						Inner Join horario ON spot.horario_id = horario.id 
-						Inner Join dia ON horario.dia_id = dia.id 
-						Inner Join programa ON horario.programa_id = programa.id 
-						Inner Join audiencia ON programa.audiencia_id = audiencia.id 
-						Inner Join canal ON programa.canal_id = canal.id 
-					WHERE 
+						Inner Join spot ON spot.producto_id = producto.id
+						Inner Join proveedor ON producto.proveedor_id = proveedor.id
+						Inner Join medio ON medio.id = proveedor.medio_id
+						Inner Join horario ON spot.horario_id = horario.id
+						Inner Join dia ON horario.dia_id = dia.id
+						Inner Join programa ON horario.programa_id = programa.id
+						Inner Join audiencia ON programa.audiencia_id = audiencia.id
+						Inner Join canal ON programa.canal_id = canal.id
+					WHERE
 						estado.clave = 'FCT-INI'
 						AND impacto.cargo_id = '1'
 						AND campania.dependencia_id = '"  . $this->id . "'
@@ -370,22 +370,22 @@ class Dependencia extends ActiveRecord{
 						solicitud.id, spot.duracion, programa.id, producto.precio
 					ORDER BY
 						campania.nombre, solicitud.clave
-				) 
+				)
 			) AS impacto
 			ORDER BY
-				campania_nombre, solicitud_clave" 
+				campania_nombre, solicitud_clave"
 		);
-		
+
 		$datos = array();
 		foreach($impactos as $impacto){
-			
+
 			$datos[ $impacto->campania_id ][ $impacto->solicitud_id ][ $impacto->pseudo_id] = $impacto;
-			
+
 		}
 
-		return 
+		return
 			$datos;
-		
+
 	}
 
 	public function publicado( $ejercicio_id = '' ){
@@ -407,19 +407,19 @@ class Dependencia extends ActiveRecord{
 				"WHERE " .
 					"dependencia.id = '" . $this->id . "' " .
 					( $ejercicio_id == 'ALL' ? '' : "AND dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ).
-					"AND ( " . 
-						"estado.clave = 'PUB-OK' " . 
+					"AND ( " .
+						"estado.clave = 'PUB-OK' " .
 						"OR estado.clave = 'FCT-INI' " .
 						"OR estado.clave = 'FCT-LST' " .
 						"OR estado.clave = 'FCT-ENV' " .
 						"OR estado.clave = 'FCT-PAG' " .
 					") "
 					);
-						
+
 					$dependencia = $dependencia[ 0 ];
 
 					$_cached[ __FUNCTION__ ] = $dependencia->publicado;
-						
+
 		}
 
 		return
@@ -427,8 +427,8 @@ class Dependencia extends ActiveRecord{
 
 
 	}
-	
-	
+
+
 	public function publicadoPorMedio( $medio = '', $ejercicio_id = '' ){
 
 		$ejercicio_id = ( $ejercicio_id ? $ejercicio_id : Session :: get_data( 'eje.id' ) );
@@ -452,26 +452,26 @@ class Dependencia extends ActiveRecord{
 					( $ejercicio_id == 'ALL' ? '' : "AND dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ).
 					"AND medio.clave = '" . $medio . "' " .
 					"AND ( " .
-						"estado.clave = 'PUB-OK' " . 
+						"estado.clave = 'PUB-OK' " .
 						"OR estado.clave = 'FCT-INI' " .
 						"OR estado.clave = 'FCT-LST' " .
 						"OR estado.clave = 'FCT-ENV' " .
 						"OR estado.clave = 'FCT-PAG' " .
 					") "
 					);
-						
+
 					$dependencia = $dependencia[ 0 ];
 
 					$_cached[ __FUNCTION__ ] = $dependencia->publicado;
-						
+
 		}
 
 		return
 		$_cached[ __FUNCTION__ ];
 
 	}
-	
-	
+
+
 	public function porfacturar( $ejercicio_id = ''  ){
 
 		$ejercicio_id = ( $ejercicio_id ? $ejercicio_id : Session :: get_data( 'eje.id' ) );
@@ -484,17 +484,17 @@ class Dependencia extends ActiveRecord{
 
 		$dependencia = new Dependencia();
 		$dependencias = $dependencia->find_all_by_sql(
-			"SELECT " . 
+			"SELECT " .
 				"dependencia.* " .
-			"FROM " . 
+			"FROM " .
 				"impacto " .
 				"INNER JOIN solicitud ON impacto.solicitud_id = solicitud.id " .
 				"INNER JOIN campania ON solicitud.campania_id = campania.id " .
 				"INNER JOIN dependencia ON campania.dependencia_id = dependencia.id " .
-			"WHERE " . 
+			"WHERE " .
 				"impacto.estado_id = '".$estado->id."' AND impacto.cargo_id = '".$cargo->id."' " .
 				( $ejercicio_id == 'ALL' ? '' : "AND dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ) .
-			"GROUP BY " . 
+			"GROUP BY " .
 				"dependencia.id " .
 			"ORDER BY " .
 				"dependencia.nombre "
@@ -502,7 +502,7 @@ class Dependencia extends ActiveRecord{
 
 		return
 			$dependencias;
-					
+
 	}
 
 	public function facturasPorEstadoFactura($clave){
@@ -511,7 +511,7 @@ class Dependencia extends ActiveRecord{
 		$dependencias->find_all_by_sql(
 					"SELECT
 						factura.*
-					FROM 
+					FROM
 						dependencia
 					INNER JOIN factura ON dependencia.id = factura.dependencia_id
 					INNER JOIN festados ON factura.festados_id = festados.id
@@ -555,18 +555,18 @@ class Dependencia extends ActiveRecord{
 					"dependencia.id = '" . $this->id . "' " .
 					( $ejercicio_id == 'ALL' ? '' : "AND dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ) .
 					"AND MONTH( factura.fecha ) = '" . $mes . "' " .
-					"AND ( " . 
+					"AND ( " .
 						"estado.clave = 'FCT-INI' " .
 						"OR estado.clave = 'FCT-LST' " .
 						"OR estado.clave = 'FCT-ENV' " .
 						"OR estado.clave = 'FCT-PAG' " .
 					") "
 					);
-						
+
 					$dependencia = $dependencia[ 0 ];
 
 					$_cached[ __FUNCTION__ ] = $dependencia->facturado;
-						
+
 		}
 
 		/*return
@@ -576,7 +576,7 @@ class Dependencia extends ActiveRecord{
 		$_cached[ __FUNCTION__ ];
 
 	}
-	
+
 	public function todas( $ejercicio_id = '' ){
 
 		$dependencias = new Dependencia();
@@ -585,13 +585,13 @@ class Dependencia extends ActiveRecord{
 		return
 			$dependencias->find_all_by_sql(
 				"SELECT " .
-					"dependencia.id, " . 
-					"dependencia.fiscal_id, " . 
-					"dependencia.ejercicio_id, " . 
-					"dependencia.clave, " . 
-					"dependencia.nombre, " . 
-					"dependencia.saved_at, " . 
-					"dependencia.modified_in, " . 
+					"dependencia.id, " .
+					"dependencia.fiscal_id, " .
+					"dependencia.ejercicio_id, " .
+					"dependencia.clave, " .
+					"dependencia.nombre, " .
+					"dependencia.saved_at, " .
+					"dependencia.modified_in, " .
 					"dependencia.externo " .
 				"FROM " .
 					"dependencia " .
@@ -599,7 +599,7 @@ class Dependencia extends ActiveRecord{
 					( $ejercicio_id = 'ALL' ? '1 ' : "dependencia.ejercicio_id = '" . $ejercicio_id . "' "  ).
 				"GROUP BY " .
 				 	"dependencia.id " .
-				"ORDER BY " . 
+				"ORDER BY " .
 					"dependencia.nombre "
 			);
 

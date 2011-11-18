@@ -64,9 +64,46 @@ class Factura extends ActiveRecord{
 		}
 
 		return
-			"(" . strtoupper( Utils:: NumerosALetras( $pesos ) ) . "PESOS " . $centavos . "/100 M.N.)";
+			strtoupper( Utils:: NumerosALetras( $pesos ) ) . "PESOS (" . $centavos . "/100)";
 
 	}
+
+	public function receptor(){
+
+        $dependencia = $this->dependencia();
+        $fiscal = $dependencia->fiscal();
+
+        $receptor = new stdClass();
+
+        foreach( $fiscal as $clave => $valor ){
+
+            $receptor->$clave = $valor;
+
+        }
+
+        return
+            $receptor;
+
+	}
+
+	public function verFecha(){
+
+	    return
+	       Utils :: fecha_convertir( $this->fecha );
+	}
+
+    public function verFechaEspanol(){
+
+        return
+           Utils :: fecha_espanol( $this->fecha );
+    }
+
+	public function verFolio(){
+
+	       return
+	           $this->folio;
+	}
+
 
 }
 ?>

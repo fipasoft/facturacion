@@ -3,140 +3,59 @@
 	<!-- Describe la estructura de los campos principales en el documento de excel -->
 	<encabezados nivel="1">
 		<campo>
-			<id>proyecto</id>
-			<nombre>PROYECTO</nombre>
+			<id>clave</id>
+			<nombre>CLAVE</nombre>
 			<clase>TH.BGLightyellowCenter</clase> 
-			<combinarFilas>2</combinarFilas>
 			<ancho>13</ancho>
 	   </campo>
-		<campo>
-			<id>acumuladoSub</id> 
-			<nombre>SUBTOTAL @@aInicio-@@aFin</nombre>
-			<clase>TH.BGVerylightyellowCenterSmaller</clase>
-			<combinarFilas>2</combinarFilas>
-			<existe>acumulado</existe>
-			<ancho>14</ancho>
-		</campo>
-	    <campo>
-	        <id>acumuladoIva</id> 
-	        <nombre>IVA ACREDITABLE @@aInicio-@@aFin</nombre>
-	        <clase>TH.BGVerylightyellowCenterSmaller</clase>
-	        <combinarFilas>2</combinarFilas>
-	        <existe>acumulado</existe>
-	        <ancho>14.5</ancho>
-	    </campo>
-	    <campo>
-	        <id>acumuladoTotal</id> 
-	        <nombre>TOTAL GASTOS @@aInicio-@@aFin</nombre>
-	        <clase>TH.BGVerylightyellowCenterSmaller</clase>
-	        <combinarFilas>2</combinarFilas>
-	        <existe>acumulado</existe>
-	        <ancho>14</ancho>
-	    </campo>
-	    <campo>
-	        <id>mes</id> 
-	        <mapear>meses</mapear>
-	        <nombre>@@meses</nombre>
-	        <clase>TH.BGLightyellowCenter</clase>
-	    </campo>
-	    <campo>
-            <id>sub</id> 
-            <padre>mes</padre>
-            <mapear>meses</mapear>
-            <nombre>SUBTOTAL</nombre>
-            <clase>TH.BGVerylightyellowCenterSmaller</clase>
+	   <campo>
+            <id>concepto</id>
+            <nombre>DESCRIPCION</nombre>
+            <clase>TH.BGLightyellowCenter</clase> 
+            <combinarColumnas>4</combinarColumnas>
+            <ancho>13</ancho>
        </campo>
        <campo>
-            <id>iva</id> 
-            <padre>mes</padre>
-            <mapear>meses</mapear>
-            <nombre>IVA</nombre>
-            <clase>TH.BGVerylightyellowCenterSmaller</clase>
-        </campo>
-	    <campo>
-	        <id>total</id> 
-	        <nombre>TOTAL GENERAL
-(@@inicio - @@fin)</nombre>
-	        <clase>TH.BGLightyellowCenter</clase>
-	    </campo>
-	    <campo>
-            <id>totalEgresos</id> 
-            <padre>total</padre>
-            <nombre>TOTAL EGRESOS</nombre>
-            <clase>TH.BGVerylightyellowCenterSmaller</clase>
-            <ancho>14</ancho>
-        </campo>
-        <campo>
-            <id>totalIva</id> 
-            <padre>total</padre>
-            <nombre>TOTAL IVA (FORMATO 3)</nombre>
-            <clase>TH.BGVerylightyellowCenterSmaller</clase>
-            <ancho>14</ancho>
-        </campo>
-        <campo>
-            <id>totalGeneral</id> 
-            <padre>total</padre>
-            <nombre>TOTAL GENERAL</nombre>
-            <clase>TH.BGVerylightyellowCenterSmaller</clase>
-            <ancho>14</ancho>
-        </campo>
+            <id>cantidad</id>
+            <nombre>CANTIDAD</nombre>
+            <clase>TH.BGLightyellowCenter</clase> 
+            <ancho>13</ancho>
+       </campo>
+       <campo>
+            <id>unitario</id>
+            <nombre>COSTO UNITARIO</nombre>
+            <clase>TH.BGLightyellowCenter</clase> 
+            <ancho>13</ancho>
+       </campo>
+       <campo>
+            <id>monto</id>
+            <nombre>IMPORTE</nombre>
+            <clase>TH.BGLightyellowCenter</clase> 
+            <ancho>13</ancho>
+       </campo>
+		
 	</encabezados>
 	<contenido>
 	   <campo>
-            <id>proyecto</id>
+            <id>clave</id>
             <clase>TD</clase> 
        </campo>
-        <campo>
-            <id>acumuladoSub</id> 
-            <clase>TD</clase>
-            <existe>acumulado</existe>
-        </campo>
-        <campo>
-            <id>acumuladoIva</id> 
-            <clase>TD</clase>
-            <existe>acumulado</existe>
-        </campo>
-        <campo>
-            <id>acumuladoTotal</id> 
-            <clase>TD</clase>
-            <existe>acumulado</existe>
-        </campo>
-        <campo>
-            <id>mes</id> 
-            <oculto>true</oculto>
-            <mapear>meses</mapear>
-        </campo>
-        <campo>
-            <id>sub</id> 
-            <padre>mes</padre>
-            <mapear>meses</mapear>
-            <clase>TD</clase>
+       <campo>
+            <id>concepto</id>
+            <clase>TD</clase> 
+            <combinarColumnas>4</combinarColumnas>
        </campo>
        <campo>
-            <id>iva</id> 
-            <padre>mes</padre>
-            <mapear>meses</mapear>
-            <clase>TD</clase>
-        </campo>
-        <campo>
-            <id>total</id> 
-            <oculto>true</oculto>
-            <clase>TD</clase>
-        </campo>
-        <campo>
-            <id>totalEgresos</id> 
-            <padre>total</padre>
-            <clase>TD</clase>
-        </campo>
-        <campo>
-            <id>totalIva</id> 
-            <padre>total</padre>
-            <clase>TD</clase>
-        </campo>
-        <campo>
-            <id>totalGeneral</id> 
-            <padre>total</padre>
-            <clase>TD</clase>
-        </campo>
+            <id>cantidad</id>
+            <clase>TD</clase> 
+       </campo>
+       <campo>
+            <id>unitario</id>
+            <clase>TD</clase> 
+       </campo>
+       <campo>
+            <id>monto</id>
+            <clase>TD</clase> 
+       </campo>
 	</contenido>
 </xls>
