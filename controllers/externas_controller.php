@@ -1,15 +1,5 @@
 <?php
-// publicidad, Creado el 22/06/2009
-/**
- * Dependencias
- *
- * @package    Controladores
- * @author     mimeks <mimex@fipasoft.com.mx>
- * @copyright  2009 FiPa Software (contacto at fipasoft.com.mx)
- * @license    http://www.gnu.org/licenses/gpl.html  GNU General Public License (GPL)
- *
- */
-class DependenciasController extends ApplicationController{
+class ExternasController extends ApplicationController{
 	public $template = "system";
 
 	public function agregar(){
@@ -27,16 +17,21 @@ class DependenciasController extends ApplicationController{
 					"AND nombre = '" . $this->post('nombre') . "' " 
 					) == 0
 					){
+
 						$fiscal = new Fiscal();
-						$fiscal= $fiscal->UDG();
-						if($fiscal->id!=""){
+						$fiscal->rfc = trim($this->post('rfc'));
+						$fiscal->razon = trim($this->post('razon'));
+						$fiscal->domicilio = trim($this->post('domicilio'));
+						$fiscal->colonia = trim($this->post('colonia'));
+						$fiscal->cp = trim($this->post('cp'));
+						$fiscal->municipio_id = $this->post("municipio_id");
+						if($fiscal->save()){
 							$dependencia = new Dependencia();
 							$dependencia->clave            =  $this->post('clave');
 							$dependencia->nombre            =  $this->post('nombre');
 							$dependencia->ejercicio_id      =  $this->post('ejercicio_id');
-							$dependencia->externo = 0;
 							$dependencia->fiscal_id = $fiscal->id;
-
+							$dependencia->externo = 1;
 							if( $dependencia->save() ){
 								// historial
 								$historial = new Historial();
@@ -59,39 +54,12 @@ class DependenciasController extends ApplicationController{
 							}
 						}else{
 							$this->option = 'error';
-							$this->error .= 'No se encontraron los datos fiscales de la UDG.';
+							$this->error .= ' Error al guardar en la BD.'. $dependencia->show_message();
 						}
 					}else{
 						$this->option = 'error';
 						$this->error .= 'La dependencia no se agreg&oacute; debido a que ya existe un registro con esos datos.';
 					}
-		}
-	}
-	
-	public function contactos(){
-		$this->set_response("view");
-		try{
-
-			$dependencia_id = $this->post("dependencia_id");
-			$dependencia = new Dependencia();
-			$dependencia = $dependencia->find($dependencia_id);
-
-			if($dependencia->id == ""){
-				throw new Exception("La dependencia no existe.");
-			}
-
-			$contactos = $dependencia->contactos();
-			
-			if(count($contactos) == 0){
-				throw new Exception("No se han capturado los contactos.");
-			}
-
-			$this->contactos	=		$contactos;
-			$this->dependencia	=		$dependencia;
-			$this->option		=		"exito";
-
-		}catch (Exception $e){
-			$this->error($e->getMessage());
 		}
 	}
 
@@ -103,12 +71,14 @@ class DependenciasController extends ApplicationController{
 			$dependencia = new Dependencia();
 			$dependencia = $dependencia->find($id);
 			if( $dependencia->id != '' ){
-				if($dependencia->externo==0){
+
+				if($dependencia->externo==1){
 					$this->option         =  'captura';
 					$this->dependencia    =  $dependencia;
 				}else{
-					$this->error = 'La dependencia seleccionada no existe.';
+					$this->error = 'La dependencia no es externa.';
 				}
+
 
 			}else{
 				$this->error = 'La dependencia seleccionada no existe.';
@@ -120,8 +90,7 @@ class DependenciasController extends ApplicationController{
 			$dependencia = $dependencia->find( $this->post('id') );
 
 			if($dependencia->id != ''){
-
-				if($dependencia->externo==0){
+				if($dependencia->externo==1){
 					$existentes = new Dependencia();
 
 					if($existentes->count(
@@ -132,18 +101,27 @@ class DependenciasController extends ApplicationController{
 						) == 0)
 						{
 
-							$dependencia->clave             =   $this->post( 'clave' );
-							$dependencia->nombre            =   $this->post( 'nombre' );
+							$fiscal = $dependencia->fiscal();
+							if($fiscal->id!=""){
+								$fiscal->rfc = trim($this->post('rfc'));
+								$fiscal->razon = trim($this->post('razon'));
+								$fiscal->domicilio = trim($this->post('domicilio'));
+								$fiscal->colonia = trim($this->post('colonia'));
+								$fiscal->cp = trim($this->post('cp'));
+								$fiscal->municipio_id = $this->post('municipio_id');
+								if($fiscal->save()){
+									$dependencia->clave             =   $this->post( 'clave' );
+									$dependencia->nombre            =   $this->post( 'nombre' );
 
-							if( $dependencia->save() ){
-								// historial
-								$historial = new Historial();
-								$historial->ejercicio_id    =   $dependencia->ejercicio_id;
-								$historial->usuario         =   Session :: get_data( 'usr.login' );
-								$historial->descripcion     =   utf8_encode(
+									if( $dependencia->save() ){
+										// historial
+										$historial = new Historial();
+										$historial->ejercicio_id    =   $dependencia->ejercicio_id;
+										$historial->usuario         =   Session :: get_data( 'usr.login' );
+										$historial->descripcion     =   utf8_encode(
 															'Edit� ' .
-								utf8_decode( $dependencia->clave ) . ' - ' .
-								utf8_decode( $dependencia->nombre ) . ' ' .
+										utf8_decode( $dependencia->clave ) . ' - ' .
+										utf8_decode( $dependencia->nombre ) . ' ' .
 															'[dep' . $dependencia->id . '] '
 															);
 															$historial->controlador     =   $this->controlador;
@@ -151,9 +129,17 @@ class DependenciasController extends ApplicationController{
 															$historial->save();
 
 															$this->option = 'exito';
+									}else{
+										$this->option = 'error';
+										$this->error .= ' Error al guardar en la BD.'. $dependencia->show_message();
+									}
+								}else{
+									$this->option = 'error';
+									$this->error .= ' Error al guardar en la BD.';
+								}
 							}else{
 								$this->option = 'error';
-								$this->error .= ' Error al guardar en la BD.'. $dependencia->show_message();
+								$this->error .= 'La informacion fiscal no existe.';
 							}
 						}else{
 							$this->option = 'error';
@@ -177,7 +163,8 @@ class DependenciasController extends ApplicationController{
 			$dependencia = new Dependencia();
 			$this->dependencia = $dependencia->find($id);
 			if($this->dependencia->id == ''){
-				if($dependencia->externo==0){
+
+				if($dependencia->externo==1){
 					$this->option = 'error';
 					$this->error = 'La dependencia no existe.';
 				}else{
@@ -191,7 +178,7 @@ class DependenciasController extends ApplicationController{
 			$this->error = '';
 			$dependencia = new Dependencia();
 			$dependencia = $dependencia->find( $this->post('id') );
-
+				
 			$_dependencia = new stdClass();
 			$_dependencia->id            =  $dependencia->id;
 			$_dependencia->ejercicio_id  =  $dependencia->ejercicio_id;
@@ -200,9 +187,12 @@ class DependenciasController extends ApplicationController{
 
 			if( $dependencia->id != '' ){
 				// eliminando la dependencia
-				if($dependencia->externo==0){
+
+				if($dependencia->externo==1){
 					try{
+						$fiscal = $dependencia->fiscal();
 						$dependencia->delete( $dependencia->id );
+						$fiscal->delete($fiscal->id);
 						$this->option = 'exito';
 
 						// historial
@@ -254,9 +244,13 @@ class DependenciasController extends ApplicationController{
 
 		// cuenta todos los registros
 		$dependencias = new Dependencia();
-		$registros = $dependencias->count(
-			"ejercicio_id = '" . Session :: get_data( 'eje.id' ) . "'  AND externo='0' " . 
+		$registros = $dependencias->count_by_sql("SELECT count(dependencia.id)
+		FROM dependencia
+		INNER JOIN fiscal ON dependencia.fiscal_id = fiscal.id 
+		WHERE
+		ejercicio_id = '" . Session :: get_data( 'eje.id' ) . "' AND externo='1' " . 
 		( $c == "" ? "" : "AND " . $c )
+		
 		);
 
 		// paginacion
@@ -268,15 +262,20 @@ class DependenciasController extends ApplicationController{
 		$paginador->generar();
 
 		// ejecuta la consulta
-		$dependencias = $dependencias->find(
-			"conditions: ejercicio_id = '" . Session :: get_data( 'eje.id' ) . "'  AND externo='0' " . 
-		( $c == "" ? "" : "AND " . $c ),
-			'order: clave, nombre',
-			'limit: ' . ( $paginador->pagina() * $paginador->rpp() ) . ', ' 
+		$dependencias = $dependencias->find_all_by_sql(
+			"SELECT dependencia.*
+		FROM dependencia
+		INNER JOIN fiscal ON dependencia.fiscal_id = fiscal.id 
+		WHERE
+		ejercicio_id = '" . Session :: get_data( 'eje.id' ) . "' AND externo='1' " . 
+		( $c == "" ? "" : "AND " . $c ).
+			' ORDER BY clave, nombre '.
+			' limit ' . ( $paginador->pagina() * $paginador->rpp() ) . ', ' 
 			. $paginador->rpp()
 			);
 
-		 // verificar privilegios disponibles
+			
+	 // verificar privilegios disponibles
           $acl = new gacl_extra();
           $this->acl = $acl->acl_check_multiple(
               array(
@@ -288,7 +287,7 @@ class DependenciasController extends ApplicationController{
               ),
               Session :: get_data( 'usr.login' )
           );
-			
+		
 			// salida
 			$this->busqueda = $b;
 			$this->dependencias = $dependencias;
