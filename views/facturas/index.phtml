@@ -106,16 +106,13 @@
 			<?php 
 			$i = 1;
 			
-			$flestado = new Flestado();
-			$flimpreso = $flestado->porclave("imp");
 			?>
 			
 			<?php foreach($facturas as $factura){ ?>
 			 
-				<?php $folio = $factura->folio();?>
 				<tr class="<?php echo (($i %2) == 0 ? 'odd' : ''); ?>">
 					<td class="centro">
-						<?php echo $factura->folio . '-AB'; ?>
+						<?php echo $factura->folio; ?>
 						<br />
 						
 						<?php $st = $factura->estado() ?>
@@ -188,14 +185,6 @@
 							<?php echo $dependencia->nombre; ?>
 						</span>
 					</td>
-					<!-- <td class="centro">
-						<?php echo $factura->rfc ?><br/>
-						<span class="sub2">
-						<?php echo $factura->domicilio; ?><br/>
-						<?php echo $factura->colonia; ?><br/>
-						<?php echo $factura->cpostal; ?><br/>
-						</span>
-					</td >-->
 					<td class="numero">
 						<span class="sub2 main">
 							<?php $monto = number_format( $factura->subtotal, 2, '.', ',' ); ?>
@@ -215,21 +204,10 @@
 						</strong>
 					</td>
 					<td class="centro">
-						<a href="<?php echo $path; ?>facturas/ver/<?php echo $factura->id; ?>" title="Ver">
-						<img src="<?php echo $path ?>public/img/system/ver.png" alt="ver"/></a>
 						
 						<a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
 						<img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/></a>
-						
-						<?php if($factura->festados_id!=$fcancelada->id && $factura->cancelable()){ ?>
-						<a href="<?php echo $path; ?>facturas/cancelar/<?php echo $factura->id; ?>"  title="Cancelar">
-						<img src="<?php echo $path ?>public/img/system/cancelar.png" alt="cancelar"/>
-						</a>
-						<?php }elseif($factura->eliminable()){ ?>
-						<a href="<?php echo $path; ?>facturas/eliminar/<?php echo $factura->id; ?>"  title="Eliminar">
-						<img src="<?php echo $path ?>public/img/system/eliminar.png" alt="eliminar"/>
-						</a>
-						<?php } ?>
+					
 					</td>
 				</tr>
 			<?php
