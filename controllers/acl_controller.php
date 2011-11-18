@@ -113,7 +113,8 @@ class AclController extends ApplicationController {
 				'agregar',
 				'editar',
 				'eliminar',
-				'index'
+				'index',
+				'fiscales'
 				),
                 
             'localizacion' => array (
@@ -242,7 +243,8 @@ class AclController extends ApplicationController {
 				'agregar',
 				'editar',
 				'eliminar',
-				'index'
+				'index',
+                'fiscales'
 				)
 				);
 				$this->privilegios['administradores'][] = array (

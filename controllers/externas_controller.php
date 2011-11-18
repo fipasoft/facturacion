@@ -1,6 +1,25 @@
 <?php
 class ExternasController extends ApplicationController{
 	public $template = "system";
+    
+    public function fiscales(){
+        try{
+            $this->set_response("view");
+            $this->option = "captura";
+            $dependencia_id = $this->post('dependencia_id');
+            $dependencia = new Dependencia();
+            $dependencia = $dependencia->find($dependencia_id);
+            
+            if($dependencia->id == ''){
+                throw new Exception("Error los datos no son validos.");
+            }
+            $this->dependencia = $dependencia;
+            
+        }catch(Exception $e){
+            
+            $this->error( $e->getMessage(), $errvar, $e );
+        }
+    }
 
 	public function agregar(){
 		if( $this->post('nombre') == '' ){
