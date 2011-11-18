@@ -14,6 +14,12 @@
 					Agregar otra factura
 					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
 				</a>
+                    <?php if($factura->editable()){ ?> /
+                <a href="<?php echo $path ?>facturas/editar/<?php echo $factura->id; ?>" title="Editar factura">
+                    Editar factura
+                    <img src="<?php echo $path?>public/img/system/editar.png" alt="editar"/>
+                </a>
+                <?php } ?>
 			</div>
 		</div>
 		<?php switch($option) { 
