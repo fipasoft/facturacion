@@ -134,6 +134,20 @@ class FacturasController extends ApplicationController{
                 throw new Exception("Error al guardar el festado.");
             }
             
+            
+                $historial = new Historial();
+                $historial->ejercicio_id    =   $dependencia->ejercicio_id;
+                $historial->usuario         =   Session :: get_data( 'usr.login' );
+                $historial->descripcion     =   utf8_encode(
+                                        'Agrego la factura ' .
+                utf8_decode( $factura->folio ) . ' - ' .
+                utf8_decode( $factura->rfc ) . ' ' .
+                                        '[fac' . $factura->id . '] '
+                                        );
+                                        $historial->controlador     =   $this->controlador;
+                                        $historial->accion          =   $this->accion;
+                                        $historial->save();
+            
             mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
         }else{    
             $this->option = "captura";
@@ -297,6 +311,20 @@ class FacturasController extends ApplicationController{
                     
                 }
                 
+                $historial = new Historial();
+                $historial->ejercicio_id    =   $dependencia->ejercicio_id;
+                $historial->usuario         =   Session :: get_data( 'usr.login' );
+                $historial->descripcion     =   utf8_encode(
+                                        'Edito la factura ' .
+                utf8_decode( $factura->folio ) . ' - ' .
+                utf8_decode( $factura->rfc ) . ' ' .
+                                        '[fac' . $factura->id . '] '
+                                        );
+                                        $historial->controlador     =   $this->controlador;
+                                        $historial->accion          =   $this->accion;
+                                        $historial->save();
+                                                            
+                                
                 
                 mysql_query("COMMIT") or die("Error al finalizar la transaccion");
                 
@@ -358,6 +386,9 @@ class FacturasController extends ApplicationController{
                 
                 $hoy = new DateTime();
                 
+                $anterior = new Festados();
+                $anterior = $anterior->find($factura->festados_id);
+                
                 $factura->festados_id = $edo->id;
                 $factura->enviada = ($factura->enviada == '0000-00-00'? $hoy->format("Y-m-d") : $factura->enviada);
                 $factura->recibida = ($factura->recibida == '0000-00-00'? $hoy->format("Y-m-d") : $factura->recibida);
@@ -373,6 +404,20 @@ class FacturasController extends ApplicationController{
                 if(!$festado->save()){
                     throw new Exception("Error al guardar el festado.");
                 }
+                
+                $historial = new Historial();
+                $historial->ejercicio_id    =   Session :: get_data( 'eje.id');
+                $historial->usuario         =   Session :: get_data( 'usr.login' );
+                $historial->descripcion     =   utf8_encode(
+                                        'Cambio estado de la factura ' .
+                utf8_decode( $factura->folio ) . ' - ' .
+                utf8_decode( $factura->rfc ) . ' .' .
+                'De '. $anterior->singular . ' a '. $edo->singular.' '.
+                                        '[fac' . $factura->id . '] '
+                                        );
+                                        $historial->controlador     =   $this->controlador;
+                                        $historial->accion          =   $this->accion;
+                                        $historial->save();
                 
                 mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
                 
