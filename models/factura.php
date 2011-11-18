@@ -38,6 +38,13 @@ class Factura extends ActiveRecord{
 				( $this->festados_id == $fcap->id );
 	}
 
+    public function editable(){
+        $fcap = new Festados();
+        $fcap = $fcap->porclave('act');
+
+        return
+                ( $this->festados_id == $fcap->id );
+    }
 
 	public function estado( $r = '' ){
 
