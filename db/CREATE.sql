@@ -92,7 +92,7 @@ CREATE TABLE dependencia (
   clave VARCHAR(8) NOT NULL,
   nombre VARCHAR(256) NOT NULL,
   saved_at DATETIME NOT NULL DEFAULT '0000-00-00',
-  modified_at DATETIME NOT NULL DEFAULT '0000-00-00',
+  modified_in DATETIME NOT NULL DEFAULT '0000-00-00',
   externo BOOL NOT NULL,
   PRIMARY KEY(id),
   INDEX dependencia_FKIndex1(ejercicio_id),

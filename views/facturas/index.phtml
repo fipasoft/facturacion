@@ -1,0 +1,255 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>
+		<?php echo $registros;?>
+		Factura<?php echo ($registros == 1 ? '' : 's') ?>
+		<?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+		</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="#" id="aSearch" title="Buscar" >
+					Buscar
+					<img src="<?php echo $path?>public/img/system/buscar.png"/>
+				</a> /
+				<a href="<?php echo $path ?>facturas/agregar" title="Agregar factura">
+					Agregar factura
+					<img src="<?php echo $path?>public/img/system/nuevo.png"/>
+				</a>
+				
+				
+			</div>
+			<div id="search"  id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?> >
+				<form action="<?php echo $path ?>facturas" method="post" id="frm_search">
+					<fieldset>
+						
+						<div>
+							<label for="dependencia_id">Dependencia</label>
+							<select name="dependencia_id" id="dependencia_id">
+								<option></option>
+								<?php foreach($dependencias as $dependencia){ ?>
+								<option value="<?php echo $dependencia->id; ?>" <?php echo ($dependencia->id==$busqueda->campo('dependencia_id')? ' selected="selected" ':'') ?>><?php echo $dependencia->nombre; ?></option>
+								<?php } ?>
+							</select>
+						</div>
+						
+						<div>
+							<label for="festados_id">Estado</label>
+							<select name="festados_id" id="festados_id">
+								<option></option>
+								<?php foreach($festados as $estado){ ?>
+								<option value="<?php echo $estado->id; ?>" <?php echo ($estado->id==$busqueda->campo('festados_id')? ' selected="selected" ':'') ?>><?php echo $estado->singular; ?></option>
+								<?php } ?>
+							</select>
+							<label for="fecha">Fecha </label>
+							<input type="text" name="fecha" id="fecha" value="<?php echo $busqueda->campo('fecha') ?>" size="10" maxlength="10" readonly="readonly" />
+							<label for="folio">Folio</label>
+							<input type="text" name="folio" id="folio" value="<?php echo $busqueda->campo('folio') ?>" size="8" maxlength="32" />
+							<label for="rfc">Rfc</label>
+							<input type="text" name="rfc" id="rfc" value="<?php echo $busqueda->campo('rfc') ?>" size="16" maxlength="16" />
+						</div>
+						
+						<div>
+							<label for="domicilio">Domicilio</label>
+							<input type="text" name="domicilio" id="domicilio" value="<?php echo $busqueda->campo('domicilio') ?>" size="40" maxlength="256" />					
+							<label for="colonia">Colonia</label>
+							<input type="text" name="colonia" id="colonia" value="<?php echo $busqueda->campo('colonia') ?>" size="30" maxlength="256" />										
+						</div>
+						
+						<div>
+							<label for="subtotal">Subtotal</label>
+							<input type="text" class="_real_" name="subtotal" id="subtotal" value="<?php echo $busqueda->campo('subtotal') ?>" size="14" maxlength="14" />
+							<label for="iva">IVA</label>
+							<input type="text" class="_real_" name="iva" id="iva" value="<?php echo $busqueda->campo('iva') ?>" size="14" maxlength="14" />
+							<label for="total">Total</label>
+							<input type="text" class="_real_" name="total" id="total" value="<?php echo $busqueda->campo('total') ?>" size="14" maxlength="14" />
+						</div>
+						
+						<div>
+							<label for="observaciones">Observaciones</label>
+							<input type="text" name="observaciones" id="observaciones" value="<?php echo $busqueda->campo('observaciones') ?>" size="50" maxlength="254" />					
+						</div>
+					
+						<input type="submit" id="btn_submit" value="Filtrar" />
+						<input type="reset" id="reset" value="Quitar filtros" />
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<?php if($registros>0){ 
+			$fcancelada = new Festados();
+			$fcancelada = $fcancelada->porclave("CAN");
+				
+			?>
+		<div class="pages"> 
+			<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>" 
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a> 
+			<?php } ?>
+		</div>
+		<br />
+		<table style="margin-left:-80px;width:1050px;">
+			<tr>
+				<th class="centro" style="width:150px;">Folio</th>
+				<th class="centro" style="width:150px;">Fecha</th>
+				<th class="centro" style="width:350px;">Dependencia</th>
+				<!-- <th class="centro" style="width:200px;">Datos fiscales</th>-->
+				<th class="centro" style="width:70px;">Subtotal</th>
+				<th class="centro" style="width:65px;">IVA</th>
+				<th class="centro" style="width:70px;">Total</th>
+				<th class="centro">Opciones</th>
+			</tr>
+			
+			<?php 
+			$i = 1;
+			
+			$flestado = new Flestado();
+			$flimpreso = $flestado->porclave("imp");
+			?>
+			
+			<?php foreach($facturas as $factura){ ?>
+			 
+				<?php $folio = $factura->folio();?>
+				<tr class="<?php echo (($i %2) == 0 ? 'odd' : ''); ?>">
+					<td class="centro">
+						<?php echo $factura->folio . '-AB'; ?>
+						<br />
+						
+						<?php $st = $factura->estado() ?>
+						<?php switch( $st->clave ){ 
+								case 'CAN': ?>
+									<span class="false">
+										Cancelada
+									</span>
+									<?php break;?>
+								<?php case 'PAG': ?>
+									<div id="dcontenedor_<?php echo $factura->id; ?>">
+									<span class="sub">
+										<a class="epagado" id="epagado_<?php echo $factura->id; ?>"  style="color:#99AA00;">
+											Pagada
+										</a>
+									</span>
+									</div>
+									<div class="fspin" style="display:none;" id="dspin_<?php echo $factura->id; ?>">
+										<img alt="cargando" src="<?php echo $path ?>public/img/system/spin.gif">
+									</div>
+									 <?php echo  "$" . number_format($factura->montoPagado(), 2, ".", ","); ?>
+									
+									<?php break;?>
+									<?php case 'PPG': ?>
+									<div id="dcontenedor_<?php echo $factura->id; ?>">
+									<span class="sub">
+										<a class="epagado" id="epagado_<?php echo $factura->id; ?>"  style="color:#e1ba20;">
+											Parcialmente Pagada
+										</a>
+									</span>
+									</div>
+									<div style="display:none;" id="dspin_<?php echo $factura->id; ?>">
+										<img alt="cargando" src="<?php echo $path ?>public/img/system/spin.gif">
+									</div>
+									<span class="sub2">
+									Pagado </span><?php echo "$" . number_format($factura->montoPagado(), 2, ".", ","); ?>
+									<br/>
+									<span class="sub2">
+									Restante </span><?php echo "$" . number_format(($factura->total - $factura->montoPagado()), 2, ".", ","); ?>
+									
+									
+									<?php break;?>
+								<?php default: ?>
+									<span class="sub2">
+										<?php echo $st->nombre ?>
+									</span>
+									<?php /*<br/>
+									<span class="sub2">
+									Pagado </span><?php echo "$" . number_format($factura->montoPagado(), 2, ".", ","); ?>
+									<br/>
+									<span class="sub2">
+									Restante </span><?php echo "$" . number_format(($factura->total - $factura->montoPagado()), 2, ".", ","); ?>
+									*/?>
+									
+									<?php break;?>
+						<?php }?>
+					</td>
+					<td class="centro">
+					<span class="sub2">Creaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?><br/>
+					<?php if($factura->enviada != "" && $factura->enviada != "0000-00-00"){ ?>
+					<span class="sub2">Env&iacute;o: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->enviada) ?><br/>
+					<?php } ?>
+					<?php if($factura->recibida != "" && $factura->recibida != "0000-00-00"){ ?>
+					<span class="sub2">Recepci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->recibida) ?>
+					<?php } ?>
+					</td>
+					<td class="centro">
+						<?php $dependencia = $factura->dependencia(); ?>
+						<span class="sub2 main">
+							<?php echo $dependencia->nombre; ?>
+						</span>
+					</td>
+					<!-- <td class="centro">
+						<?php echo $factura->rfc ?><br/>
+						<span class="sub2">
+						<?php echo $factura->domicilio; ?><br/>
+						<?php echo $factura->colonia; ?><br/>
+						<?php echo $factura->cpostal; ?><br/>
+						</span>
+					</td >-->
+					<td class="numero">
+						<span class="sub2 main">
+							<?php $monto = number_format( $factura->subtotal, 2, '.', ',' ); ?>
+							<?php echo ( $monto == '0.00' ? '-' : $monto ) ?>
+						</span>
+					</td>
+					<td class="numero">
+						<span class="sub2 main">
+						<?php $monto = number_format( $factura->iva, 2, '.', ',' ); ?>
+						<?php echo ( $monto == '0.00' ? '-' : $monto ) ?>
+						</span>
+					</td>
+					<td class="numero">
+						<?php $monto = number_format( $factura->total, 2, '.', ',' ); ?>
+						<strong>
+							<?php echo ( $monto == '0.00' ? '-' : $monto ) ?>
+						</strong>
+					</td>
+					<td class="centro">
+						<a href="<?php echo $path; ?>facturas/ver/<?php echo $factura->id; ?>" title="Ver">
+						<img src="<?php echo $path ?>public/img/system/ver.png" alt="ver"/></a>
+						
+						<a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
+						<img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/></a>
+						
+						<?php if($factura->festados_id!=$fcancelada->id && $factura->cancelable()){ ?>
+						<a href="<?php echo $path; ?>facturas/cancelar/<?php echo $factura->id; ?>"  title="Cancelar">
+						<img src="<?php echo $path ?>public/img/system/cancelar.png" alt="cancelar"/>
+						</a>
+						<?php }elseif($factura->eliminable()){ ?>
+						<a href="<?php echo $path; ?>facturas/eliminar/<?php echo $factura->id; ?>"  title="Eliminar">
+						<img src="<?php echo $path ?>public/img/system/eliminar.png" alt="eliminar"/>
+						</a>
+						<?php } ?>
+					</td>
+				</tr>
+			<?php
+			$i++;
+			} ?>
+		</table>
+		<?php }else{ ?>
+			<p class="info">
+						<br />
+						No hay registros que mostrar
+			</p>
+		<?php } ?>
+		<div class="pages"> 
+			<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>" 
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a> 
+			<?php } ?>
+		</div>
+	</div>
+</div>
