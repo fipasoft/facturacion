@@ -1,0 +1,22 @@
+<div id="primary">
+	<div class="content">
+		<h1>
+			Sistema
+		</h1>
+		<?php foreach( $categorias as $categoria => $catalogos ){ ?>
+			<h2>
+				<?php echo htmlentities( $categoria ) ?>
+			</h2>
+			<ul class="opciones">
+			<?php foreach( $catalogos as $clave => $titulo ){ ?>
+					<li>
+						<a 	href="<?php echo $path . $clave ?>"
+							title="Ver cat&aacute;logo de <?php echo htmlentities( strtolower( $titulo ) ) ?>">
+								<?php echo htmlentities( $titulo ) ?>
+						</a>
+					</li>
+			<?php } ?>
+			</ul>
+		<?php } ?>
+	</div>
+</div>

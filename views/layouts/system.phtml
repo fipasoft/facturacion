@@ -1,0 +1,118 @@
+<?php
+Kumbia :: import('app.componentes.*');
+$path = KUMBIA_PATH;
+$css_path = $path . 'css/';
+$js_path = $path . 'javascript/';
+$year = date('Y');
+$vista = ($accion == '' ? 'index' : $accion);
+$menu = Session :: get_data('usr.menu');
+?>
+ <link href="<?php echo $css_path ?>system/nav.css" type="text/css" rel="stylesheet" />
+  <link href="<?php echo $css_path ?>system/style.css" type="text/css" rel="stylesheet" />
+  <link href="<?php echo $css_path ?>system/print.css" type="text/css" rel="stylesheet" media="print" />
+  <link href="<?php echo $css_path ?>system/autocomplete.css" type="text/css" rel="stylesheet" />
+  <link href="<?php echo $css_path ?>system/calendar.css" type="text/css" rel="stylesheet" />
+  <link href="<?php echo $css_path ?>system/tooltips.css" type="text/css" rel="stylesheet" media="screen" />
+  <link href="<?php echo $css_path ?>system/tooltips.css" type="text/css" rel="stylesheet" media="screen" />
+  <link href="<?php echo $css_path ?>lightbox/lightbox.css" type="text/css" rel="stylesheet" />
+  <link href="<?php echo $css_path ?>widgets/tablik.css" type="text/css" rel="stylesheet" />
+ <link href="<?php echo $css_path ?>system/modalbox.css" type="text/css" rel="stylesheet" />
+<?php if(file_exists('public/css/view/' . $controlador . '.css')){?>
+  <link href="<?php echo $css_path . 'view/' . $controlador ?>.css" type="text/css" rel="stylesheet" />
+<?php }?>
+<?php if(file_exists('public/css/view/' . $controlador . '.' . $vista . '.css')){?>
+  <link href="<?php echo $css_path . 'view/' . $controlador . '.' . $vista ?>.css" type="text/css" rel="stylesheet" />
+<?php }?>
+<?php if(file_exists('public/css/view/' . $controlador . '.' . $vista . '.print.css')){?>
+  <link href="<?php echo $css_path . 'view/' . $controlador . '.' . $vista ?>.print.css" type="text/css" rel="stylesheet" media="print" />
+<?php }?>
+  <script type="text/javascript" src="<?php echo $js_path ?>protoaculous/1.6.packed.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>modalbox/modalbox.js" ></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>event/adddomloadevent.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>calendar/calendar.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>calendar/calendar-setup.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>calendar/calendar-es.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>json/json2.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>swfobject/swfobject.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>lightbox/lightbox.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>tooltips/tooltips.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>system/principal.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>system/system.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>system/utils.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>system/form.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>widgets/tablik.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>widgets/localizacion.js"></script>
+<?php if(file_exists('public/javascript/view/' . $controlador . '.js')){?>
+  <script type="text/javascript" src="<?php echo $js_path . 'view/' . $controlador ?>.js"></script>
+<?php }?>
+<?php if(file_exists('public/javascript/view/' . $controlador . '.' . $vista . '.js')){?>
+  <script type="text/javascript" src="<?php echo $js_path . 'view/' . $controlador . '.' . $vista?>.js"></script>
+<?php }?>
+
+</head>
+<body class="l10 wide">
+<div id="container">
+	<div id="header">
+		<div class="content">
+			<div id="logo">
+				<img src="<?php echo $path . 'img/system/header.png'?>" alt="UDG / Sistema de publicidad"/>
+			</div>
+			<div id="control">
+				<?php echo Session :: get_data('usr.login') ?> /
+				<a href="#" id="ejercicioBoton" title="Cambiar de ejercicio">
+					Ejercicio:</a>
+				<div id="ejercicioActual">
+					<?php echo ($_eje->id != '' ? $_eje->ver() : 'No disponible') ?>
+				</div>
+				<div id="ejercicioSelector" style="display:none">
+					<form id="frm_ejercicio" method="post" action="<?php echo $path ?>ejercicios/seleccionar">
+						<div>
+							<input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo KUMBIA_PATH?>" />
+							<input type="hidden" name="controlador" id="CONTROLLER" value="<?php echo $controlador ?>" />
+							<input type="hidden" name="accion" id="VIEW" value="<?php echo $accion ?>" />
+							<input type="hidden" name="parametros" id="PARAMS" value="<?php echo $params ?>" />
+							<input type="hidden" name="EJE_ID" id="EJE_ID" value="<?php echo $_eje->annio ?>" />
+							<select name="ejercicio_id" id="ejercicioSelect">
+								<?php if(count($_ejes) == 0){ ?>
+								<option>No hay ejercicios disponibles</option>
+								<?php } ?>
+								<?php foreach($_ejes as $eje){?>
+								<option value="<?php echo $eje->id?>"
+										<?php if($eje->id == $_eje->id){ ?>selected="selected"<?php } ?>>
+										<?php echo $eje->ver() ?>
+								</option>
+								<?php } ?>
+							</select>
+						</div>
+					</form>
+				</div> /
+				<a href="<?php echo $path ?>sistema/configuracion">Configuraci&oacute;n</a> /
+				<a href="<?php echo $path ?>sistema">Sistema</a> /
+				<!--<a href="<?php echo $path ?>sistema/ayuda">Ayuda</a> /-->
+				<a href="<?php echo $path ?>sesion/cerrar">Cerrar sesi&oacute;n</a>
+			</div>
+			<div id="menu_container">
+			<?php if(is_array($menu)){?>
+				<ul id="menu">
+					<?php foreach ($menu as $item) {?>
+						<li <?php echo ($controlador == $item ? 'id="active"' : '') ?>>
+							<a href="<?php echo $path . $item?>" title="<?php echo $item ?>">
+								<?php echo ucfirst($item) ?>
+							</a>
+						</li>
+					<?php }?>
+				</ul>
+			<?php } ?>
+			</div>
+		</div>
+	</div>
+	<?php content() ?>
+	<div id="footer">
+		<div class="content">
+			<span class="sub2">
+				Universidad de Guadalajara <?php echo $year ?>
+			</span>
+		</div>
+	</div>
+</div>
+</body>

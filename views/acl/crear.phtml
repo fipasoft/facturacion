@@ -1,0 +1,51 @@
+<h1>Creando Lista ACL</h1>
+<h3>Creando ACL Secci&oacute;n</h3>
+<ul>
+	<li>ACLSection <?php echo $acl_section['value'] ?>, ID <?php echo $acl_section['id'] ?></li>
+</ul>
+<h3>ARO Secci&oacute;n</h3>
+<ul>
+	<?php foreach($aro_section as $key => $val): ?>
+		<li>Valor <?php echo $key ?>, ID <?php echo $val ?></li>
+	<?php endforeach ?>
+</ul>
+<h3>ARO</h3>
+<ul>
+	<?php foreach($aro as $key => $val): ?>
+		<li>Valor <?php echo $key ?>, ID <?php echo $val ?></li>
+	<?php endforeach ?>
+</ul>
+<h3>ACO Secci&oacute;n</h3>
+<ul>
+	<?php foreach($aco_section as $key => $val): ?>
+		<li>Valor <?php echo $key ?>, ID <?php echo $val ?></li>
+	<?php endforeach ?>
+</ul>
+<h3>ACO</h3>
+<ul>
+	<?php foreach($aco as $section => $acos): ?>
+		<li><ul><?php echo $section ?>, 
+			<?php foreach($acos as $key => $val):?>
+				<li><?php echo $key ?>, ID <?php echo $val ?></li>
+			<?php endforeach ?>
+		</ul></li>
+	<?php endforeach ?>
+</ul>
+<h3>Grupos</h3>
+<ul>
+	<?php foreach($grupos as $key => $val): ?>
+		<li>Valor <?php echo $key ?>, ID <?php echo $val ?></li>
+	<?php endforeach ?>
+</ul>
+<h3>Lista ACL</h3>
+<ul>
+	<?php foreach($lista_acl as $key => $val): ?>
+		<li>ACL ID <?php echo $key ?>, creada para el grupo <?php echo $val ?></li>
+	<?php endforeach ?>
+</ul>
+<h3>Asignacion de grupos</h3>
+<ul>
+	<?php foreach($grupos_asignados as $key => $val): ?>
+		<li>Asignacion <?php echo $key ?>, con el ID <?php echo $val ?></li>
+	<?php endforeach ?>
+</ul>

@@ -1,0 +1,51 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Datos de Historial</h1>
+		<?php switch($option) {
+				case 'vista': ?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path ?>historial">Volver a historial
+							<img src="<?php echo $path?>public/img/system/volver.png"/>
+						</a>
+					</div>
+				</div>
+				<table>
+				<tr>
+				<th>Fecha</th><td><?php echo Utils::fecha_espanol(substr($historial->saved_at,0,10)); ?></td>
+				</tr>
+				<tr>
+				<th>Usuario</th><td><?php echo $historial->usuario; ?></td>
+				</tr>
+				<tr>
+				<th>Controlador</th><td><?php echo $historial->controlador; ?></td>
+				</tr>
+				<tr>
+				<th>Acci&oacute;n</th><td><?php echo $historial->accion; ?></td>
+				</tr>
+				<tr>
+				<th>Descripci&oacute;n</th><td><?php echo $historial->descripcion; ?></td>
+				</tr>
+
+				</table>
+		<?php break; ?>
+		<?php case 'error':
+			  default:
+		?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path ?>inicio">Volver
+							<img src="<?php echo $path?>public/img/system/volver.png"/>
+						</a>
+					</div>
+				</div>
+				<p class="error">
+					Ha ocurrido un error al intentar ver el registro.
+					<br />
+				 	<?php echo $error ?>
+				</p>
+		<?php break; ?>
+		<?php } ?>
+	</div>
+</div>

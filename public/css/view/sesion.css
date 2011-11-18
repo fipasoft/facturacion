@@ -1,0 +1,18 @@
+div.content fieldset{
+margin-bottom: 40px;
+margin-top: 40px;
+text-align:right;
+width:200px;
+}
+#botones{
+width: 220px;
+}
+#menu{
+height: 5px;
+}
+#menu_container{
+margin-bottom: 10px;
+}
+div.content p.error{
+margin-top: 30px;
+}

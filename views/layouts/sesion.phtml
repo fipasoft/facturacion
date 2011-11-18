@@ -1,0 +1,40 @@
+<?php
+/*
+ * Inicialización de variables
+ */
+
+$path = KUMBIA_PATH;
+$css_path = $path . 'css/';
+$year = date('Y');
+$js_path = $path . 'javascript/';
+$vista = ($accion == '' ? 'index' : $accion);
+?>
+<link href="<?php echo $css_path ?>system/nav.css" type="text/css" rel="stylesheet" />
+<link href="<?php echo $css_path ?>system/style.css" type="text/css" rel="stylesheet" />
+<?php if(file_exists('public/css/view/' . $controlador . '.css')){?>
+  <link href="<?php echo $css_path . 'view/' . $controlador ?>.css" type="text/css" rel="stylesheet" />
+<?php }?>
+<?php if(file_exists('public/css/view/' . $controlador . '.' . $vista . '.css')){?>
+  <link href="<?php echo $css_path . 'view/' . $controlador . '.' . $vista ?>.css" type="text/css" rel="stylesheet" />
+<?php }?>
+  <script type="text/javascript" src="<?php echo $js_path ?>protoaculous/1.6.packed.js"></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>event/adddomloadevent.js"></script>
+<?php if(file_exists('public/javascript/view/' . $controlador . '.js')){?>
+  <script type="text/javascript" src="<?php echo $js_path . 'view/' . $controlador ?>.js"></script>
+<?php }?>
+<?php if(file_exists('public/javascript/view/' . $controlador . '.' . $vista . '.js')){?>
+  <script type="text/javascript" src="<?php echo $js_path . 'view/' . $controlador . '.' . $vista?>.js"></script>
+<?php }?>
+</head>
+<body class="l10 wide">
+<div id="container">
+	<div id="header">
+		<div class="content"><img src="<?php echo $path . 'img/system/header.png'?>" alt="Sistema de Publicidad" /></div>
+	</div>
+	<div id="menu_container"><ul id="menu"><li></li></ul></div>
+	<?php content() ?>
+	<div id="footer">
+		<div class="content">Universidad de Guadalajara <?php echo $year ?></div>
+	</div>
+</div>
+</body>

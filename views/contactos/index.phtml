@@ -1,0 +1,177 @@
+<div id="primary">
+	<div class="content">
+		<h1>
+			<?php echo $registros;?>
+			Contacto<?php echo ($registros == 1 ? '' : 's') ?>
+			<?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+		</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="#" id="aSearch" title="Buscar" >
+					Buscar
+					<img src="<?php echo $path?>public/img/system/buscar.png" alt="buscar"/>
+				</a> 
+				<?php if($acl['contactos']['agregar']){ ?>/
+				<a href="<?php echo $path ?>contactos/agregar" title="Agregar contacto">
+					Agregar contacto
+					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
+				</a>
+				<?php } ?>
+			</div>
+			<div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+				<form action="<?php echo $path ?>contactos" method="post" id="frm_search">
+					<fieldset>
+						<div>
+							<label for="nombre">Nombre</label>
+							<input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="30" maxlength="70" />
+							<label for="dependencia">Dependencia</label>
+							<select name="dependencia" id="dependencia">
+								<option />
+								<?php foreach($dependencias as $dependencia){?>
+								<option value="<?php echo $dependencia->id?>"
+										<?php if( $busqueda->campo('dependencia') == $dependencia->id ){ ?> selected="selected" <?php } ?> >
+									<?php echo $dependencia->nombre ?>
+								</option>
+								<?php } ?>
+							</select> 
+							<label for="proveedor">Proveedor</label>
+							<select name="proveedor" id="proveedor">
+								<option />
+								<?php foreach($proveedores as $proveedor){?>
+								<option value="<?php echo $proveedor->id?>"
+										<?php if( $busqueda->campo('proveedor') == $proveedor->id ){ ?> selected="selected" <?php } ?> >
+									<?php echo $proveedor->nombre ?>
+								</option>
+								<?php } ?>
+							</select>
+						</div>
+						<div>
+							<input type="submit" id="btn_submit" value="Filtrar" />
+							<input type="reset" id="reset" value="Quitar filtros" />
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<div class="pages"> 
+			<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>" 
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a> 
+			<?php }?>
+		</div>
+		<br />
+		<?php if($registros > 0){ ?>
+				<table>
+					<tr>
+						<th>Personal</th>
+						<th>Laboral</th>
+						<th>Contacto</th>
+						<th>Observaciones</th>
+						
+						<?php if($acl['contactos']['eliminar'] || $acl['contactos']['editar']){ ?>
+						<th>Opciones</th>
+						<?php } ?>
+					</tr>
+					<?php 
+						$i = 0;
+						foreach($contactos as $contacto ){ 
+					?>
+					<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+						<td>
+							<span class="uc"><?php echo $contacto->ap . ' ' . $contacto->am ?></span>,
+							<?php 	echo $contacto->nombre ?>
+							<br />
+							<span class="sub"><?php echo $contacto->titulo ?></span>
+						</td>
+						<td>
+							<?php if( $contacto->cargo ){?>
+								<?php echo $contacto->cargo ?>
+								<br />
+							<?php } ?>
+							<span class="sub"><?php echo $contacto->institucion_nombre ?></span>
+						</td>
+						<td>
+
+								<?php echo $contacto->mail ?>
+								<span class="sub">e-mail</span>
+								<br />
+
+								<?php if( $contacto->tel ){?>
+									<?php echo $contacto->tel ?>
+									<span class="sub">tel</span>								
+									<br />
+								<?php } ?>
+								
+								<?php if( $contacto->cel ){?>
+									<?php echo $contacto->cel ?>
+									<span class="sub">m&oacute;vil</span>
+									<br />
+								<?php } ?>
+								
+								<?php if( $contacto->trunk ){?>
+									<?php echo $contacto->trunk ?>
+									<span class="sub">radio</span>
+									<br />
+								<?php } ?>
+								
+								<?php if( $contacto->domicilio ){?>
+									<?php echo $contacto->domicilio ?>
+									<span class="sub">domicilio</span>
+									<br />
+								<?php } ?>
+								
+						</td>
+						<td>
+							<?php if( $contacto->observaciones ){?>
+									<span class="sub2">
+										&quot;<?php echo $contacto->observaciones ?>&quot;
+									</span>
+									<br />
+							<?php }else{ ?>
+								-
+							<?php } ?>
+						</td>
+						
+						<?php if($acl['contactos']['eliminar'] || $acl['contactos']['editar']){ ?>
+						<td style="text-align:center">
+						<?php if($acl['contactos']['editar']){ ?>
+							<a href="<?php echo $path . 'contactos/editar/' . $contacto->id?>"
+							   title="Editar datos del contacto">
+							   <img src="<?php echo $path?>public/img/system/editar.png" />
+							</a> 
+						<?php } ?>
+						
+						<?php if($acl['contactos']['eliminar']){ ?>
+							<a href="<?php echo $path . 'contactos/eliminar/' . $contacto->id?>"
+							   title="Eliminar toda la informacion del contacto">
+							   <img src="<?php echo $path?>public/img/system/eliminar.png" />
+							</a>
+						<?php } ?>
+						</td>
+						<?php } ?>
+					</tr>
+					<?php 
+						$i++;
+					}
+					?>
+				</table>
+		<?php } else { ?>
+				<p class="info">
+					<br />
+					No hay registros que mostrar
+				</p>
+		<?php } ?>
+		<div class="pages"> 
+			<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>" 
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a> 
+			<?php }?>
+		</div>
+	</div>
+</div>

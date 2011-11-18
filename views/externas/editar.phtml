@@ -1,0 +1,88 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Editar dependencia externa</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>externas">Volver
+					<img src="<?php echo $path?>public/img/system/volver.png" alt="volver"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) { 
+				case 'captura': ?>
+				<form action="<?php echo $path ?>externas/editar" id="frm_editar" method="post">
+					<input type="hidden" name="id" id="id" value="<?php echo $dependencia->id ?>" />
+					<fieldset>
+						<legend>Datos</legend>
+						<label for="clave">Clave</label>
+						<br />
+						<input type="text" name="clave" id="clave" 
+						       size="12" maxlength="12" value="<?php echo $dependencia->clave ?>"/>
+				        <br />
+				        <br />
+						<label for="nombre">Nombre</label>
+						<br />
+						<input type="text" name="nombre" id="nombre" 
+						       size="30" maxlength="256" value="<?php echo $dependencia->nombre ?>"/>
+				        <br />
+				        <br />
+					</fieldset>
+					<div class="divisor"></div>
+					<?php $fiscal = $dependencia->fiscal(); ?>
+					<fieldset>					
+						<legend>Fiscal</legend>
+						<label for="clave">RFC</label>
+						<br />
+						<input type="text" name="rfc" id="rfc" size="20" maxlength="20" value="<?php echo $fiscal->rfc; ?>" />
+						<br />
+						<br />
+						<label for="razon">Raz&oacute;n social</label>
+						<br />
+						<input type="text" name="razon" id="razon" size="30" maxlength="255" value="<?php echo $fiscal->razon; ?>"/>
+						<br />
+						<br />
+						<label for="domicilio">Domicilio</label>
+						<br />
+						<input type="text" name="domicilio" id="domicilio" size="30" maxlength="255" value="<?php echo $fiscal->domicilio ?>"/>
+						<br />
+						<br />
+						<label for="colonia">Colonia</label>
+						<br />
+						<input type="text" name="colonia" id="colonia" size="30" maxlength="255" value="<?php echo $fiscal->colonia; ?>"/>
+						<br />
+						<br />
+						<label for="cp">C&oacute;digo postal</label>
+						<br />
+						<input type="text" name="cp" id="cp" size="20" maxlength="20" value="<?php echo $fiscal->cp ?>" />
+						<br />
+						<br />
+						<div class="localizacion_editar">
+						<input type="hidden" value="<?php echo $fiscal->municipio_id; ?>" name="municipio_id" id="municipio_id" />
+						</div>
+					</fieldset>
+					<div class="divisor"></div>
+					
+					<div id="botones">
+						<input type="button" id="cancelar" value="Cancelar">
+						<input type="button" id="aceptar" value="Editar">
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info">
+					<br />
+					La informaci&oacute;n de la dependencia se edit&oacute; correctamente
+				</p>
+			<?php  break; ?>
+			<?php case 'error': 
+				  default: 
+			?>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>
