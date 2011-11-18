@@ -62,8 +62,8 @@
 //
 //	Configuration
 //
-var fileLoadingImage = "/bancos2/img/lightbox/loading.gif";		
-var fileBottomNavCloseImage = "/bancos2/img/lightbox/closelabel.gif";
+var fileLoadingImage = "/facturacion/img/lightbox/loading.gif";		
+var fileBottomNavCloseImage = "/facturacion/img/lightbox/closelabel.gif";
 
 var overlayOpacity = 0.8;	// controls transparency of shadow overlay
 
