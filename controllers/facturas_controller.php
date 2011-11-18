@@ -45,10 +45,72 @@ class FacturasController extends ApplicationController{
 	public function index( $pag = '' ){
 
 	   try{
+        // vars
+        $controlador = $this->controlador;
+        $accion = $this->accion;
+        $path = $this->path = KUMBIA_PATH;
+
+        $ejercicio_id = Session :: get_data( 'eje.id' );
+
+        // busqueda
+        $b = new Busqueda($controlador, $accion);
+        $b->campos();
+
+        // genera las condiciones
+        $b->establecerCondicion(
+            'festados_id',
+            "festados_id = '" . $b->campo( 'festados_id' ) . "'"
+            );
+
+            $b->establecerCondicion(
+            'dependencia_id',
+            "dependencia_id = '" . $b->campo( 'dependencia_id' ) . "'"
+            );
+
+            $b->establecerCondicion(
+            'fecha',
+            "fecha = '" . Utils :: fecha_convertir( $this->post('fecha') ) . "'"
+            );
 
 
+
+            $c = "factura.ejercicio_id = '" . $ejercicio_id . "' ";
+            $c .= ( $b->condicion() ? "AND " . $b->condicion() : '' );
+
+            // cuenta todos los registros
+            $facturas = new Factura();
+            $registros = $facturas->count( ( $c == "" ? "" : $c ) );
+
+            // paginacion
+            $paginador = new Paginador( $controlador, $accion );
+            if( $pag != '' ){
+                $paginador->guardarPagina( $pag );
+            }
+            $paginador->estableceRegistros( $registros );
+            $paginador->generar();
+
+            // ejecuta la consulta
+            $facturas = $facturas->find(
+            "conditions: " . $c,
+            'order: folio DESC ',
+            'limit: ' . ( $paginador->pagina() * $paginador->rpp() ) . ', '
+            . $paginador->rpp()
+            );
+
+            $dependencias = new Dependencia();
+            $dependencias = $dependencias->facturadas( $ejercicio_id );
+
+            $festados = new Festados();
+            $festados = $festados->find();
+
+            // salida
+            $this->busqueda = $b;
+            $this->paginador = $paginador;
+            $this->registros = $registros;
+            $this->facturas = $facturas;
+            $this->dependencias = $dependencias;
+            $this->festados = $festados;
         }catch( Exception $e ){
-
             $this->error( $e->getMessage(), $errvar, $e );
 
         }

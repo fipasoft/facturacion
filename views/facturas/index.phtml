@@ -12,38 +12,11 @@
 					Buscar
 					<img src="<?php echo $path?>public/img/system/buscar.png"/>
 				</a> /
-				<?php
-				$folio = new Folio();
-				if($folio->establecido()){
-				?>
 				<a href="<?php echo $path ?>facturas/agregar" title="Agregar factura">
 					Agregar factura
 					<img src="<?php echo $path?>public/img/system/nuevo.png"/>
-				</a> /
+				</a>
 				
-				<a href="<?php echo $path ?>facturas/impactos" title="Controlar impactos">
-					Control de impactos
-					<img src="<?php echo $path?>public/img/system/estado.png"/>
-				</a>
-				/
-				<a class="sub" id="bsub" title="Control de oficios" >
-					Control de oficios
-					<img src="<?php echo $path?>public/img/system/folio.png" alt="oficios"/>
-				</a>
-				<div id="dsub" style="display:none;">
-					<br/>
-					<a href="<?php echo $path ?>facturas/control" title="Solicitud" >
-						Oficios de envio
-						<img src="<?php echo $path?>public/img/system/folio.png" alt="Solicitud"/>
-					</a> <br/>
-					<a href="<?php echo $path ?>oficios/facturacion" title="cancelacion" >
-					Oficios de cancelacion
-					<img src="<?php echo $path?>public/img/system/cancelar.png" alt="cancelacion"/>
-				</a>  
-				</div>
-				 
-				 
-				<?php } ?>
 				
 			</div>
 			<div id="search"  id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?> >
