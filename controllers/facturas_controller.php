@@ -32,7 +32,15 @@ class FacturasController extends ApplicationController{
             $factura = new Factura();
             $factura = $factura->find( $id );
 
+            if( !$factura || $factura->id  == '' ){
+
+                throw new Exception( 'Id no valido' );
+
+            }
+
             $this->factura = $factura;
+            $this->exito();
+            $this->set_response( 'view' );
 
         }catch( Exception $e ){
 

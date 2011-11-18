@@ -1,36 +1,36 @@
 <?php
 
 /** KumbiaForms - PHP Rapid Development Framework *****************************
-*	
-* Copyright (C) 2005-2007 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
+*
+* Copyright (C) 2005-2007 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
 * Copyright (C) 2005-2007 Julian Cortes (jucorant at gmail.com)
-* 	
+*
 * This framework is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
 * License as published by the Free Software Foundation; either
 * version 2.1 of the License, or (at your option) any later version.
-* 
+*
 * This framework is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 * Lesser General Public License for more details.
-* 
+*
 * You should have received a copy of the GNU Lesser General Public
 * License along with this framework; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-* 
+*
 * Este framework es software libre; puedes redistribuirlo y/o modificarlo
-* bajo los terminos de la licencia pública general GNU tal y como fue publicada
-* por la Fundación del Software Libre; desde la versión 2.1 o cualquier
-* versión superior.
-* 
-* Este framework es distribuido con la esperanza de ser util pero SIN NINGUN 
-* TIPO DE GARANTIA; sin dejar atrás su LADO MERCANTIL o PARA FAVORECER ALGUN
-* FIN EN PARTICULAR. Lee la licencia publica general para más detalles.
-* 
-* Debes recibir una copia de la Licencia Pública General GNU junto con este
-* framework, si no es asi, escribe a Fundación del Software Libre Inc.,
-* 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+* bajo los terminos de la licencia pï¿½blica general GNU tal y como fue publicada
+* por la Fundaciï¿½n del Software Libre; desde la versiï¿½n 2.1 o cualquier
+* versiï¿½n superior.
+*
+* Este framework es distribuido con la esperanza de ser util pero SIN NINGUN
+* TIPO DE GARANTIA; sin dejar atrï¿½s su LADO MERCANTIL o PARA FAVORECER ALGUN
+* FIN EN PARTICULAR. Lee la licencia publica general para mï¿½s detalles.
+*
+* Debes recibir una copia de la Licencia Pï¿½blica General GNU junto con este
+* framework, si no es asi, escribe a Fundaciï¿½n del Software Libre Inc.,
+* 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 *
 *****************************************************************************
 * Excel Functions
@@ -1147,9 +1147,11 @@ if(!class_exists('PEAR')){
 
 }
 
+include_once "lib/excel/utils.php";
 include_once "lib/excel/reader.php";
 include_once "lib/excel/writer.php";
 include_once "lib/excel/writer/reporte.class.php";
+include_once "lib/excel/writer/plantilla.class.php";
 include_once "lib/excel/writer/hoja.class.php";
 include_once "lib/excel/writer/estilo.class.php";
 ?>
