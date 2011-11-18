@@ -37,7 +37,7 @@
 					</fieldset>
 					<div class="divisor"></div>
 					
-					<fieldset>
+					<fieldset style="margin-left: -50px;">
 					    <legend>Conceptos</legend>
 					    <div class="tablik">
 					    <table>
@@ -49,8 +49,9 @@
                                         <img src="<?php echo $path?>public/img/system/ver.png" alt="Seleccionar todo"/>
                                     </a>
                                 </th>
+                                <th>Clave</th>
+                                <th>Descripción</th>
 					            <th>Cantidad</th>
-                                <th>Concepto</th>
                                 <th>Unitario</th>
                                 <th>Monto</th>
 					        </tr>
@@ -62,15 +63,22 @@
                                                class="switch" />
                                     </td>
                                 <td class="centro">
+                                    <input type="text" size="12" maxlength="20"
+                                            name="clave[]" class="clave"/>
+                                </td>
+                                
+                                
+                                <td class="centro">
+                                    <input type="text" size="70" maxlength="300"
+                                            name="concepto[]" class="concepto"/>
+                                    
+                                </td>
+                                
+                                <td class="centro">
                                     <input type="text" size="4" maxlength="3"
                                             name="cantidad[]" class="cantidad"/>
                                 </td>
                                 
-                                <td class="centro">
-                                    <input type="text" size="80" maxlength="300"
-                                            name="concepto[]" class="concepto"/>
-                                    
-                                </td>
                                 
                                 <td class="centro">
                                     <input type="text" size="12" maxlength="12"
