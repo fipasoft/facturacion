@@ -21,12 +21,16 @@ function init(){
 	rfc = $('dependencia_id');
 	if(rfc){
     rfc.onchange = function(){
+        if(this.value != ''){
         new Ajax.Updater('fiscales', $('KUMBIA_PATH').value + 'externas/fiscales/', { 
            method: 'post',
            onLoading: function(){ $('check').hide(); $('spinner').show(); },
            onComplete: function() { $('spinner').hide(); $('check').show()},
            parameters: {dependencia_id: $('dependencia_id').value}
         });
+        }else{
+            $('fiscales').innerHTML = 'Elija una dependencia.';
+        }
     }
     }
 	
