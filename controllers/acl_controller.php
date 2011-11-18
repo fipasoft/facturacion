@@ -64,6 +64,13 @@ class AclController extends ApplicationController {
 				'editar',
 				'control'
 				),
+            'externas' => array (
+                'agregar',
+                'editar',
+                'eliminar',
+                'index',
+                'fiscales'
+                ),
 			'ejercicios' => array (
 				'agregar',
 				'editar',
@@ -109,13 +116,6 @@ class AclController extends ApplicationController {
 				'eliminar',
 				'index',
 				'contactos'
-				),
-			'externas' => array (
-				'agregar',
-				'editar',
-				'eliminar',
-				'index',
-				'fiscales'
 				),
                 
             'localizacion' => array (
