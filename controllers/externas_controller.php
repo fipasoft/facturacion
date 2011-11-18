@@ -57,7 +57,7 @@ class ExternasController extends ApplicationController{
 								$historial->ejercicio_id    =   $dependencia->ejercicio_id;
 								$historial->usuario         =   Session :: get_data( 'usr.login' );
 								$historial->descripcion     =   utf8_encode(
-														'Agreg� ' .
+														'Agrego ' .
 								utf8_decode( $dependencia->clave ) . ' - ' .
 								utf8_decode( $dependencia->nombre ) . ' ' .
 														'[dep' . $dependencia->id . '] '
@@ -138,7 +138,7 @@ class ExternasController extends ApplicationController{
 										$historial->ejercicio_id    =   $dependencia->ejercicio_id;
 										$historial->usuario         =   Session :: get_data( 'usr.login' );
 										$historial->descripcion     =   utf8_encode(
-															'Edit� ' .
+															'Edito ' .
 										utf8_decode( $dependencia->clave ) . ' - ' .
 										utf8_decode( $dependencia->nombre ) . ' ' .
 															'[dep' . $dependencia->id . '] '
@@ -219,7 +219,7 @@ class ExternasController extends ApplicationController{
 						$historial->ejercicio_id    =   $_dependencia->ejercicio_id;
 						$historial->usuario         =   Session :: get_data( 'usr.login' );
 						$historial->descripcion     =   utf8_encode(
-														'Elimin� ' .
+														'Elimino ' .
 						utf8_decode( $_dependencia->clave ) . ' - ' .
 						utf8_decode( $_dependencia->nombre ) . ' ' .
 														'[dep' . $_dependencia->id . '] '
