@@ -221,6 +221,7 @@ CREATE TABLE concepto (
   cantidad INTEGER UNSIGNED NOT NULL,
   unitario DOUBLE(11,2) NOT NULL,
   monto DOUBLE(11,2) NOT NULL,
+  clave VARCHAR(20) NULL,
   PRIMARY KEY(id),
   INDEX orden_FKIndex2(factura_id),
   FOREIGN KEY(factura_id)

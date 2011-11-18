@@ -28,6 +28,7 @@ class FacturasController extends ApplicationController{
             $conceptos = $this->post("concepto");
             $cantidades = $this->post("cantidad");
             $costos = $this->post("costo");
+            $claves = $this->post("clave");
             
             $subtotal = $this->post("subtotal");
             $iva = $this->post("iva");
@@ -52,6 +53,10 @@ class FacturasController extends ApplicationController{
             
             if(!is_array($costos) || count($costos) == 0){
                 throw new Exception("Error los costos no son validos.");
+            }
+            
+            if(!is_array($claves) || count($claves) == 0){
+                throw new Exception("Error las claves no son validos.");
             }
             
             if($subtotal == "" ){
@@ -101,11 +106,20 @@ class FacturasController extends ApplicationController{
             foreach ($cantidades as $k => $cantidad) {
                     
                 $concepto = new Concepto();
+                
+                if(trim($cantidad) == '' ||
+                    trim($conceptos[$k]) == '' ||
+                    trim($unitarios[$k]) == '' ||
+                    trim($costos[$k]) == ''){
+                        throw new Exception("Error los datos de los conceptos no son consistentes.");
+                }
+                
                 $concepto -> factura_id        =   $factura->id;
-                $concepto -> cantidad           =   $cantidad;
-                $concepto -> descripcion        =   $conceptos[$k];
-                $concepto -> unitario           =   $unitarios[$k];
-                $concepto -> monto              =   $costos[$k];
+                $concepto -> cantidad           =   trim($cantidad);
+                $concepto -> descripcion        =   trim($conceptos[$k]);
+                $concepto -> unitario           =   trim($unitarios[$k]);
+                $concepto -> monto              =   trim($costos[$k]);
+                $concepto -> clave              =   trim($claves[$k]);
                 
                 if(!$concepto->save()){
                     throw new Exception("Error al guardar el concepto.");
@@ -132,6 +146,7 @@ class FacturasController extends ApplicationController{
             
         }
         }catch(Exception $e){
+            
             if($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
             
