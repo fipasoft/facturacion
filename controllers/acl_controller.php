@@ -114,7 +114,14 @@ class AclController extends ApplicationController {
 				'editar',
 				'eliminar',
 				'index'
-				)
+				),
+                
+            'localizacion' => array (
+                'inicia',
+                'editar',
+                'estados',
+                'municipios'
+                ),
 				);
 				$i = 0;
 				foreach ($acos as $section => $objects) {
@@ -212,6 +219,16 @@ class AclController extends ApplicationController {
 				'password'
 				)
 				);
+                
+                
+                $this->privilegios['administradores'][] = array (
+                'localizacion' => array (
+                'inicia',
+                'editar',
+                'estados',
+                'municipios'
+                ));
+                
 				$this->privilegios['administradores'][] = array (
 			'dependencias' => array (
 				'agregar',
