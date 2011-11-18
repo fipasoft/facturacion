@@ -17,64 +17,17 @@
 
 		if( in_array('root',  $usr_grupos) ){
 			$controladores = array(
-				'banners',
-				'campanias',
-				'canales',
-				'contactos',
-				'convenios',
-				'dependencias',
 				'ejercicios',
-				'estaciones',
-				'generos',
-				'grupos',
-				'impresos',
-				'insertos',
-				'macrogeneros',
-				'programas',
-				'proveedores',
-				'publicaciones',
-				'secciones',
-				'sitios',
 				'usuarios',
-				'solicitudes',
 				'facturas',
-				'categorias',
-				'envios',
-				'facturacion',
-				'pagos',
-				'oficios'
+				'externas'
 			);
-		}else if( in_array('administradores',  $usr_grupos) ||  
-					in_array('facturacion',  $usr_grupos) ||  
-					in_array('publicacion',  $usr_grupos)  ||  
-					in_array('consulta',  $usr_grupos)){
+		}else if( in_array('administradores',  $usr_grupos)){
 			$controladores = array(
-				'banners',
-				'campanias',
-				'canales',
-				'contactos',
-				'convenios',
-				'dependencias',
 				'ejercicios',
-				'estaciones',
-				'generos',
-				'grupos',
-				'impresos',
-				'insertos',
-				'macrogeneros',
-				'proveedores',
-				'programas',
-				'publicaciones' .
-				'secciones',
-				'sitios',
-				'usuarios',
-				'solicitudes',
-				'facturas',
-				'categorias',
-				'envios',
-				'facturacion',
-				'pagos',
-				'oficios'
+                'usuarios',
+                'facturas',
+                'externas'
 			);
 		}
 		return $controladores;
