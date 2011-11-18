@@ -1,0 +1,25 @@
+<?php $path = KUMBIA_PATH;
+ switch($option) {
+ 	case 'exito':
+ 		?>
+ 		<br/>
+ 		<label for="municipio_id">Municipio</label>
+ 		<br/>
+ 		<select id="municipio_id" name="municipio_id">
+ 			<option></option>
+ 			<?php foreach($municipios as $municipio){ ?>
+ 				<option value="<?php echo $municipio->id ?>"><?php echo $municipio->nombre; ?></option>
+ 			<?php } ?>
+ 		</select>
+ 		<?php 
+ 		break;
+ 	default: ?>
+ 	<p class="error">
+ 	<br/>Error al cargar los estados.<br/>
+ 	<?php echo $error; ?>
+ 	<br/>
+ 	</p>
+ 	<?php 
+ 		break;	
+	}
+	?>

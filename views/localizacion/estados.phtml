@@ -1,0 +1,24 @@
+<?php $path = KUMBIA_PATH;
+ switch($option) {
+ 	case 'exito':
+ 		?>
+ 		<label for="edo_id">Estado</label>
+ 		<br/>
+ 		<select id="edo_id" name="edo_id">
+ 			<option></option>
+ 			<?php foreach($estados as $edo){ ?>
+ 				<option value="<?php echo $edo->id ?>"><?php echo $edo->nombre; ?></option>
+ 			<?php } ?>
+ 		</select>
+ 		<?php 
+ 		break;
+ 	default: ?>
+ 	<p class="error">
+ 	<br/>Error al cargar los estados.<br/>
+ 	<?php echo $error; ?>
+ 	<br/>
+ 	</p>
+ 	<?php 
+ 		break;	
+	}
+	?>
