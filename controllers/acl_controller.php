@@ -61,7 +61,8 @@ class AclController extends ApplicationController {
 				'index',
 				'imprimir',
 				'cancelar',
-				'editar'
+				'editar',
+				'control'
 				),
 			'ejercicios' => array (
 				'agregar',
@@ -264,11 +265,6 @@ class AclController extends ApplicationController {
 				)
 				);
 				
-				$this->privilegios['administradores'][] = array (
-				 'facturas' => array (
-				
-				 )
-				 );
 				 
 				$this->privilegios['administradores'][] = array (
 				 'usuarios' => array (
@@ -290,7 +286,8 @@ class AclController extends ApplicationController {
                  'index',
                  'imprimir',
                  'cancelar',
-                 'editar'
+                 'editar',
+                 'control'
                  )
                  );
 				

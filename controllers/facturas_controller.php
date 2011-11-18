@@ -132,7 +132,6 @@ class FacturasController extends ApplicationController{
             
         }
         }catch(Exception $e){
-            #var_dump($e->getMessage());exit;
             if($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
             
@@ -147,6 +146,74 @@ class FacturasController extends ApplicationController{
 	public function eliminar( $id = '' ){
 
 	}
+    
+    public function control( $id = '' ){
+        try{
+            $transaccion = false;
+            
+            if($this->post('factura_id') == ''){
+                $this->option = "captura";
+                
+                $factura = new Factura();
+                $factura = $factura->find($id);
+                
+                if($factura->id == ''){
+                    throw new Exception("Error la factura no es valida.");
+                }
+                
+                $festados = new Festados();
+                $festados = $festados->find();
+                
+                $this->factura = $factura;
+                $this->festados = $festados;
+            }else{
+                $this->option = 'exito';
+                mysql_query("BEGIN") or die("Error al iniciar la transaccion");
+                $transaccion = true;
+            
+                
+                $factura = new Factura();
+                $factura = $factura->find($this->post("factura_id"));
+                
+                if($factura->id == ''){
+                    throw new Exception("Error la factura no es valida.");
+                }
+                
+                $edo = new Festados();
+                $edo = $edo->find($this->post("festados_id"));
+                
+                if($factura->id == ''){
+                    throw new Exception("Error el estado no es valida.");
+                }
+                
+                $hoy = new DateTime();
+                
+                $factura->festados_id = $edo->id;
+                $factura->enviada = ($factura->enviada == '0000-00-00'? $hoy->format("Y-m-d") : $factura->enviada);
+                $factura->recibida = ($factura->recibida == '0000-00-00'? $hoy->format("Y-m-d") : $factura->recibida);
+                
+                if(!$factura->save()){
+                    throw new Exception("Error al guardar la factura.");
+                }
+                
+                
+                $festado = new Festado();
+                $festado->factura_id = $factura->id;
+                $festado->festados_id = $edo->id; 
+                if(!$festado->save()){
+                    throw new Exception("Error al guardar el festado.");
+                }
+                
+                mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
+                
+            }
+        }catch(Exception $e){
+            if($transaccion)
+                mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
+            
+            $this->error( $e->getMessage(), $errvar, $e );
+        }
+    }
 
     public function imprimir( $id = '' ){
 
