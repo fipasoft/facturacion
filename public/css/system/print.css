@@ -1,0 +1,12 @@
+#header, #options, #search, #pages, #footer{
+display:none;
+}
+div.content span.print{
+display:block;
+}
+#primary{
+margin:0em;
+}
+#content{
+margin: 0;
+}

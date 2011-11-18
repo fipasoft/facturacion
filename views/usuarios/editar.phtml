@@ -1,0 +1,65 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Editar usuario <?php echo $usuario->login?></h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>usuarios">Volver
+				<img src="<?php echo $path?>public/img/system/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) { 
+				case 'captura': ?>
+				<form action="<?php echo $path ?>usuarios/editar/" id="frm_editar" method="post">
+					<fieldset>
+						<legend>Personal</legend>
+						<input type="hidden" name="id" id="id" value="<?php echo $usuario->id ?>" />
+						<label for="nombre">Nombre</label><br />
+						<input type="text" name="nombre" id="nombre" size="30" maxlength="30"  value="<?php echo $usuario->nombre ?>" /><br />
+						<label for="ap">Apellido paterno</label><br />
+						<input type="text" name="ap" id="ap" size="20" maxlength="20" value="<?php echo $usuario->ap ?>"/><br />
+						<label for="am">Apellido materno</label><br />
+						<input type="text" name="am" id="am" size="20" maxlength="20"  value="<?php echo $usuario->am ?>"/><br />
+						<label for="mail">Correo electr&oacute;nico</label><br />
+						<input type="text" name="mail" id="mail" size="30" maxlength="80"  value="<?php echo $usuario->mail ?>"/>
+					</fieldset>
+					<div></div>
+					<fieldset>
+						<legend>Acceso</legend>
+						<label for="grupo">Grupo</label><br />
+						<select name="grupo[]" id="grupo">
+									<option></option>		
+						<?php if(is_array($grupos)){
+								foreach($grupos as $id => $grupo){
+						?>
+									<option value="<?php echo $id ?>" 
+									<?php if($usr_grupo == $grupo){?> selected="selected" <?php } ?>>
+										<?php echo ucfirst($grupo) ?>
+									</option>		
+						<?php 	}
+							  } 
+						?>
+						</select>
+						<img id="spinner1" src="<?php echo $path ?>/public/img/system/spinner.gif" style="display:none"/>
+						<div id="acceso" class="acceso"></div>
+					</fieldset>
+					<div id="botones">
+						<input type="button" id="cancelar" value="Cancelar">
+						<input type="button" id="editar" value="Editar">
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info"><br />El usuario se edit&oacute; correctamente.</p>
+			<?php  break; ?>
+			<?php case 'error': 
+				  default: 
+			?>
+				<p class="error">Ha ocurrido un error al intentar editar el usuario.<br />
+				<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

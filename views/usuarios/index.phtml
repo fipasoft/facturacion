@@ -1,0 +1,99 @@
+<div id="primary">
+	<div class="content">
+		<h1>
+			<?php echo $registros;?>
+			Usuario<?php echo ($registros == 1 ? '' : 's') ?> 
+			<?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+		</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="" id="aSearch" title="Buscar" alt="Buscar">
+					Buscar
+					<img src="<?php echo $path?>public/img/system/buscar.png"/>
+				</a> / 
+				<a href="<?php echo $path ?>usuarios/agregar" title="Agregar usuario" alt="Agregar usuario">
+					Agregar usuario
+					<img src="<?php echo $path?>public/img/system/nuevo.png"/>
+				</a>
+			</div>
+			<div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+				<form action="<?php echo $path ?>usuarios" method="post" id="frm_search">
+					<fieldset>
+						<label for="nombre">Nombre</label>
+						<input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="20" maxlength="255" />
+						<label for="login">Login</label>
+						<input type="text" name="login" id="login" value="<?php echo $busqueda->campo('login') ?>" size="15" maxlength="255" />
+						<input type="submit" id="btn_submit" value="Filtrar" />
+						<input type="reset" id="reset" value="Quitar filtros" />
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<?php if($registros > 0){ ?>
+				<table>
+					<tr>
+						<th>Nombre</th>
+						<th>Login</th>
+						<th>Grupo</th>
+						<th>Opciones</th>
+					</tr>
+					<?php 
+						$i = 0;
+						foreach($usuarios as $usuario){ 
+					?>
+					<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+						<td>
+							<span class="uc">
+								<?php echo $usuario->ap . ' '  . $usuario->am . ', '?>
+							</span>
+							<?php echo $usuario->nombre	?>
+						</td>
+						<td><?php echo $usuario->login; ?></td>
+						<td>
+							<?php
+							$usr_grupos = $gacl_x->get_user_groups($usuario->login);
+							echo ucfirst($usr_grupos[0]);
+							?>
+						</td>
+						<td>
+							<a href="<?php echo $path . 'usuarios/ver/' . $usuario->id?>"
+							   alt="Ver datos del usuario" title="Ver datos del usuario">
+							   <img src="<?php echo $path?>public/img/system/ver.png" />
+							</a> 
+							<?php if($usuario->login != 'root'){ ?>
+							<a href="<?php echo $path . 'usuarios/editar/' . $usuario->id?>"
+							   alt="Editar datos del usuario" title="Editar datos del usuario">
+							   <img src="<?php echo $path?>public/img/system/editar.png" />
+							</a> 
+							<?php } ?>
+							<a href="<?php echo $path . 'usuarios/password/' . $usuario->id?>"
+							   alt="Cambiar el password del usuario" title="Cambiar password del usuario">
+							   <img src="<?php echo $path?>public/img/system/pass.png" />
+							</a> 
+							<?php if($usuario->login != 'root'){ ?>
+							<a href="<?php echo $path . 'usuarios/eliminar/' . $usuario->id?>"
+							   alt="Eliminar toda la informacion del usuario" title="Eliminar toda la informacion del usuario">
+							   <img src="<?php echo $path?>public/img/system/eliminar.png" />
+							</a> 
+							<?php } ?>
+						</td>
+					</tr>
+					<?php 
+						$i++;
+					} 
+					?>
+				</table>
+		<?php } else { ?>
+				<p class="info"><br />No hay registros que mostrar...</p>
+		<?php } ?>
+		<div id="pages"> 
+			<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>" 
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a> 
+			<?php }?>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,16 @@
+<?php if(is_array($acceso)){?>
+<ul>
+<?php foreach ($acceso as $controlador => $vistas) {?>
+	<li><strong><?php echo ucfirst($controlador) ?>: </strong>
+		<?php if(is_array($vistas)){
+				$i = 0;
+				foreach ($vistas as $vista) {
+					 echo ($i != 0 ? ', ' : '' ) . $vista;
+					 $i++;
+			 	} 
+			  } 
+		?>
+	</li>
+<?php }?>
+</ul>
+<?php } ?>

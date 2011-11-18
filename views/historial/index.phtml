@@ -1,0 +1,111 @@
+<div id="primary">
+	<div class="content">
+		<h1>
+			Historial
+			<?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+		</h1>
+		<h2>
+			<?php echo $registros;?>
+			Registro<?php echo ($registros == 1 ? '' : 's') ?>
+		</h2>
+		<div id="options-bar">
+			<div id="options">
+			<?php if($acl['buscar']){ ?>
+				<a href="" id="aSearch" title="Buscar" alt="Buscar">
+					Buscar
+					<img src="<?php echo $path?>public/img/system/buscar.png"/>
+				</a>
+				/
+				<?php } ?>
+				<?php if($acl['exportar']){ ?>
+				<a href="<?php echo $path . 'historial/exportar/' ?>" title="Exportar historial" alt="Exportar historial">
+                    Exportar
+                    <img src="<?php echo $path?>public/img/system/excel.png"/>
+                </a>
+                <?php } ?>
+			</div>
+			<?php if($acl['buscar']){ ?>
+			<div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+				<form action="<?php echo $path ?>historial" method="post" id="frm_search">
+					<fieldset>
+						<label for="saved_at">Fecha </label>
+							<input type="text" name="saved_at" id="saved_at" value="<?php echo $busqueda->campo('saved_at') ?>" size="10" maxlength="10" />
+						<label for="usuario">Usuario </label>
+							<input type="text" name="usuario" id="usuario" value="<?php echo $busqueda->campo('usuario') ?>" size="12" maxlength="12" />
+						<label for="controlador">M&oacute;dulo </label>
+							<select name="controlador" id="controlador">
+							<option></option>
+							<?php foreach($controladores as $c){ ?>
+							<option value="<?php echo $c; ?>" <?php if($busqueda->campo('controlador')==$c)echo 'selected="selected"'; ?>><?php echo $c; ?></option>
+							<?php } ?>
+							</select>
+						<label for="accion">Acci&oacute;n </label>
+							<input type="text" name="accion" id="accion" value="<?php echo $busqueda->campo('accion') ?>" size="12" maxlength="12" />
+						<label for="descripcion">Descripci&oacute;n </label>
+							<input type="text" name="descripcion" id="descripcion" value="<?php echo $busqueda->campo('descripcion') ?>" size="20" maxlength="254" />
+						<br/><br/>
+						<input type="submit" id="btn_submit" value="Filtrar" />
+						<input type="reset" id="reset" value="Quitar filtros" />
+					</fieldset>
+				</form>
+			</div>
+			<?php  } ?>
+		</div>
+		
+		<?php if($registros > 0){ ?>
+			<table>
+				<tr>
+					<th>Fecha</th>
+					<th>Registro</th>
+					<th>Descripci&oacute;n</th>
+				</tr>
+				<?php
+				 $i=0;
+				 foreach($historial as $h){ ?>
+				<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+					<td style="text-align:center;"><span class="sub">
+						 <?php echo Utils :: fecha_convertir( substr( $h->saved_at, 0, 10 ) ); ?>
+						 </span><br/>
+						 <span style="color: rgb(119, 119, 119);" class="sub">
+						 <?php echo substr($h->saved_at,10); ?>
+						 </span>
+					</td>
+					<td style="text-align:left;">
+					 	<span class="sub">
+						<?php echo $h->usuario; ?>
+						</span>
+						<br/>
+						 <span style="color: rgb(119, 119, 119);" class="sub">
+						<?php echo $h->controlador; ?>/<?php echo $h->accion; ?>
+						</span>
+						</td>
+					<td>
+						<?php //if($acl['ver']){ ?>
+						<?php if( 0 ){ ?>
+						<a href="<?php echo $path . 'historial/ver/' . $h->id?>"
+								alt="Ver registro" title="Ver registro">
+								<?php echo htmlentities( utf8_decode( $h->descripcion ) ); ?>
+						</a>
+						<?php }else{ ?>
+							<?php echo htmlentities( utf8_decode( $h->descripcion ) ); ?>
+						<?php } ?>
+					</td>
+				</tr>
+				<?php
+					$i++;
+				 } ?>
+			<table>
+		<?php } else { ?>
+				<p class="info"><br />No hay registros que mostrar...</p>
+		<?php } ?>
+		<div id="pages">
+		<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>"
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a>
+			<?php }?>
+		</div>
+	</div>
+</div>

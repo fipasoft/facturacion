@@ -1,0 +1,123 @@
+<div id="primary">
+	<div class="content">
+		<h1>
+			<?php echo $registros;?>
+			Dependencia<?php echo ($registros == 1 ? '' : 's') ?> no universitaria<?php echo ($registros == 1 ? '' : 's') ?>
+			<?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+		</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>catalogos" title="Volver a cat&aacute;logos">
+					Volver
+					<img src="<?php echo $path?>public/img/system/volver.png" alt="volver"/>
+				</a> /
+				<a href="#" id="aSearch" title="Buscar" >
+					Buscar
+					<img src="<?php echo $path?>public/img/system/buscar.png" alt="buscar"/>
+				</a>
+				
+				<?php if($acl['externas']['agregar']){ ?>/
+				<a href="<?php echo $path ?>externas/agregar" title="Agregar dependencia no universitaria">
+					Agregar dependencia no universitaria
+					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
+				</a>
+				<?php } ?>
+			</div>
+			<div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+				<form action="<?php echo $path ?>externas" method="post" id="frm_search">
+					<fieldset>
+						<label for="clave">Clave</label>
+						<input type="text" name="clave" id="clave" value="<?php echo $busqueda->campo('clave') ?>" size="12" maxlength="12" />
+						<label for="nombre">Nombre</label>
+						<input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="20" maxlength="256" />
+						<label for="rfc">RFC</label>
+						<input type="text" name="rfc" id="rfc" value="<?php echo $busqueda->campo('rfc') ?>" size="20" maxlength="20" />
+						<br/>
+						<br/>
+						<input type="submit" id="btn_submit" value="Filtrar" />
+						<input type="reset" id="reset" value="Quitar filtros" />
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<?php if($registros > 0){ ?>
+				<table>
+					<tr>
+						<th>Clave</th>
+						<th>Nombre</th>
+						<th>RFC</th>
+						<th>Raz&oacute;n social</th>
+						<th>Domicilio</th>
+						<?php if($acl['externas']['eliminar'] || $acl['externas']['editar']){ ?>
+						<th>Opciones</th>
+						<?php } ?>
+					</tr>
+					<?php 
+						$i = 0;
+						foreach($dependencias as $dependencia ){ 
+					?>
+					<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+						<td>
+							<?php echo $dependencia->clave ?>
+						</td>
+						<td>
+							<?php echo $dependencia->nombre ?>
+						</td>
+						<td>
+							<?php 
+							$fiscal = $dependencia->fiscal();
+							echo $fiscal->rfc; ?>
+						</td>
+						<td style="text-align:center">
+						<?php echo $fiscal->razon; ?>
+						</td>
+						<td style="text-align:center">
+						<?php echo $fiscal->domicilio; ?><br/>
+						<span><?php echo $fiscal->colonia; ?></span><br/>
+						<span><?php echo $fiscal->cp; ?></span><br/>
+						<?php 
+								$municipio = $fiscal->municipio();
+								$edo = $municipio->edo();
+						?>
+						<span class="sub"><?php echo $municipio->nombre; ?></span><br/>
+						<span class="sub"><?php echo $edo->nombre; ?></span>
+						</td>
+						<?php if($acl['externas']['eliminar'] || $acl['externas']['editar']){ ?>
+						<td style="text-align:center">
+						<?php if($acl['externas']['editar']){ ?>
+							<a href="<?php echo $path . 'externas/editar/' . $dependencia->id?>"
+							   title="Editar datos de la dependencia no universitaria">
+							   <img src="<?php echo $path?>public/img/system/editar.png" />
+							</a> 
+							<?php } ?>
+							<?php if($acl['externas']['editar']){ ?>
+							<a href="<?php echo $path . 'externas/eliminar/' . $dependencia->id?>"
+							   title="Eliminar toda la informacion de la dependencia no universitaria">
+							   <img src="<?php echo $path?>public/img/system/eliminar.png" />
+							</a>
+							<?php } ?>
+						</td>
+						<?php } ?>
+					</tr>
+					<?php 
+						$i++;
+					}
+					?>
+				</table>
+		<?php } else { ?>
+				<p class="info">
+					<br />
+					No hay registros que mostrar
+				</p>
+		<?php } ?>
+		<div class="pages"> 
+			<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>" 
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a> 
+			<?php }?>
+		</div>
+	</div>
+</div>

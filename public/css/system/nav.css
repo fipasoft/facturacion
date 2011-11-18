@@ -1,0 +1,169 @@
+/**
+ * Establece el estilo del menu principal
+ */
+#logo{
+border: 1px solid #ddd;
+border-width: 0 1px;
+}
+#menu
+{
+-moz-border-radius:0 0 6px 6px;
+background: repeat-x url('../../img/system/boton.png');
+border-top: 0px solid #333333;
+border-bottom: 1px solid #aaaaaa;
+background-color: #ECD5FF;
+height:18px;
+margin: 0;
+padding:1px 2px;
+}
+#menu a, #menu a:link, #menu a:visited
+{
+border: 0px solid #ECD5FF;
+padding: 1px;
+padding-left: 0.5em;
+padding-right: 0.5em;
+color: #EEEEEE;
+font-weight: bold;
+text-decoration: none;
+}
+#menu a:hover, #menu a:active, #menu a:focus
+{
+-moz-border-radius:5px;
+background: repeat-x url('../../img/system/boton_over.png');
+border: 0px solid #aaaaaa;
+border-bottom-color:#EEC6FF;
+border-top-color:#EEC6FF;
+padding-left: 0.5em;
+padding-right: 0.5em;
+text-decoration: none;
+}
+#menu li
+{
+padding-right: 1px;
+display: inline;
+}
+#menu ul
+{
+margin: 0px;
+padding: 0px;
+}
+#menu #active a
+{
+-moz-border-radius:5px;
+color: #EEEEEE;
+background: repeat-x url('../../img/system/boton_over.png');
+border-color: #aaaaaa;
+border-top-color: #FFF982;
+border-bottom-color: #FFF982;
+}
+#menu #active a:hover, #menu #active a:focus
+{
+-moz-border-radius:5px;
+background-color: #FFDE6F;
+border-color: #aaaaaa;
+border-top-color: #FFDE6F;
+border-bottom-color: #FFDE6F;
+}
+/**
+ * Almacena el nombre del usuario y las opciones para manejar su sesion.
+ */
+#control
+{
+-moz-border-radius:5px;
+background-color: white;
+border: 1px solid #cccccc;
+float:right;
+font-size: 0.9em;
+height: 20px;
+margin-right:10px;
+margin-top:-75px;
+padding:0 3px;
+position:relative;
+text-align:right;
+}
+#control a:visited{
+color: #3366CC;
+}
+#control a:hover{
+color: #CC3333;
+}
+/*Barra de opciones*/
+#options-bar
+{
+background-color: white;
+font-size: 0.9em;
+margin-bottom: 15px;
+padding: 0 3px;
+text-align:right;
+}
+#options-bar fieldset{
+border: 0;
+margin:0;
+padding: 0;
+}
+#options-bar form{
+margin:0;
+padding: 0;
+}
+#options{
+margin: 0 0 7px 0;
+padding-right: 3px;
+}
+#options a, #options a:visited{
+text-decoration: none;
+color: #3366CC;
+}
+#options a:hover{
+color: #CC3333;
+}
+.opciones, .options{
+margin: 0 0 7px 0;
+padding-right: 3px;
+}
+.leader a, .leader a:visited, .opciones a, .opciones a:visited, .options a, .options a:visited{
+text-decoration: none;
+color: #3366CC;
+}
+.opciones a:hover, .options a:hover{
+color: #CC3333;
+}
+/*Paginador*/
+#pages, .pages{
+color: #777;
+margin-top: 15px;
+text-align: center;
+}
+#pages a, #pages a:hover, #pages a:visited, #pages a:active,
+.pages a, .pages a:hover, .pages a:visited, .pages a:active{
+border: 1px #999999 solid;
+color: #999999;
+margin: 0 1px 0 3px;
+padding: 0 1px 0 3px;
+text-align: right;
+text-decoration: none;
+}
+#pages a:hover, .pages a:hover{
+border-color: #996699;
+background-color: #EAD2FF;
+color: #996699;
+}
+#pages a.activo, .pages a.activo{
+border: 0;
+color: #999999;
+}
+#pages a.activo:hover, .pages a.activo:hover{
+background: none;
+}
+/* etiqueta */
+div.filter-lab{
+color: #C4BE00;
+background-color: #FFFFCC;
+border: 0px #FFFF00 solid;
+display:inline;
+font-weight: bold;
+font-size: 0.5em;
+width:auto;
+}
+div.content td a{
+text-decoration: none;
+}

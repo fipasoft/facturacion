@@ -1,0 +1,129 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Agregar contacto</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>contactos">Volver
+					<img src="<?php echo $path?>public/img/system/volver.png" alt="volver"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) { 
+				case 'captura': ?>
+				<form action="<?php echo $path ?>contactos/agregar" id="frm_agregar" method="post">
+					<input type="hidden" name="ejercicio_id" id="ejercicio_id" value="<?php echo $ejercicio_id ?>" />
+					<fieldset>					
+						<legend>Personal</legend>
+						<label for="titulo">T&iacute;tulo</label>
+						<br />
+						<input type="text" name="titulo" id="titulo" size="5" maxlength="5" />
+						<br />
+						<br />
+						<label for="nombre">Nombre</label>
+						<br />
+						<input type="text" name="nombre" id="nombre" size="30" maxlength="30" />
+						<br />
+						<br />
+						<label for="ap">Apellido paterno</label>
+						<br />
+						<input type="text" name="ap" id="ap" size="20" maxlength="20" />
+						<br />
+						<br />
+						<label for="am">Apellido materno</label>
+						<br />
+						<input type="text" name="am" id="am" size="20" maxlength="20" />
+						<br />
+						<br />
+						<label><input type="radio" name="sexo" class="sexo" value="M" id="mujer"/> Mujer </label>
+						<label><input type="radio" name="sexo" class="sexo" value="H" id="hombre"/> Hombre </label><br />
+					</fieldset>
+					<div class="divisor"></div>
+					<fieldset>
+						<label><input type="radio" name="institucion" value="d" id="dependencia" checked="checked"/> Dependencia </label>
+						<label><input type="radio" name="institucion" value="p" id="proveedor" /> Proveedor </label><br />
+						<br />
+						<div id="divDependencia">
+							<select name="dependencia_id" id="dependencia_id">
+								<option />
+								<?php foreach( $dependencias as $dependencia ){?>
+								<option value="<?php echo $dependencia->id?>">
+									<?php echo $dependencia->clave . ' / ' . $dependencia->nombre ?>
+								</option>
+								<?php } ?>
+							</select>
+						</div>
+						<div id="divProveedor" style="display:none">
+							<select name="proveedor_id" id="proveedor_id">
+								<option />
+								<?php foreach( $proveedores as $proveedor ){?>
+								<option value="<?php echo $proveedor->id?>">
+									<?php echo $proveedor->nombre ?>
+								</option>
+								<?php } ?>
+							</select>
+						</div>
+						<legend>Laboral</legend>
+						<label for="cargo">Cargo</label>
+						<br />
+						<input type="text" name="cargo" id="cargo" size="30" maxlength="30" />
+						<br />
+						<br />
+					</fieldset>
+					<div class="divisor"></div>
+					<fieldset>					
+						<legend>Contacto</legend>
+						<label for="domicilio">Domicilio</label>
+						<br />
+						<input type="text" name="domicilio" id="domicilio" size="30" maxlength="254" />
+						<br />
+						<br />
+						<label for="tel">Tel&eacute;fono</label>
+						<br />
+						<input type="text" name="tel" id="tel" size="30" maxlength="30" />
+						<br />
+						<br />
+						<label for="cel">Tel&eacute;fono m&oacute;vil</label>
+						<br />
+						<input type="text" name="cel" id="cel" size="30" maxlength="30" />
+						<br />
+						<br />
+						<label for="trunk">Radio</label>
+						<br />
+						<input type="text" name="trunk" id="trunk" size="30" maxlength="30" />
+						<br />
+						<br />
+						<label for="mail">Correo electr&oacute;nico</label>
+						<br />
+						<input type="text" name="mail" id="mail" size="40" maxlength="60" />
+						<br />
+						<br />
+						<label for="observaciones">Observaciones</label>
+						<br />
+						<input type="text" name="observaciones" id="observaciones" size="40" maxlength="256" />
+						<br />
+						<br />
+					</fieldset>
+					<div id="botones">
+						<input type="button" id="cancelar" value="Cancelar">
+						<input type="button" id="aceptar" value="Agregar">
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info">
+					<br />
+					La informaci&oacute;n del contacto se agreg&oacute; correctamente
+				</p>
+			<?php  break; ?>
+			<?php case 'error': 
+				  default: 
+			?>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

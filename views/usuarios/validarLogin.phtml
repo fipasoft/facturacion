@@ -1,0 +1,6 @@
+<?php if($disponible){?>
+<span class="true">Disponible</span>
+<?php }else if($login != ''){?>
+<span class="false">No disponible</span>
+<?php } ?>
+<input type="hidden" id="disponible" value="<?php echo $disponible?>" />

@@ -1,0 +1,8 @@
+div.content ul.opciones{
+margin: 0 auto 30px auto;
+text-align: center;
+width: 400px;
+}
+div.content ul.opciones a{
+text-decoration: none;
+}

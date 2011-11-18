@@ -1,0 +1,62 @@
+<div id="primary">
+	<div class="content">
+		<h1>
+			<?php echo $registros;?>
+			Ejercicio<?php echo ($registros == 1 ? '' : 's') ?>
+		</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>ejercicios/agregar" title="Agregar ejercicio">
+					Agregar ejercicio
+					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
+				</a>
+			</div>
+		</div>
+		<?php if($registros > 0){ ?>
+				<table>
+					<tr>
+						<th>A&ntilde;o</th>
+						<th>Opciones</th>
+					</tr>
+					<?php
+						$i = 0;
+						foreach($ejercicios as $ejercicio){
+					?>
+
+					<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+						<td>
+							<?php echo $ejercicio->annio ?>
+						</td>
+						<td style="text-align:center">
+							<a href="<?php echo $path . 'ejercicios/editar/' . $ejercicio->id?>"
+							   title="Editar datos del ejercicio">
+							   <img src="<?php echo $path?>public/img/system/editar.png" alt="editar"/>
+							</a>
+							<a href="<?php echo $path . 'ejercicios/eliminar/' . $ejercicio->id?>"
+							    title="Eliminar toda la informacion del ejercicio">
+							   <img src="<?php echo $path?>public/img/system/eliminar.png" alt="eliminar"/>
+							</a>
+						</td>
+					</tr>
+					<?php
+						$i++;
+					}
+					?>
+				</table>
+		<?php } else { ?>
+				<p class="info">
+					<br />
+					No hay registros que mostrar
+				</p>
+		<?php } ?>
+		<div id="pages">
+			<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>"
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a>
+			<?php }?>
+		</div>
+	</div>
+</div>

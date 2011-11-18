@@ -1,0 +1,29 @@
+<?php $path = KUMBIA_PATH; ?>
+
+		<?php switch($option) {
+				case 'exito': ?>
+						<select name = "contacto_id" id = "contacto_id">
+							<option value=""></option>
+							<?php foreach($contactos as $contacto){ ?>
+								<option value="<?php echo $contacto->id; ?>">
+									<?php echo $contacto->cargo . " - ";  ?>
+									<?php echo ($contacto->titulo != "" ? $contacto->titulo . ". " : "");  ?>
+									<?php echo $contacto->nombre . " " . $contacto->ap . " " . $contacto->am;  ?>
+									
+								</option>
+							<?php } ?>
+						</select>
+					<br/>
+					<br/>
+				
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+				<input type="hidden" name="contacto_id" id="contacto_id" value=""  />
+			<?php  break; ?>
+		<?php } ?>

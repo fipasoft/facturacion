@@ -1,0 +1,45 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Eliminar contacto</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>contactos">Volver
+					<img src="<?php echo $path?>public/img/system/volver.png" alt="volver"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) { 
+				case 'captura': ?>
+				<form action="<?php echo $path ?>contactos/eliminar/" id="frm_eliminar" method="post">
+					<input type="hidden" name="id" id="id" value="<?php echo $contacto->id ?>" />
+					<p class="error">
+						Se dispone a eliminar toda la informaci&oacute;n del contacto
+						<br /> 
+						<?php echo $contacto->nombre . ' ' . $contacto->ap . ' ' . ' ' . $contacto->am ?>
+						<br />
+						<strong>&iquest;Desea continuar?</strong>
+					</p>
+					<div id="botones">
+						<input type="button" id="cancelar" value="Cancelar">
+						<input type="button" id="aceptar" value="Aceptar">					
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info">
+					<br />
+					El contacto se elimin&oacute; correctamente.</p>
+			<?php  break; ?>
+			<?php case 'error': 
+				  default: 
+			?>
+				<p class="error">
+					Ha ocurrido un error al intentar eliminar el contacto.
+					<br />
+				<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

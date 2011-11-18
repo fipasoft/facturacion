@@ -1,0 +1,20 @@
+._balanza_{
+text-align:left;
+width:auto;
+}
+._balanza_ ._botones_{
+float:right;
+margin:45px 20px 0 33px;
+width:50px;
+}
+
+._balanza_ ._seleccion_, ._balanza_ ._disponibles_{
+border:1px dashed #bbb;
+margin-left:0;
+text-align:center;
+width:190px;
+}
+
+._contenedor_{
+float:right;
+}

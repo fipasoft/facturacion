@@ -1,0 +1,16 @@
+.tablik .buttons{
+margin-top:14px;
+}
+
+.tablik .buttons{
+text-decoration:none;
+}
+
+.tablik .buttons a img{
+float:left;
+margin:1px 5px;
+}
+
+.tablik .selected {
+background-color:#ffb;
+}

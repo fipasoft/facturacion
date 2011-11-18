@@ -1,0 +1,382 @@
+/* tags */
+div.content .hide{
+display: none;
+}
+div.content legend{
+font-weight: bold;
+}
+div.content legend {
+margin-bottom:0;
+}
+div.content fieldset{
+-moz-border-radius:14px;
+background-color: #F5F5F5;
+line-height:165%;
+margin:0.3em auto;
+text-align:left;
+width:350px;
+}
+div.content form{
+margin-bottom:0;
+}
+div.content ul, div.content ol{
+margin-bottom:0;
+}
+/* ids */
+#botones{
+width: 380px;
+margin: 8px auto;
+padding: 0px;
+text-align:right;
+}
+#search fieldset{
+background-color: transparent;
+text-align:right;
+width:auto;
+}
+#ejercicioActual{
+display:inline;
+margin:0;
+padding;0;
+width:30px;
+}
+#ejercicioActual div{
+display:inline;
+}
+#ejercicioSelector{
+display:inline;
+margin:0;
+padding;0;
+}
+#ejercicioSelector div{
+display: inline;
+}
+#ejercicioSelector form{
+display:inline;
+margin:0;
+padding:0;
+}
+#ejercicioSelector fieldset{
+display:inline;
+background-color: transparent;
+margin:0;
+padding:0;
+text-align:right;
+width: 40px;
+}
+#ejercicioSelector select{
+padding:0;
+height:18px;
+color:#222222;
+}
+/* classes */
+div.content fieldset.invisible{
+background-color: #fff;
+border:0;
+margin:40px 0;
+padding:0;
+width:auto;
+}
+div.content h2, div.content h2.sub{
+color:#777777;
+font-size:0.9em;
+margin-top:0;
+}
+div.content .handle{
+cursor:move;
+}
+div.content .hide{
+}
+div.content .selected{
+background-color: #ffb;
+}
+div.content tr.selected td{
+background-color: #ffb;
+}
+div.content img.ficha{
+border: 1px solid #ddd;
+margin: 0 auto;
+padding: 2px;
+width: 120px;
+}
+div.content img.thumb{
+border: 1px solid #ddd;
+margin: 0 auto;
+padding: 2px;
+width: 50px;
+}
+div.content input.moneda, div.content input.total{
+text-align:right;
+}
+div.content div.check{
+float: right;
+height:20px;
+margin-right:115px;
+margin-top:-20px;
+}
+div.content div.leader{
+margin-bottom:22px;
+margin-left:9px;
+}
+div.content div.separador{
+clear:both;
+height:1px;
+margin:0;
+padding:0;
+}
+p.error,p.tip,p.info,p.msj,div.error,div.tip,div.info,div.msj{
+-moz-border-radius:14px;
+text-align: center;
+vertical-align: middle;
+line-height: 150%;
+min-height: 50px;
+height: auto !important;
+height: 50px;
+}
+p.error,p.tip,p.info,div.error,div.tip,div.info{
+border: 1px #FF6600 solid;
+width: 533px;
+padding: 4px;
+padding-left: 55px;
+padding-bottom: 10px;
+margin: 0 auto 10px auto;
+margin-bottom: 10px;
+background-repeat: no-repeat;
+background-position: 0px 2px;
+background-image: url("../../img/system/tip.png");
+background-color: #ffa;
+vertical-align: middle;
+}
+p.error,div.error{
+background-image: url("../../img/system/error.png");
+border-color: #888;
+background-color: #fff;
+}
+p.info,div.info{
+background-image: url("../../img/system/info.png");
+border-color: #336;
+background-color: #fff;
+}
+div.content div.info-tiny{
+background-image: url("../../img/system/info-tiny.png");
+background-position: 14px 8px;
+padding: 6px 0 0 0;
+min-height: 27px;
+font-size:90%;
+}
+div.content div.error-tiny{
+background-image: url("../../img/system/error-tiny.png");
+background-position: 14px 8px;
+padding: 6px 0 0 32px;
+min-height: 27px;
+font-size:90%;
+}
+div.content div.error-tiny{
+}
+span.advert {
+font-weight: bold;
+color: #ea0;
+}
+span.alert {
+font-weight: bold;
+color: #ec0;
+}
+span.bold {
+font-weight: bold;
+color: #000;
+}
+span.normal {
+font-weight: normal;
+}
+span.false{
+font-weight: bold;
+color: #c00;
+}
+span.requerido {
+color: #c00;
+}
+span.true {
+font-weight: bold;
+color: #6c0;
+}
+span.uc{
+text-transform: uppercase;
+}
+div.content input.numero{
+text-align:right;
+}
+div.content span.main{
+font-weight: bold;
+font-size: 90%;
+}
+div.content span.sub, div.content span.true{
+color: #9a0;
+font-weight: bold;
+font-size: 90%;
+}
+div.content span.sub2{
+color: #777;
+font-size: 85%;
+}
+div.content span.sub3, div.content span.warning{
+color: #CBA12A;
+font-size: 85%;
+}
+div.content span.sub4, div.content span.false, td.false, h1.false{
+font-weight: bold;
+color: #c00;
+}
+div.content img.false{
+background-color: #fcc;
+border: 1px solid #f66;
+border-radius:5px;
+padding: 2px;
+}
+div.content span.print{
+display:none;
+}
+div.content table.full{
+width:100%;
+}
+div.content table.flotante, div.content .flotante{
+background-color: #fff;
+border: 0px;
+border-left:0;
+font-size:92%;
+position:absolute;
+}
+div.content table.no-border, div.content table.no-border td,div.content table.no-border tbody{
+border: 0;
+}
+div.content table.main td, div.content table.main th{
+border: 1px solid #bbb;
+}
+div.content tr.subtotales td{
+background-color: #E5E5E5;
+}
+div.content tr.totales, div.content tr.totales td{
+background-color:transparent;
+border: 0px solid #fff;
+}
+div.content tr.totales td.total{
+border: 1px solid #bbb;
+background-color: #e4f4a5;
+font-weight: bold;
+}
+div.content td.numero{
+text-align:right;
+}
+div.content td.centrar{
+text-align:center;
+}
+div.content th img.boton{
+margin-bottom: -3px;
+margin-left: 8px;
+}
+div.content th.sub{
+background-color: #EEEEFE;
+font-size: 75%;
+}
+div.content .aprobado, div.content .ordinario{
+font-weight: bold;
+color: #000;
+}
+div.content .reprobado, div.content .sin-derecho{
+font-weight: bold;
+color: #c00;
+}
+div.content .extraordinario{
+font-weight: bold;
+color: #ec0;
+}
+.derecha{
+text-align:right;
+}
+div.content table.flotante, div.content .flotante{
+background-color: #fff;
+border: 0px;
+border-left:0;
+font-size:92%;
+position:absolute;
+}
+
+.derecho{
+text-align:right;
+}
+
+.centro{
+text-align:center;
+}
+
+.izquierdo{
+text-align:left;
+}
+
+th.total, td.total{
+background-color:#E4F4A5;
+font-weight:bold;
+}
+
+span.estado{
+font-size:8px;
+}
+
+span.e1{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e2{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e3{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e4{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e5{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e6{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e7{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e8{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e9{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e10{
+font-weight: bold;
+color: #99AA00;
+}
+
+span.e999{
+font-weight: bold;
+color: #c00;
+}
+
+td.cancelado
+{	
+background-color:#FBDBC4;
+}

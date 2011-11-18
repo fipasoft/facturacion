@@ -1,0 +1,45 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Eliminar dependencia externa</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>externas">Volver
+					<img src="<?php echo $path?>public/img/system/volver.png" alt="volver"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) { 
+				case 'captura': ?>
+				<form action="<?php echo $path ?>externas/eliminar/" id="frm_eliminar" method="post">
+					<input type="hidden" name="id" id="id" value="<?php echo $dependencia->id ?>" />
+					<p class="error">
+						Se dispone a eliminar toda la informaci&oacute;n de la dependencia externa
+						<br /> 
+						<?php echo $dependencia->clave . ' - ' . $dependencia->nombre ?>
+						<br />
+						<strong>&iquest;Desea continuar?</strong>
+					</p>
+					<div id="botones">
+						<input type="button" id="cancelar" value="Cancelar">	
+						<input type="button" id="aceptar" value="Aceptar">				
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info">
+					<br />
+					La dependencia se elimin&oacute; correctamente.</p>
+			<?php  break; ?>
+			<?php case 'error': 
+				  default: 
+			?>
+				<p class="error">
+					Ha ocurrido un error al intentar eliminar la dependencia.
+					<br />
+				<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>
