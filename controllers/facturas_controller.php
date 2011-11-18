@@ -27,11 +27,31 @@ class FacturasController extends ApplicationController{
 
     public function imprimir( $id = '' ){
 
+        try{
 
+            $factura = new Factura();
+            $factura = $factura->find( $id );
+
+            $this->factura = $factura;
+
+        }catch( Exception $e ){
+
+            $this->error( $e->getMessage(), $errvar, $e );
+
+        }
 
     }
 
 	public function index( $pag = '' ){
+
+	   try{
+
+
+        }catch( Exception $e ){
+
+            $this->error( $e->getMessage(), $errvar, $e );
+
+        }
 
 	}
 
