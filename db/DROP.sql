@@ -8,15 +8,21 @@ DROP TABLE depcontacto;
 
 DROP TABLE dependencia;
 
-DROP TABLE historial;
+DROP TABLE fiscal;
 
-DROP TABLE usuario;
+DROP TABLE municipio;
+
+DROP TABLE edo;
+
+DROP TABLE historial;
 
 DROP TABLE contacto;
 
-DROP TABLE fiscal;
+DROP TABLE usuario;
 
 DROP TABLE festados;
+
+DROP TABLE pais;
 
 DROP TABLE ejercicio;
 

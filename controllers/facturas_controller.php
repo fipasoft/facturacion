@@ -14,7 +14,130 @@ class FacturasController extends ApplicationController{
 	public $template = "system";
 
 	public function agregar(){
-
+	    try{
+	    $transaccion = false;
+        if($this->post("ejercicio_id") !=""){
+            mysql_query("BEGIN") or die("Error al iniciar la transaccion");
+            $transaccion = true;
+            
+            $this->option = "exito";
+            $dependencia_id = $this->post("dependencia_id");
+            
+            $cantidades = $this->post("cantidad");
+            $unitarios = $this->post("unitario");
+            $conceptos = $this->post("concepto");
+            $cantidades = $this->post("cantidad");
+            $costos = $this->post("costo");
+            
+            $subtotal = $this->post("subtotal");
+            $iva = $this->post("iva");
+            $total = $this->post("total");
+            
+            
+            if($dependencia_id == "" ){
+                throw new Exception("Error no se especifico el cliente.");
+            }
+            
+            if(!is_array($cantidades) || count($cantidades) == 0){
+                throw new Exception("Error las cantidades no son validas.");
+            }
+            
+            if(!is_array($unitarios) || count($unitarios) == 0){
+                throw new Exception("Error los unitarios no son validos.");
+            }
+            
+            if(!is_array($cantidades) || count($cantidades) == 0){
+                throw new Exception("Error las cantidades no son validas.");
+            }
+            
+            if(!is_array($costos) || count($costos) == 0){
+                throw new Exception("Error los costos no son validos.");
+            }
+            
+            if($subtotal == "" ){
+                throw new Exception("Error no se especifico el subtotal.");
+            }
+            
+            if($iva == "" ){
+                throw new Exception("Error no se especifico el iva.");
+            }
+            
+            $activa = new Festados();
+            $activa = $activa->find_first("clave='act'");
+            
+            if($activa->id == ''){
+                throw new Exception("Error no se ha dado de alta el estado 'activo' de la factura.");
+            }
+            
+            $dependencia = new Dependencia();
+            $dependencia = $dependencia->find($dependencia_id);
+            $fiscal = $dependencia->fiscal();
+            
+            $now = new DateTime();
+            
+            $factura = new Factura();
+            $factura->ejercicio_id      =       $this->post("ejercicio_id");
+            $factura->dependencia_id    =       $dependencia->id;
+            $factura->festados_id       =       $activa->id;
+            $factura->folio             =       $factura->obtenFolio();
+            $factura->fecha             =       $now->format("Y-m-d");
+            $factura->razon             =       $fiscal->razon;
+            $factura->rfc               =       $fiscal->rfc;
+            $factura->domicilio         =       $fiscal->domicilio;
+            $factura->colonia           =       $fiscal->colonia;
+            $factura->cpostal           =       $fiscal->cp;
+            
+            $factura->subtotal          =       $subtotal;
+            $factura->iva               =       $iva;
+            $factura->total             =       $total;
+            $factura->observaciones     =       $observaciones;
+            $factura->enviada           =       '0000-00-00';
+            $factura->recibida          =       '0000-00-00';
+            
+            if(!$factura->save()){
+                throw new Exception("Error al guardar la factura.");
+            }
+            
+            foreach ($cantidades as $k => $cantidad) {
+                    
+                $concepto = new Concepto();
+                $concepto -> factura_id        =   $factura->id;
+                $concepto -> cantidad           =   $cantidad;
+                $concepto -> descripcion        =   $conceptos[$k];
+                $concepto -> unitario           =   $unitarios[$k];
+                $concepto -> monto              =   $costos[$k];
+                
+                if(!$concepto->save()){
+                    throw new Exception("Error al guardar el concepto.");
+                }
+                
+            }
+            
+            $festado = new Festado();
+            $festado->factura_id = $factura->id;
+            $festado->festados_id = $activa->id; 
+            if(!$festado->save()){
+                throw new Exception("Error al guardar el festado.");
+            }
+            
+            mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
+        }else{    
+            $this->option = "captura";
+            $ejercicio_id = Session :: get_data( 'eje.id' );
+            
+            $dependencias = new Dependencia();
+            $dependencias = $dependencias->find();
+            $this->dependencias = $dependencias;
+            $this->ejercicio_id = $ejercicio_id;
+            
+        }
+        }catch(Exception $e){
+            #var_dump($e->getMessage());exit;
+            if($transaccion)
+                mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
+            
+            $this->error( $e->getMessage(), $errvar, $e );
+        }
 	}
 
 	public function editar( $id = '' ){

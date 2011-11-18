@@ -1,0 +1,41 @@
+<?php $path = KUMBIA_PATH;
+ switch($option) {
+ 	case 'exito':
+ 		?>
+ 		<label for="edo_id">Estado</label>
+ 		<br/>
+ 		<select id="edo_id" name="edo_id">
+ 			<option></option>
+ 			<?php foreach($estados as $e){ ?>
+ 				<option value="<?php echo $e->id ?>"
+ 				<?php if($e->id == $edo->id){ ?>
+ 					selected = "selected"
+ 				<?php } ?>
+ 				><?php echo $e->nombre; ?></option>
+ 			<?php } ?>
+ 		</select>
+ 		<div id="loc_municipios">
+ 		<br/>
+ 		<label for="municipio_id">Municipio</label>
+ 		<br/>
+ 		<select id="municipio_id" name="municipio_id">
+ 			<option></option>
+ 			<?php foreach($municipios as $mun){ ?>
+ 				<option value="<?php echo $mun->id ?>"
+ 				<?php if($mun->id == $municipio->id){ ?>
+ 					selected = "selected"
+ 				<?php } ?>><?php echo $mun->nombre; ?></option>
+ 			<?php } ?>
+ 		</select></div>
+ 		<?php 
+ 		break;
+ 	default: ?>
+ 	<p class="error">
+ 	<br/>Error al cargar la localizacion.<br/>
+ 	<?php echo $error; ?>
+ 	<br/>
+ 	</p>
+ 	<?php 
+ 		break;	
+	}
+	?>
