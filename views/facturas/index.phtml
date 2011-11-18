@@ -76,11 +76,7 @@
 				</form>
 			</div>
 		</div>
-		<?php if($registros>0){ 
-			$fcancelada = new Festados();
-			$fcancelada = $fcancelada->porclave("CAN");
-				
-			?>
+		<?php if($registros>0){ ?>
 		<div class="pages"> 
 			<?php foreach($paginador->botones() as $boton){ ?>
 				 <a  href="<?php echo $path . $boton->url() ?>" 
@@ -159,13 +155,6 @@
 									<span class="sub2">
 										<?php echo $st->nombre ?>
 									</span>
-									<?php /*<br/>
-									<span class="sub2">
-									Pagado </span><?php echo "$" . number_format($factura->montoPagado(), 2, ".", ","); ?>
-									<br/>
-									<span class="sub2">
-									Restante </span><?php echo "$" . number_format(($factura->total - $factura->montoPagado()), 2, ".", ","); ?>
-									*/?>
 									
 									<?php break;?>
 						<?php }?>
@@ -205,11 +194,16 @@
 					</td>
 					<td class="centro">
 						
-						<a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
-						<img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/></a>
-					
+					<?php if($factura->editable()){ ?>
+                       <a href="<?php echo $path; ?>facturas/editar/<?php echo $factura->id; ?>"  title="Editar">
+                        <img src="<?php echo $path ?>public/img/system/editar.png" alt="editar"/></a>
+                    <?php } ?>
+                    
 					   <a href="<?php echo $path; ?>facturas/control/<?php echo $factura->id; ?>"  title="Estados">
                         <img src="<?php echo $path ?>public/img/system/estado.png" alt="estados"/></a>
+                    
+                        <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
+                        <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/></a>
                     
 					</td>
 				</tr>
