@@ -1,0 +1,65 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Control de factura</h1>
+		<h2>Folio: <?php echo $factura->folio; ?></h2>
+        <h2>RFC: <?php echo $factura->rfc; ?></h2>
+        <h2>Razon social: <?php echo $factura->razon; ?></h2>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>facturas">Volver
+					<img src="<?php echo $path?>public/img/system/volver.png" alt="volver"/>
+				</a> /
+				<a href="<?php echo $path ?>facturas/agregar" title="Agregar factura">
+					Agregar otra factura
+					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) { 
+				case 'captura': ?>
+				<form action="<?php echo $path ?>facturas/control" id="frm_agregar" method="post">
+					<input type="hidden" name="factura_id" id="factura_id" value="<?php echo $factura->id ?>" />
+					
+					<fieldset>
+						<legend>Estados</legend>
+						<br />
+						<select name="festados_id" id="festados_id" >
+                            <option></option>
+                            <?php foreach ($festados as $edo) { ?>
+                                <option value="<?php echo $edo->id ?>"
+                                    <?php if($edo->id == $factura->festados_id) { ?>
+                                        selected = "selected"
+                                    <?php } ?>
+                                    >
+                                    <?php echo $edo->singular; ?></option>
+                                    
+                            <?php } ?>
+                        </select>
+                        
+					</fieldset>
+					
+                    <div id="botones">
+                        <input type="button" id="cancelar" value="Cancelar">
+                        <input type="button" id="aceptar" value="Cambiar">
+                    </div>
+					
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info">
+					<br />
+					El estado de la factura se cambio correctamente.
+				</p>
+			<?php  break; ?>
+			<?php case 'error': 
+				  default: 
+			?>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>
