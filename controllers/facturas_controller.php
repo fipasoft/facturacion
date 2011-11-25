@@ -78,14 +78,13 @@ class FacturasController extends ApplicationController{
             $dependencia = $dependencia->find($dependencia_id);
             $fiscal = $dependencia->fiscal();
             
-            $now = new DateTime();
             
             $factura = new Factura();
             $factura->ejercicio_id      =       $this->post("ejercicio_id");
             $factura->dependencia_id    =       $dependencia->id;
             $factura->festados_id       =       $activa->id;
             $factura->folio             =       $factura->obtenFolio();
-            $factura->fecha             =       $now->format("Y-m-d");
+            $factura->fecha             =       Utils::convierteFechaMySql($this->post('fecha'));
             $factura->razon             =       $fiscal->razon;
             $factura->rfc               =       $fiscal->rfc;
             $factura->domicilio         =       $fiscal->domicilio;
@@ -265,6 +264,7 @@ class FacturasController extends ApplicationController{
                     
                 }
                 
+                $factura->fecha             =       Utils::convierteFechaMySql($this->post('fecha'));
                 $factura->dependencia_id    =       $dependencia->id;
                 $factura->festados_id       =       $activa->id;
                 $factura->razon             =       $fiscal->razon;

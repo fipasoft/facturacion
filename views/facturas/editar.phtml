@@ -28,6 +28,17 @@
 
 					<fieldset>
 						<legend>Fiscal</legend>
+						<label for="clave">Fecha</label>
+                        <br/>
+                        <input name="fecha" 
+                               id="fecha" 
+                               value="<?php echo Utils::convierteFecha(substr($factura->fecha,0,10)); ?>" 
+                               size="10" 
+                               maxlength="10" 
+                               class="_fecha_" 
+                               readonly="readonly" />
+                        <br/>
+                        <br/>
 						<label for="clave">RFC</label>
 						<br />
 						<select name="dependencia_id" id="dependencia_id" >
