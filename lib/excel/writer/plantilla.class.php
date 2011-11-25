@@ -22,15 +22,26 @@ class Plantilla extends Reporte{
 		$cols = array();
 
 		foreach( $encabezados as $campo ){
-			if( !isset( $campo->nHijos ) ){
-				if( isset($campo->ancho) ){
-					$cols[] = $campo->ancho;
-				}else{
-					$cols[] = 12;
-				}
+
+		    if( !isset( $campo->nHijos ) && !isset( $campo->combinarColumnas ) ){
+
+				$cols[] = ( $campo->ancho ? $campo->ancho : 12 );
+
 			}else{
-				$cols = array_merge( $cols, $this->cols( $campo->hijos ) );
+
+
+			    $hijos = ( $campo->combinarColumnas ? $campo->combinarColumnas : $$campo->nHijos );
+
+			    for( $i = 0; $i < $hijos; $i++ ){
+
+			        $cols[] = ( $campo->ancho ? $campo->ancho : 12 );
+
+			    }
+
+
 			}
+
+
 		}
 		return $cols;
 	}

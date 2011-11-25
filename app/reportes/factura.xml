@@ -6,32 +6,32 @@
 			<id>clave</id>
 			<nombre>CLAVE</nombre>
 			<clase>TH.BGLightyellowCenter</clase> 
-			<ancho>13</ancho>
+			<ancho>11.61</ancho>
 	   </campo>
 	   <campo>
             <id>concepto</id>
             <nombre>DESCRIPCION</nombre>
             <clase>TH.BGLightyellowCenter</clase> 
             <combinarColumnas>4</combinarColumnas>
-            <ancho>13</ancho>
+            <ancho>10.86</ancho>
        </campo>
        <campo>
             <id>cantidad</id>
             <nombre>CANTIDAD</nombre>
             <clase>TH.BGLightyellowCenter</clase> 
-            <ancho>13</ancho>
+            <ancho>9.43</ancho>
        </campo>
        <campo>
             <id>unitario</id>
             <nombre>COSTO UNITARIO</nombre>
             <clase>TH.BGLightyellowCenter</clase> 
-            <ancho>13</ancho>
+            <ancho>11.71</ancho>
        </campo>
        <campo>
             <id>monto</id>
             <nombre>IMPORTE</nombre>
             <clase>TH.BGLightyellowCenter</clase> 
-            <ancho>13</ancho>
+            <ancho>17</ancho>
        </campo>
 		
 	</encabezados>
