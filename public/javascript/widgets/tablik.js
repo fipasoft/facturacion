@@ -73,14 +73,28 @@ Tablik.prototype = {
 		}
 	},
 
-	delRow: function(){
+	delRow: function( callbacks ){
+		
+		var before = ( callbacks && callbacks.before ? callbacks.before : this.callbacks.delRow_Before );
+		var after = ( callbacks && callbacks.after ? callbacks.after : this.callbacks.delRow_After );
+		var tr = $( this.id );
+		
+		if( before ){
+			before.apply( tr, [ tr.identify() ] );
+		}
+		
 		$$( '#' + this.id + ' table' ).each( function( t ){
-			var rows = $( t ).rows
+			var rows = $( t ).rows;
 			var n = $( t ).rows.length;
 			if( n > 2 ){
 				$( t ).deleteRow( n - 1 );
 			}
 		});
+		
+		if( after ){
+			after.apply( tr, [ tr.identify() ] );
+		}
+		
 	},
 	
 	initRow: function( id, callbacks ){

@@ -13,12 +13,12 @@
 				</a>
 			</div>
 		</div>
-		<?php switch($option) { 
+		<?php switch($option) {
 				case 'captura': ?>
 				<form action="<?php echo $path ?>facturas/agregar" id="frm_agregar" method="post">
 					<input type="hidden" name="ejercicio_id" id="ejercicio_id" value="<?php echo $ejercicio_id ?>" />
-					
-					<fieldset>					
+
+					<fieldset>
 						<legend>Fiscal</legend>
 						<label for="clave">RFC</label>
 						<br />
@@ -32,15 +32,15 @@
 						<br />
 						<br />
                         <div id="fiscales">
-                            
+
                         </div>
 					</fieldset>
 					<div class="divisor"></div>
-					
+
 					<fieldset style="margin-left: -50px;">
 					    <legend>Conceptos</legend>
 					    <div class="tablik">
-					    <table>
+					    <table id="tblConceptos">
 					        <tr>
                                 <th>
                                     <a  title="Seleccionar todas las filas"
@@ -66,28 +66,28 @@
                                     <input type="text" size="12" maxlength="20"
                                             name="clave[]" class="clave"/>
                                 </td>
-                                
-                                
+
+
                                 <td class="centro">
                                     <input type="text" size="70" maxlength="300"
                                             name="concepto[]" class="concepto"/>
-                                    
+
                                 </td>
-                                
+
                                 <td class="centro">
                                     <input type="text" size="4" maxlength="3"
-                                            name="cantidad[]" class="cantidad"/>
+                                            name="cantidad[]" class="cantidad centro _entero_"/>
                                 </td>
-                                
-                                
+
+
                                 <td class="centro">
                                     <input type="text" size="12" maxlength="12"
-                                            name="unitario[]" class="unitario"/>
+                                            name="unitario[]" class="unitario numero _real_"/>
                                 </td>
-                                
+
                                 <td class="centro">
                                     <input type="text" size="12" maxlength="12"
-                                            name="costo[]" class="costo"/>
+                                            name="costo[]" class="monto costo numero _real_" readonly="readonly"/>
                                 </td>
 					        </tr>
 					    </table>
@@ -101,14 +101,15 @@
                                 </a>
                             </div>
 					    </div>
-					    
+
                         <div style="margin-left: 800px;">
                         <table>
                             <tr>
                                 <th>Subtotal</th>
                                 <td>
                                     <input type="text" size="12" maxlength="12"
-                                            name="subtotal" class="subtotal"
+                                            name="subtotal" class="total-monto subtotal numero"
+                                            readonly="readonly"
                                             id="subtotal"/>
                                 </td>
                             </tr>
@@ -116,7 +117,8 @@
                                 <th>IVA</th>
                                 <td>
                                     <input type="text" size="12" maxlength="12"
-                                            name="iva" class="iva"
+                                            name="iva" class="iva numero"
+                                            readonly="readonly"
                                             id="iva"/>
                                 </td>
                             </tr>
@@ -124,14 +126,15 @@
                                 <th>Total</th>
                                 <td>
                                     <input type="text" size="12" maxlength="12"
-                                            name="total" class="total"
+                                            name="total" class="total numero"
+                                            readonly="readonly"
                                             id="total"/>
                                 </td>
                             </tr>
                         </table>
                         </div>
 					</fieldset>
-					
+
 					<div id="botones">
 						<input type="button" id="cancelar" value="Cancelar">
 						<input type="button" id="aceptar" value="Agregar">
@@ -144,8 +147,8 @@
 					La informaci&oacute;n de la factura se agreg&oacute; correctamente
 				</p>
 			<?php  break; ?>
-			<?php case 'error': 
-				  default: 
+			<?php case 'error':
+				  default:
 			?>
 				<p class="error">
 					<br />

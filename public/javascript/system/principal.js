@@ -1,3 +1,8 @@
+GlobalVars = {
+	iva: 0.16,
+	isr: 0.10
+};
+
 function div_sw(id){
 if($(id).style.display=='none'){
 Effect.BlindDown(id); return false;
@@ -265,12 +270,4 @@ function validar_entero(campo){
 		campo.value = '';
 		campo.focus();
 	}
-}
-
-function validar_entero2(campo){
-	if( !esEntero(campo.value) ){
-		campo.focus();
-		return false;
-	}
-	return true;
 }

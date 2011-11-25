@@ -50,12 +50,5 @@ Effect.DropOut($('search'));
 };
 }
 
-$$('.sub').each(function(a){
-	a.href = 'javascript:;';
-	a.onclick = function(){
-		div_sw(this.id.replace("bsub", "dsub"));
-	};
-});
-
 }
 addDOMLoadEvent(sys);

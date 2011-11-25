@@ -42,78 +42,49 @@ var Format = {
 
 };
 
-
-function oNumero(numero){
-//Propiedades
-this.valor = numero || 0
-this.dec = -1;
-
-//Métodos
-this.formato = numFormat;
-this.ponValor = ponValor;
-
-//Definición de los métodos
-function ponValor(cad)
-{
-if (cad =='-' || cad=='+') return
-if (cad.length ==0) return
-if (cad.indexOf('.') >=0)
-this.valor = parseFloat(cad);
-else
-this.valor = parseInt(cad);
-}
-
-function numFormat(dec, miles)
-{
-var num = this.valor, signo=3, expr;
-var cad = ""+this.valor;
-var ceros = "", pos, pdec, i;
-for (i=0; i < dec; i++)
-ceros += '0';
-pos = cad.indexOf('.')
-if (pos < 0)
-cad = cad+"."+ceros;
-else
-{
-pdec = cad.length - pos -1;
-if (pdec <= dec)
-{
-for (i=0; i< (dec-pdec); i++)
-cad += '0';
-}
-else
-{
-num = num*Math.pow(10, dec);
-num = Math.round(num);
-num = num/Math.pow(10, dec);
-cad = new String(num);
-}
-}
-pos = cad.indexOf('.')
-if (pos < 0) pos = cad.lentgh
-if (cad.substr(0,1)=='-' || cad.substr(0,1) == '+')
-signo = 4;
-if (miles && pos > signo)
-do{
-expr = /([+-]?\d)(\d{3}[\.\,]\d*)/
-cad.match(expr)
-cad=cad.replace(expr, RegExp.$1+','+RegExp.$2)
-}
-while (cad.indexOf(',') > signo)
-if (dec<0) cad = cad.replace(/\./,'')
-return cad;
-}
-}
-//Fin del objeto oNumero:
-
-
 var Serie = {
 	sumar: function ( serie, prcs, includeAll ){
 		var precision = ( prcs ? prcs : 2 ) ;
 		return $$( serie ).inject( 0.00, function(acc, n) {
 			acc = parseFloat( acc );
-			var n = parseFloat( n.value || n.innerHTML.sub( ',', '') );
+			var n = parseFloat( n.value || n.innerHTML.gsub( ',', '') );
 			return parseFloat( acc + ( isNaN( n ) || ( includeAll && n.disabled ) ? 0 : n ) ).toFixed( precision ); 
 		});
+	}
+};
+
+var Impuestos = {
+	verificar: function( tr ){
+		var sub = tr.down( 'input.sub' );
+		var iva = tr.down( 'input.iva' );
+		var isr = tr.down( 'input.isr' );
+		
+		// verificacion de iva
+			
+		if( $F( sub ) != '' && $F( iva ) != '' && $F( iva ) != parseFloat( parseFloat( $F( sub ) ) * GlobalVars.iva ).toFixed( 2 ) ){
+			iva.up('td').addClassName( 'alert' );
+		}else{
+			iva.up('td').removeClassName( 'alert' );
+		}
+		
+	
+		// verificacion de isr
+		var isrVal = 0;
+		if( isr ){
+			isrVal = $F( isr );
+			if( $F( sub ) != '' && $F( isr ) != '' && $F( isr ) != parseFloat( parseFloat( $F( sub ) ) * GlobalVars.isr ).toFixed( 2 ) ){
+				isr.up('td').addClassName( 'alert' );
+			}else{
+				isr.up('td').removeClassName( 'alert' );
+			}
+		}
+		
+		// verificacion de monto
+		var tot = tr.down( 'input.monto' );
+		if( $F( tot ) != '' && $F( sub ) != '' && $F( iva ) != '' && $F( tot ) != parseFloat( parseFloat( $F( sub ) ) + parseFloat( $F( iva ) ) - parseFloat( isrVal ) ).toFixed( 2 ) ){
+			tot.up('td').addClassName( 'alert' );
+		}else{
+			tot.up('td').removeClassName( 'alert' );
+		}
 	}
 };
