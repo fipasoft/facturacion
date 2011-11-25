@@ -62,7 +62,8 @@ class AclController extends ApplicationController {
 				'imprimir',
 				'cancelar',
 				'editar',
-				'control'
+				'control',
+				'ver'
 				),
             'externas' => array (
                 'agregar',
@@ -287,7 +288,8 @@ class AclController extends ApplicationController {
                  'imprimir',
                  'cancelar',
                  'editar',
-                 'control'
+                 'control',
+                 'ver'
                  )
                  );
 				
