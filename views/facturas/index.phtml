@@ -160,13 +160,8 @@
 						<?php }?>
 					</td>
 					<td class="centro">
-					<span class="sub2">Creaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?><br/>
-					<?php if($factura->enviada != "" && $factura->enviada != "0000-00-00"){ ?>
-					<span class="sub2">Env&iacute;o: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->enviada) ?><br/>
-					<?php } ?>
-					<?php if($factura->recibida != "" && $factura->recibida != "0000-00-00"){ ?>
-					<span class="sub2">Recepci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->recibida) ?>
-					<?php } ?>
+                    <span class="sub2">Creaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->saved_at) ?><br/>
+                    <span class="sub2">Facturaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?><br/>
 					</td>
 					<td class="centro">
 						<?php $dependencia = $factura->dependencia(); ?>
