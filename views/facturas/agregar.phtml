@@ -20,6 +20,11 @@
 
 					<fieldset>
 						<legend>Fiscal</legend>
+                        <label for="clave">Folio</label><br/>
+						<?php $factura = new Factura(); ?>
+						<?php echo $factura->obtenFolio(); ?>
+						<br/>
+						<br/>
 						<?php $hoy = new Datetime(); ?>
                         <label for="clave">Fecha</label>
                         <br/>
