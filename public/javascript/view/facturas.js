@@ -63,6 +63,17 @@ Factura = Class.create({
 		    });
 		}
 		
+		fdependencia = $( 'fdependencia_id' );
+		if(fdependencia){
+		    $('dependencia_id').value = fdependencia.value;
+		    new Ajax.Updater('fiscales', $('KUMBIA_PATH').value + 'externas/fiscales/', { 
+                       method: 'post',
+                       onLoading: function(){ $('check').hide(); $('spinner').show(); },
+                       onComplete: function() { $('spinner').hide(); $('check').show();},
+                       parameters: {dependencia_id: fdependencia.value}
+                    });
+		}
+		
 	},
 	
 	inicializarTablero: function( scope ){
