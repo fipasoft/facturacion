@@ -95,7 +95,7 @@ class FacturasController extends ApplicationController{
             $factura->subtotal          =       $subtotal;
             $factura->iva               =       $iva;
             $factura->total             =       $total;
-            $factura->observaciones     =       $observaciones;
+            $factura->observaciones     =       trim($this->post("observaciones"));
             $factura->enviada           =       '0000-00-00';
             $factura->recibida          =       '0000-00-00';
             
@@ -276,7 +276,7 @@ class FacturasController extends ApplicationController{
                 $factura->subtotal          =       $subtotal;
                 $factura->iva               =       $iva;
                 $factura->total             =       $total;
-                $factura->observaciones     =       $observaciones;
+                $factura->observaciones     =       $this->post("observaciones");
                 
                 if(!$factura->save()){
                     throw new Exception("Error al guardar la factura.");

@@ -22,7 +22,7 @@
 		</div>
 		<?php switch($option) {
 				case 'captura': ?>
-				<form action="<?php echo $path ?>facturas/editar" id="frm_agregar" method="post">
+				<form action="<?php echo $path ?>facturas/editar" id="frm_editar" method="post">
 					<input type="hidden" name="factura_id" id="factura_id" value="<?php echo $factura->id ?>" />
 					<input type="hidden" name="fdependencia_id" id="fdependencia_id" value="<?php echo $factura->dependencia_id ?>" />
 
@@ -153,6 +153,14 @@
                         </table>
                         </div>
 					</fieldset>
+					
+					                   
+                    <fieldset>
+                        <legend>Observaciones</legend>
+                            <textarea name="observaciones" id="observaciones" cols="100" rows="5"><?php echo $factura->observaciones; ?></textarea>
+                        </div>
+                    </fieldset>
+
 
 					<div id="botones">
 						<input type="button" id="cancelar" value="Cancelar">
