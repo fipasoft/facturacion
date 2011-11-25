@@ -530,5 +530,27 @@ class FacturasController extends ApplicationController{
 
 	}
 
+    public function ver( $id = '' ){
+        try{
+                $this->option = "captura";
+                
+                $factura = new Factura();
+                $factura = $factura->find($id);
+                
+                if($factura->id == ''){
+                    throw new Exception("Error la factura no es valida.");
+                }
+                
+                $this->factura = $factura;
+            
+        }catch(Exception $e){
+            
+            if($transaccion)
+                mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
+            
+            $this->error( $e->getMessage(), $errvar, $e );
+        }
+    }
+
 }
 ?>

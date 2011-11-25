@@ -1,0 +1,155 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Editar factura</h1>
+		<h2>Folio: <?php echo $factura->folio; ?></h2>
+        <h2>RFC: <?php echo $factura->rfc; ?></h2>
+        <h2>Razon social: <?php echo $factura->razon; ?></h2>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>facturas">Volver
+					<img src="<?php echo $path?>public/img/system/volver.png" alt="volver"/>
+				</a> /
+				<a href="<?php echo $path ?>facturas/agregar" title="Agregar factura">
+					Agregar otra factura
+					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
+				</a> /
+				<?php if($factura->editable()){ ?>
+                <a href="<?php echo $path ?>facturas/editar/<?php echo $factura->id; ?>" title="Editar factura">
+                    Editar factura
+                    <img src="<?php echo $path?>public/img/system/editar.png" alt="editar"/>
+                </a> /
+                <?php } ?>
+                <a href="<?php echo $path ?>facturas/control/<?php echo $factura->id; ?>" title="Control factura">
+                    Cambiar estado
+                    <img src="<?php echo $path?>public/img/system/estado.png" alt="control"/>
+                </a> /
+                <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
+                    Imprimir
+                    <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/>
+                </a>
+            
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'captura': ?>
+				<form action="<?php echo $path ?>facturas/editar" id="frm_editar" method="post">
+					<input type="hidden" name="factura_id" id="factura_id" value="<?php echo $factura->id ?>" />
+					<input type="hidden" name="fdependencia_id" id="fdependencia_id" value="<?php echo $factura->dependencia_id ?>" />
+
+					<fieldset>
+						<legend>Fiscal</legend>
+						<?php $festados = $factura->estado(); ?>
+                        <span class="sub2">Estado: </span> <?php echo $festados->singular; ?><br/>
+                        
+						<span class="sub2">Folio: </span> <?php echo $factura->folio ?><br/>
+                        <span class="sub2">Creaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->saved_at) ?><br/>
+                        <span class="sub2">Facturaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?><br/>
+                        <?php $dependencia = $factura->dependencia(); ?>
+                        <?php $fiscal = $dependencia->fiscal(); ?>
+                        <?php $municipio = $fiscal->municipio(); ?>
+                        <?php $edo = $municipio->edo(); ?>
+                        <span class="sub2">RFC: </span> <?php echo $fiscal -> rfc; ?> <br/>
+                        <span class="sub2">Razón social: </span> <?php echo $fiscal -> razon; ?> <br/>
+                        <span class="sub2">Domicilio: </span> <?php echo $fiscal -> domicilio; ?> <br/>
+                        <span class="sub2">Colonia: </span> <?php echo $fiscal -> colonia; ?> <br/>
+                        <span class="sub2">C.P.: </span> <?php echo $fiscal -> cp; ?> <br/>
+                        <span class="sub2">Municipio: </span> <?php echo $municipio -> nombre; ?> <br/>
+                        <span class="sub2">Estado: </span> <?php echo $edo -> nombre; ?> <br/>
+
+					</fieldset>
+					<div class="divisor"></div>
+
+					<fieldset style="margin-left: -50px;width: 100%">
+					    <legend>Conceptos</legend>
+					    <div class="tablik">
+					    <table id="tblConceptos" style="width: 90%">
+					        <tr>
+                                <th>Clave</th>
+                                <th>Descripción</th>
+					            <th>Cantidad</th>
+                                <th>Unitario</th>
+                                <th>Monto</th>
+					        </tr>
+					        <?php
+					           $conceptos = $factura->conceptos();
+					         ?>
+					         <?php foreach ($conceptos as $concepto) { ?>
+					        <tr>
+                                <td class="centro">
+                                    <?php echo $concepto->clave; ?>
+                                </td>
+
+
+                                <td class="centro">
+                                    <?php echo $concepto->descripcion; ?>
+                                </td>
+
+                                <td class="centro">
+                                    <?php echo $concepto->cantidad; ?>
+                                </td>
+
+
+                                <td class="centro">
+                                    <?php echo $concepto->unitario; ?>
+                                </td>
+
+                                <td class="centro">
+                                    <?php echo $concepto->monto; ?>
+                                </td>
+					        </tr>
+					        <?php } ?>
+					    </table>
+					    <br />
+					    </div>
+
+                        <div>
+                        <table style="margin-left: 622px">
+                            <tr>
+                                <th>Subtotal</th>
+                                <td>
+                                    <?php echo $factura->subtotal; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>IVA</th>
+                                <td>
+                                    <?php echo $factura->iva; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td>
+                                    <?php echo $factura->total; ?>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+					</fieldset>
+					
+					                   
+                    <fieldset>
+                        <legend>Observaciones</legend>
+                        <?php echo $factura -> observaciones; ?> <br/>
+
+                    </fieldset>
+
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info">
+					<br />
+					La informaci&oacute;n de la factura se agreg&oacute; correctamente
+				</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

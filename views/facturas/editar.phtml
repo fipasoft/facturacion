@@ -14,10 +14,20 @@
 					Agregar otra factura
 					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
 				</a> /
+				
+                <a href="<?php echo $path ?>facturas/ver/<?php echo $factura->id; ?>" title="Ver factura">
+                    Ver factura
+                    <img src="<?php echo $path?>public/img/system/ver.png" alt="ver"/>
+                </a> /
                 <a href="<?php echo $path ?>facturas/control/<?php echo $factura->id; ?>" title="Control factura">
                     Cambiar estado
                     <img src="<?php echo $path?>public/img/system/estado.png" alt="control"/>
+                </a> /
+                <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
+                    Imprimir
+                    <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/>
                 </a>
+                
 			</div>
 		</div>
 		<?php switch($option) {
@@ -169,7 +179,6 @@
                     <fieldset>
                         <legend>Observaciones</legend>
                             <textarea name="observaciones" id="observaciones" cols="100" rows="5"><?php echo $factura->observaciones; ?></textarea>
-                        </div>
                     </fieldset>
 
 

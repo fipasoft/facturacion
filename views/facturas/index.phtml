@@ -189,6 +189,9 @@
 					</td>
 					<td class="centro">
 						
+                       <a href="<?php echo $path; ?>facturas/ver/<?php echo $factura->id; ?>"  title="Ver">
+                        <img src="<?php echo $path ?>public/img/system/ver.png" alt="ver"/></a>
+                        
 					<?php if($factura->editable()){ ?>
                        <a href="<?php echo $path; ?>facturas/editar/<?php echo $factura->id; ?>"  title="Editar">
                         <img src="<?php echo $path ?>public/img/system/editar.png" alt="editar"/></a>
