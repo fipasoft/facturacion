@@ -5,32 +5,32 @@
 		<campo>
 			<id>clave</id>
 			<nombre>CLAVE</nombre>
-			<clase>TH.BGLightyellowCenter</clase> 
+			<clase>A9cg</clase> 
 			<ancho>11.61</ancho>
 	   </campo>
 	   <campo>
-            <id>concepto</id>
+            <id>descripcion</id>
             <nombre>DESCRIPCION</nombre>
-            <clase>TH.BGLightyellowCenter</clase> 
+            <clase>A9cg</clase> 
             <combinarColumnas>4</combinarColumnas>
             <ancho>10.86</ancho>
        </campo>
        <campo>
             <id>cantidad</id>
             <nombre>CANTIDAD</nombre>
-            <clase>TH.BGLightyellowCenter</clase> 
+            <clase>A9cg</clase> 
             <ancho>9.43</ancho>
        </campo>
        <campo>
             <id>unitario</id>
             <nombre>COSTO UNITARIO</nombre>
-            <clase>TH.BGLightyellowCenter</clase> 
+            <clase>A9cg</clase> 
             <ancho>11.71</ancho>
        </campo>
        <campo>
             <id>monto</id>
             <nombre>IMPORTE</nombre>
-            <clase>TH.BGLightyellowCenter</clase> 
+            <clase>A9cg</clase> 
             <ancho>17</ancho>
        </campo>
 		
@@ -38,24 +38,24 @@
 	<contenido>
 	   <campo>
             <id>clave</id>
-            <clase>TD</clase> 
+            <clase>TD.Borderside</clase> 
        </campo>
        <campo>
-            <id>concepto</id>
-            <clase>TD</clase> 
+            <id>descripcion</id>
+            <clase>TD.Borderside</clase> 
             <combinarColumnas>4</combinarColumnas>
        </campo>
        <campo>
             <id>cantidad</id>
-            <clase>TD</clase> 
+            <clase>TD.Borderside</clase> 
        </campo>
        <campo>
             <id>unitario</id>
-            <clase>TD</clase> 
+            <clase>TD.BordersideNum</clase> 
        </campo>
        <campo>
             <id>monto</id>
-            <clase>TD</clase> 
+            <clase>TD.BordersideNum</clase> 
        </campo>
 	</contenido>
 </xls>

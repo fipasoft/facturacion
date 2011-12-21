@@ -1,7 +1,138 @@
 <?php
 class XLSEstilo{
 	public $catalogo;
-	public function XLSEstilo(){		
+	public function XLSEstilo(){
+
+	    $fondoGris = '22';
+
+	    // Arial 7
+        $this->catalogo['A7']['setAlign'] = 'center';
+        $this->catalogo['A7']['setFontFamily'] = 'Arial';
+        $this->catalogo['A7']['setSize'] = '7';
+        $this->catalogo['A7']['setVAlign'] = 'vcenter';
+        $this->catalogo['A7']['setTextWrap'] = '';
+
+	    // Arial 8.5
+        $this->catalogo['A8.5']['setAlign'] = 'center';
+        $this->catalogo['A8.5']['setFontFamily'] = 'Arial';
+        $this->catalogo['A8.5']['setSize'] = '8.5';
+        $this->catalogo['A8.5']['setVAlign'] = 'vcenter';
+        $this->catalogo['A8.5']['setTextWrap'] = '';
+
+        // Arial 9 center gray border bold
+        $this->catalogo['A9cg']['setAlign'] = 'center';
+        $this->catalogo['A9cg']['setBold'] = '1';
+        $this->catalogo['A9cg']['setBorder'] = '1';
+        $this->catalogo['A9cg']['setFontFamily'] = 'Arial';
+        $this->catalogo['A9cg']['setFgColor'] = $fondoGris;
+        $this->catalogo['A9cg']['setSize'] = '9';
+        $this->catalogo['A9cg']['setVAlign'] = 'vcenter';
+        $this->catalogo['A9cg']['setTextWrap'] = '';
+
+        // Arial 9 center gray no border
+        $this->catalogo['A9cgNb']['setAlign'] = 'center';
+        $this->catalogo['A9cgNb']['setBold'] = '1';
+        $this->catalogo['A9cgNb']['setFontFamily'] = 'Arial';
+        $this->catalogo['A9cgNb']['setFgColor'] = $fondoGris;
+        $this->catalogo['A9cgNb']['setSize'] = '9';
+        $this->catalogo['A9cgNb']['setVAlign'] = 'vcenter';
+        $this->catalogo['A9cgNb']['setTextWrap'] = '';
+
+
+        // Arial 9 right gray no border
+        $this->catalogo['A9rgNb']['setAlign'] = 'right';
+        $this->catalogo['A9rgNb']['setBold'] = '1';
+        $this->catalogo['A9rgNb']['setFontFamily'] = 'Arial';
+        $this->catalogo['A9rgNb']['setFgColor'] = $fondoGris;
+        $this->catalogo['A9rgNb']['setSize'] = '9';
+        $this->catalogo['A9rgNb']['setVAlign'] = 'vcenter';
+        $this->catalogo['A9rgNb']['setTextWrap'] = '';
+
+
+        // Arial 9.5
+        $this->catalogo['A9.5']['setAlign'] = 'center';
+        $this->catalogo['A9.5']['setFontFamily'] = 'Arial';
+        $this->catalogo['A9.5']['setSize'] = '9.5';
+        $this->catalogo['A9.5']['setVAlign'] = 'vcenter';
+        $this->catalogo['A9.5']['setTextWrap'] = '';
+
+        // Arial 10 num
+        $this->catalogo['A10Num']['setAlign'] = 'right';
+        $this->catalogo['A10Num']['setFontFamily'] = 'Arial';
+        $this->catalogo['A10Num']['setSize'] = '10';
+        $this->catalogo['A10Num']['setNumFormat'] = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-';
+        $this->catalogo['A10Num']['setVAlign'] = 'vcenter';
+        $this->catalogo['A10Num']['setTextWrap'] = '';
+
+	    // Arial 10 bold
+        $this->catalogo['A10b']['setAlign'] = 'left';
+        $this->catalogo['A10b']['setBold'] = '1';
+        $this->catalogo['A10b']['setFontFamily'] = 'Arial';
+        $this->catalogo['A10b']['setSize'] = '10';
+        $this->catalogo['A10b']['setVAlign'] = 'vcenter';
+        $this->catalogo['A10b']['setTextWrap'] = '';
+
+        // Arial 9
+        $this->catalogo['A9']['setAlign'] = 'left';
+        $this->catalogo['A9']['setFontFamily'] = 'Arial';
+        $this->catalogo['A9']['setSize'] = '9';
+        $this->catalogo['A9']['setVAlign'] = 'vcenter';
+        $this->catalogo['A9']['setTextWrap'] = '';
+
+        // Arial 9 Top
+        $this->catalogo['A9T']['setAlign'] = 'left';
+        $this->catalogo['A9T']['setFontFamily'] = 'Arial';
+        $this->catalogo['A9T']['setSize'] = '9';
+        $this->catalogo['A9T']['setVAlign'] = 'top';
+        $this->catalogo['A9T']['setTextWrap'] = '';
+
+        // Arial 11
+        $this->catalogo['A11']['setAlign'] = 'left';
+        $this->catalogo['A11']['setFontFamily'] = 'Arial';
+        $this->catalogo['A11']['setSize'] = '11';
+        $this->catalogo['A11']['setVAlign'] = 'vcenter';
+        $this->catalogo['A11']['setTextWrap'] = '';
+
+        // Arial 11 center
+        $this->catalogo['A11c']['setAlign'] = 'center';
+        $this->catalogo['A11c']['setFontFamily'] = 'Arial';
+        $this->catalogo['A11c']['setSize'] = '11';
+        $this->catalogo['A11c']['setVAlign'] = 'vcenter';
+        $this->catalogo['A11c']['setTextWrap'] = '';
+
+        // Arial 11 center background gray
+        $this->catalogo['A11cg']['setAlign'] = 'center';
+        $this->catalogo['A11cg']['setFontFamily'] = 'Arial';
+        $this->catalogo['A11cg']['setSize'] = '11';
+        $this->catalogo['A11cg']['setFgColor'] = $fondoGris;
+        $this->catalogo['A11cg']['setVAlign'] = 'vcenter';
+        $this->catalogo['A11cg']['setTextWrap'] = '';
+
+        // TD.Borderside
+        $this->catalogo['TD.Borderside']['setAlign'] = 'center';
+        $this->catalogo['TD.Borderside']['setLeft'] = '1';
+        $this->catalogo['TD.Borderside']['setRight'] = '1';
+        $this->catalogo['TD.Borderside']['setFontFamily'] = 'Arial';
+        $this->catalogo['TD.Borderside']['setSize'] = '10';
+        $this->catalogo['TD.Borderside']['setVAlign'] = 'vcenter';
+
+         // TD.BordersideNum
+        $this->catalogo['TD.BordersideNum']['setAlign'] = 'right';
+        $this->catalogo['TD.BordersideNum']['setLeft'] = '1';
+        $this->catalogo['TD.BordersideNum']['setRight'] = '1';
+        $this->catalogo['TD.BordersideNum']['setFontFamily'] = 'Arial';
+        $this->catalogo['TD.BordersideNum']['setNumFormat'] = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-';
+        $this->catalogo['TD.BordersideNum']['setSize'] = '10';
+        $this->catalogo['TD.BordersideNum']['setVAlign'] = 'vcenter';
+
+        // TD.Bordertop
+        $this->catalogo['TD.Bordertop']['setAlign'] = 'left';
+        $this->catalogo['TD.Bordertop']['setTop'] = '1';
+        $this->catalogo['TD.Bordertop']['setFontFamily'] = 'Arial';
+        $this->catalogo['TD.Bordertop']['setNumFormat'] = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-';
+        $this->catalogo['TD.Bordertop']['setSize'] = '10';
+        $this->catalogo['TD.Bordertop']['setVAlign'] = 'vcenter';
+
 		// H1
 		$this->catalogo['H1']['setAlign'] = 'center';
 		$this->catalogo['H1']['setBold'] = '1';
@@ -309,7 +440,7 @@ class XLSEstilo{
 		$this->catalogo['TD.BGOrange']['setFgColor'] = '51';
 		$this->catalogo['TD.BGOrange']['setFontFamily'] = 'Arial';
 		$this->catalogo['TD.BGOrange']['setNumFormat'] = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-';
-		$this->catalogo['TD.BGOrange']['setSize'] = '10';		
+		$this->catalogo['TD.BGOrange']['setSize'] = '10';
 		$this->catalogo['TD.BGOrange']['setTextWrap'] = '';
 		$this->catalogo['TD.BGOrange']['setVAlign'] = 'vcenter';
 		// TD.BGOrangeNoBorder
@@ -317,7 +448,7 @@ class XLSEstilo{
 		$this->catalogo['TD.BGOrangeNoBorder']['setFgColor'] = '51';
 		$this->catalogo['TD.BGOrangeNoBorder']['setFontFamily'] = 'Arial';
 		$this->catalogo['TD.BGOrangeNoBorder']['setNumFormat'] = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-';
-		$this->catalogo['TD.BGOrangeNoBorder']['setSize'] = '10';		
+		$this->catalogo['TD.BGOrangeNoBorder']['setSize'] = '10';
 		$this->catalogo['TD.BGOrangeNoBorder']['setTextWrap'] = '';
 		$this->catalogo['TD.BGOrangeNoBorder']['setVAlign'] = 'vcenter';
 		// TD.BGLightyellowCenter
@@ -326,7 +457,7 @@ class XLSEstilo{
 		$this->catalogo['TD.BGLightyellowCenter']['setBorder'] = '1';
 		$this->catalogo['TD.BGLightyellowCenter']['setFgColor'] = '43';
 		$this->catalogo['TD.BGLightyellowCenter']['setFontFamily'] = 'Arial';
-//		$this->catalogo['TD.BGLightyellowCenter']['setNumFormat'] = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-';		
+//		$this->catalogo['TD.BGLightyellowCenter']['setNumFormat'] = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-';
 		$this->catalogo['TD.BGLightyellowCenter']['setSize'] = '11';
 		$this->catalogo['TD.BGLightyellowCenter']['setTextWrap'] = '';
 		$this->catalogo['TD.BGLightyellowCenter']['setVAlign'] = 'vcenter';
@@ -367,7 +498,7 @@ class XLSEstilo{
 		$this->catalogo['TDH.BiggerRightTop']['setSize'] = '35';
 		$this->catalogo['TDH.BiggerRightTop']['setTextRotation'] = '90';
 		$this->catalogo['TDH.BiggerRightTop']['setVAlign'] = 'top';
-		
+
 		// TDNoBorder
 		$this->catalogo['TD.NoBorder']['setAlign'] = 'left';
 		$this->catalogo['TD.NoBorder']['setFontFamily'] = 'Arial';

@@ -80,9 +80,23 @@ class Dependencia extends ActiveRecord{
 	}
 
 	public function fiscal(){
+
 		$fiscal = new Fiscal();
-		$fiscal = $fiscal->find($this->fiscal_id);
-		return $fiscal;
+		$fiscal = $fiscal->find_all_by_sql(
+    		"SELECT " .
+                "fiscal.*, " .
+                "CONCAT( TRIM( municipio.nombre ), ', ' , TRIM( edo.nombre ) ) AS ciudad " .
+            "FROM " .
+                "fiscal " .
+                "Inner Join municipio ON fiscal.municipio_id = municipio.id " .
+                "Inner Join edo ON municipio.edo_id = edo.id " .
+            "WHERE " .
+    		    "fiscal.id = '" . $this->fiscal_id . "'"
+		);
+
+		return
+		  $fiscal[ 0 ];
+
 	}
 
 	public function facturadas( $ejercicio_id = '' ){

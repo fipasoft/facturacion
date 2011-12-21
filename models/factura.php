@@ -1,6 +1,6 @@
 <?php
 class Factura extends ActiveRecord{
-    
+
     public $ultimo;
 
 	public function conceptos(){
@@ -71,34 +71,35 @@ class Factura extends ActiveRecord{
 			strtoupper( Utils:: NumerosALetras( $pesos ) ) . "PESOS (" . $centavos . "/100)";
 
 	}
-    
+
     public static function obtenFolio(){
         $facturas = new Factura();
         if($facturas->count() > 0){
-            
+
             $q = "SELECT MAX(CAST(folio AS DECIMAL(10))) AS ultimo FROM factura;";
             $factura = new Factura();
             $factura = $factura->find_by_sql($q);
             return $factura['ultimo'] + 1;
-            
+
         }else{
-            
+
             $sys = Config :: read('sys.ini');
             return $sys->facturacion->folio_ini;
-            
+
         }
     }
 
-	public function receptor(){
+	public function receptor( $campos = array() ){
 
         $dependencia = $this->dependencia();
         $fiscal = $dependencia->fiscal();
+        $campos = ( count( $campos ) > 0 ? $campos : $fiscal );
 
         $receptor = new stdClass();
 
-        foreach( $fiscal as $clave => $valor ){
+        foreach( $campos as $campo => $valor ){
 
-            $receptor->$clave = $valor;
+            $receptor->$campo = $fiscal->$campo;
 
         }
 
