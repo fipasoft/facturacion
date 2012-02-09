@@ -2,7 +2,7 @@
 	<div class="content">
 		<h1>
 			<?php echo $registros;?>
-			Dependencia<?php echo ($registros == 1 ? '' : 's') ?> no universitaria<?php echo ($registros == 1 ? '' : 's') ?>
+			Dependencia<?php echo ($registros == 1 ? '' : 's') ?> <?php echo ($registros == 1 ? '' : 's') ?>
 			<?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
 		</h1>
 		<div id="options-bar">
@@ -17,8 +17,8 @@
 				</a>
 				
 				<?php if($acl['externas']['agregar']){ ?>/
-				<a href="<?php echo $path ?>externas/agregar" title="Agregar dependencia no universitaria">
-					Agregar dependencia no universitaria
+				<a href="<?php echo $path ?>externas/agregar" title="Agregar dependencia ">
+					Agregar dependencia 
 					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
 				</a>
 				<?php } ?>
@@ -86,13 +86,13 @@
 						<td style="text-align:center">
 						<?php if($acl['externas']['editar']){ ?>
 							<a href="<?php echo $path . 'externas/editar/' . $dependencia->id?>"
-							   title="Editar datos de la dependencia no universitaria">
+							   title="Editar datos de la dependencia ">
 							   <img src="<?php echo $path?>public/img/system/editar.png" />
 							</a> 
 							<?php } ?>
 							<?php if($acl['externas']['editar']){ ?>
 							<a href="<?php echo $path . 'externas/eliminar/' . $dependencia->id?>"
-							   title="Eliminar toda la informacion de la dependencia no universitaria">
+							   title="Eliminar toda la informacion de la dependencia ">
 							   <img src="<?php echo $path?>public/img/system/eliminar.png" />
 							</a>
 							<?php } ?>
