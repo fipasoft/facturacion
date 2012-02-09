@@ -16,13 +16,13 @@
 					Agregar factura
 					<img src="<?php echo $path?>public/img/system/nuevo.png"/>
 				</a>
-				
-				
+
+
 			</div>
 			<div id="search"  id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?> >
 				<form action="<?php echo $path ?>facturas" method="post" id="frm_search">
 					<fieldset>
-						
+
 						<div>
 							<label for="dependencia_id">Dependencia</label>
 							<select name="dependencia_id" id="dependencia_id">
@@ -32,7 +32,7 @@
 								<?php } ?>
 							</select>
 						</div>
-						
+
 						<div>
 							<label for="festados_id">Estado</label>
 							<select name="festados_id" id="festados_id">
@@ -48,14 +48,14 @@
 							<label for="rfc">Rfc</label>
 							<input type="text" name="rfc" id="rfc" value="<?php echo $busqueda->campo('rfc') ?>" size="16" maxlength="16" />
 						</div>
-						
+
 						<div>
 							<label for="domicilio">Domicilio</label>
-							<input type="text" name="domicilio" id="domicilio" value="<?php echo $busqueda->campo('domicilio') ?>" size="40" maxlength="256" />					
+							<input type="text" name="domicilio" id="domicilio" value="<?php echo $busqueda->campo('domicilio') ?>" size="40" maxlength="256" />
 							<label for="colonia">Colonia</label>
-							<input type="text" name="colonia" id="colonia" value="<?php echo $busqueda->campo('colonia') ?>" size="30" maxlength="256" />										
+							<input type="text" name="colonia" id="colonia" value="<?php echo $busqueda->campo('colonia') ?>" size="30" maxlength="256" />
 						</div>
-						
+
 						<div>
 							<label for="subtotal">Subtotal</label>
 							<input type="text" class="_real_" name="subtotal" id="subtotal" value="<?php echo $busqueda->campo('subtotal') ?>" size="14" maxlength="14" />
@@ -64,12 +64,12 @@
 							<label for="total">Total</label>
 							<input type="text" class="_real_" name="total" id="total" value="<?php echo $busqueda->campo('total') ?>" size="14" maxlength="14" />
 						</div>
-						
+
 						<div>
 							<label for="observaciones">Observaciones</label>
-							<input type="text" name="observaciones" id="observaciones" value="<?php echo $busqueda->campo('observaciones') ?>" size="50" maxlength="254" />					
+							<input type="text" name="observaciones" id="observaciones" value="<?php echo $busqueda->campo('observaciones') ?>" size="50" maxlength="254" />
 						</div>
-					
+
 						<input type="submit" id="btn_submit" value="Filtrar" />
 						<input type="reset" id="reset" value="Quitar filtros" />
 					</fieldset>
@@ -77,13 +77,13 @@
 			</div>
 		</div>
 		<?php if($registros>0){ ?>
-		<div class="pages"> 
+		<div class="pages">
 			<?php foreach($paginador->botones() as $boton){ ?>
-				 <a  href="<?php echo $path . $boton->url() ?>" 
+				 <a  href="<?php echo $path . $boton->url() ?>"
 					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
 					class="<?php echo $boton->estilo() ?>">
 					<?php echo $boton->etiqueta() ?>
-				</a> 
+				</a>
 			<?php } ?>
 		</div>
 		<br />
@@ -98,21 +98,21 @@
 				<th class="centro" style="width:70px;">Total</th>
 				<th class="centro">Opciones</th>
 			</tr>
-			
-			<?php 
+
+			<?php
 			$i = 1;
-			
+
 			?>
-			
+
 			<?php foreach($facturas as $factura){ ?>
-			 
+
 				<tr class="<?php echo (($i %2) == 0 ? 'odd' : ''); ?>">
 					<td class="centro">
 						<?php echo $factura->folio; ?>
 						<br />
-						
+
 						<?php $st = $factura->estado() ?>
-						<?php switch( $st->clave ){ 
+						<?php switch( $st->clave ){
 								case 'CAN': ?>
 									<span class="false">
 										Cancelada
@@ -130,7 +130,7 @@
 										<img alt="cargando" src="<?php echo $path ?>public/img/system/spin.gif">
 									</div>
 									 <?php echo  "$" . number_format($factura->montoPagado(), 2, ".", ","); ?>
-									
+
 									<?php break;?>
 									<?php case 'PPG': ?>
 									<div id="dcontenedor_<?php echo $factura->id; ?>">
@@ -148,20 +148,19 @@
 									<br/>
 									<span class="sub2">
 									Restante </span><?php echo "$" . number_format(($factura->total - $factura->montoPagado()), 2, ".", ","); ?>
-									
-									
+
+
 									<?php break;?>
 								<?php default: ?>
 									<span class="sub2">
 										<?php echo $st->nombre ?>
 									</span>
-									
+
 									<?php break;?>
 						<?php }?>
 					</td>
 					<td class="centro">
-                    <span class="sub2">Creaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->saved_at) ?><br/>
-                    <span class="sub2">Facturaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?><br/>
+                        <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?>
 					</td>
 					<td class="centro">
 						<?php $dependencia = $factura->dependencia(); ?>
@@ -188,21 +187,21 @@
 						</strong>
 					</td>
 					<td class="centro">
-						
+
                        <a href="<?php echo $path; ?>facturas/ver/<?php echo $factura->id; ?>"  title="Ver">
                         <img src="<?php echo $path ?>public/img/system/ver.png" alt="ver"/></a>
-                        
+
 					<?php if($factura->editable()){ ?>
                        <a href="<?php echo $path; ?>facturas/editar/<?php echo $factura->id; ?>"  title="Editar">
                         <img src="<?php echo $path ?>public/img/system/editar.png" alt="editar"/></a>
                     <?php } ?>
-                    
+
 					   <a href="<?php echo $path; ?>facturas/control/<?php echo $factura->id; ?>"  title="Estados">
                         <img src="<?php echo $path ?>public/img/system/estado.png" alt="estados"/></a>
-                    
+
                         <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
                         <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/></a>
-                    
+
 					</td>
 				</tr>
 			<?php
@@ -215,13 +214,13 @@
 						No hay registros que mostrar
 			</p>
 		<?php } ?>
-		<div class="pages"> 
+		<div class="pages">
 			<?php foreach($paginador->botones() as $boton){ ?>
-				 <a  href="<?php echo $path . $boton->url() ?>" 
+				 <a  href="<?php echo $path . $boton->url() ?>"
 					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
 					class="<?php echo $boton->estilo() ?>">
 					<?php echo $boton->etiqueta() ?>
-				</a> 
+				</a>
 			<?php } ?>
 		</div>
 	</div>
