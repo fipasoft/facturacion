@@ -1,20 +1,20 @@
 <?php
 // FiPa, Creado el 01/12/2008
-/** 
+/**
  * Asistencias Controller
- * 
+ *
  * @package    Controladores
  * @author     mimeks <mimex@fipasoft.com.mx>
  * @copyright  2008 FiPa Software (contacto at fipasoft.com.mx)
  * @license    http://www.gnu.org/licenses/gpl.html  GNU General Public License (GPL)
- * 
+ *
  */
 class SistemaController extends ApplicationController {
 	 public $template = "system";
-	 	 
+
 	 function autocompletar(){
 	 	$this->set_response('view');
-	 	
+
 	 	$tabla   =  $this->post('tabla');
 	 	$campo   =  $this->post('campo');
 	 	$valor   =  $this->post('valor');
@@ -26,28 +26,28 @@ class SistemaController extends ApplicationController {
 		 		case 'LEFT':
 				 		$c = $campo . " LIKE '%" . $valor . "' ";
 		 			break;
-		 			
+
 				case 'RIGHT':
 						$c = $campo . " LIKE '" . $valor . "%' ";
 		 			break;
-		 			
+
 				case 'STRICT':
 						$c = $campo . " = '" . $valor . "' ";
 		 			break;
-		 			
+
 	 			case 'BOTH':
 	 			default:
 	 					$c = $campo . " LIKE '%" . $valor . "%' ";
 		 			break;
 		 	}
 		 	$resultados = $$tabla->find(
-		 		"columns: " . $campo, 
+		 		"columns: " . $campo,
 		 		"conditions: " . $c ,
 		 		"group: " . $campo,
 		 		"order: " . $campo,
 		 		"limit: " . $limit
 		 	);
-		 	
+
 	 	}else{
 	 		$resultados = array();
 	 		$campo = null;
@@ -56,7 +56,7 @@ class SistemaController extends ApplicationController {
 	 	$this->campo       =  $campo;
 	 	$this->resultados  =  $resultados;
 	 }
-	 	 
+
 	 function ayuda(){
 	 	$grupos = Session :: get_data('usr.grupos');
 	 	ksort($grupos);
@@ -65,24 +65,24 @@ class SistemaController extends ApplicationController {
 	 	}
 	 	$this->grupos = $grupos;
 	 }
-	 
+
  	public function index(){
  		$categorias = array();
 
  		$categorias[ '' ] = array(
-			'usuarios' => 'Usuarios',
- 			'historial' => 'Historial'
+ 		    'ejercicios' => 'Ejercicios',
+			'usuarios' => 'Usuarios'
  		);
 
 		$this->categorias   =  $categorias;
 		$this->path         =  KUMBIA_PATH;
  	}
-	 
-	 
+
+
 	 function configuracion(){
-	 	
+
 	 }
-	 
+
 	 function password(){
 	 	$this->option = '';
 	 	$this->error = '';
@@ -94,7 +94,7 @@ class SistemaController extends ApplicationController {
 			$usuario = new Usuario();
 			$usuario = $usuario->find( $usr_id );
 			if($usuario->id != ''){
-				if( $usuario->pass == sha1($this->post('pass')) ){ 
+				if( $usuario->pass == sha1($this->post('pass')) ){
 					if( $this->post('pass2') == $this->post('pass3') ){
 						if(strlen($this->post('pass')) >= 6){
 							$usuario->pass = sha1($this->post('pass2'));
@@ -115,13 +115,13 @@ class SistemaController extends ApplicationController {
 				}else{
 					$this->option = 'error';
 					$this->error .= ' La contrase&ntilde;a anterior es incorrecta.';
-				}				
+				}
 			}else{
 				$this->option = 'error';
-				$this->error = ' El usuario no existe.';	
+				$this->error = ' El usuario no existe.';
 			}
-	 		
+
 	 	}
-	 } 
+	 }
 }
 ?>

@@ -118,7 +118,7 @@ class AclController extends ApplicationController {
 				'index',
 				'contactos'
 				),
-                
+
             'localizacion' => array (
                 'inicia',
                 'editar',
@@ -222,8 +222,8 @@ class AclController extends ApplicationController {
 				'password'
 				)
 				);
-                
-                
+
+
                 $this->privilegios['administradores'][] = array (
                 'localizacion' => array (
                 'inicia',
@@ -231,7 +231,7 @@ class AclController extends ApplicationController {
                 'estados',
                 'municipios'
                 ));
-                
+
 				$this->privilegios['administradores'][] = array (
 			'dependencias' => array (
 				'agregar',
@@ -265,8 +265,8 @@ class AclController extends ApplicationController {
 				'ver'
 				)
 				);
-				
-				 
+
+
 				$this->privilegios['administradores'][] = array (
 				 'usuarios' => array (
 				 'agregar',
@@ -279,7 +279,7 @@ class AclController extends ApplicationController {
 				 'ver'
 				 )
 				 );
-                 
+
                  $this->privilegios['administradores'][] = array (
                  'facturas' => array (
                  'agregar',
@@ -292,8 +292,8 @@ class AclController extends ApplicationController {
                  'ver'
                  )
                  );
-				
-				
+
+
 
 				// carga los permisos en la lista acl
 				$i = 0;
