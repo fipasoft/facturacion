@@ -2,7 +2,7 @@
 	<div class="content">
 		<h1>
 			<?php echo $registros;?>
-			Dependencia<?php echo ($registros == 1 ? '' : 's') ?> <?php echo ($registros == 1 ? '' : 's') ?>
+			Dependencia<?php echo ($registros == 1 ? '' : 's') ?>
 			<?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
 		</h1>
 		<div id="options-bar">
@@ -15,10 +15,10 @@
 					Buscar
 					<img src="<?php echo $path?>public/img/system/buscar.png" alt="buscar"/>
 				</a>
-				
+
 				<?php if($acl['externas']['agregar']){ ?>/
 				<a href="<?php echo $path ?>externas/agregar" title="Agregar dependencia ">
-					Agregar dependencia 
+					Agregar dependencia
 					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
 				</a>
 				<?php } ?>
@@ -41,46 +41,45 @@
 			</div>
 		</div>
 		<?php if($registros > 0){ ?>
-				<table>
+				<table style="width:800px">
 					<tr>
 						<th>Clave</th>
 						<th>Nombre</th>
-						<th>RFC</th>
 						<th>Raz&oacute;n social</th>
 						<th>Domicilio</th>
 						<?php if($acl['externas']['eliminar'] || $acl['externas']['editar']){ ?>
 						<th>Opciones</th>
 						<?php } ?>
 					</tr>
-					<?php 
+					<?php
 						$i = 0;
-						foreach($dependencias as $dependencia ){ 
+						foreach($dependencias as $dependencia ){
 					?>
 					<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
-						<td>
-							<?php echo $dependencia->clave ?>
+						<td class="centrar">
+                            <span class="main">
+    							<?php echo $dependencia->clave ?>
+                            </span>
 						</td>
 						<td>
 							<?php echo $dependencia->nombre ?>
 						</td>
-						<td>
-							<?php 
-							$fiscal = $dependencia->fiscal();
-							echo $fiscal->rfc; ?>
-						</td>
 						<td style="text-align:center">
-						<?php echo $fiscal->razon; ?>
+    						<?php echo $fiscal->razon; ?>
+                            <br />
+                            <?php $fiscal = $dependencia->fiscal(); ?>
+                            <span class="sub">
+                                <?php  echo $fiscal->rfc; ?>
+                            </span>
 						</td>
 						<td style="text-align:center">
 						<?php echo $fiscal->domicilio; ?><br/>
-						<span><?php echo $fiscal->colonia; ?></span><br/>
-						<span><?php echo $fiscal->cp; ?></span><br/>
-						<?php 
+						<span>Col. <?php echo $fiscal->colonia; ?> C.P. <?php echo $fiscal->cp; ?></span><br/>
+						<?php
 								$municipio = $fiscal->municipio();
 								$edo = $municipio->edo();
 						?>
-						<span class="sub"><?php echo $municipio->nombre; ?></span><br/>
-						<span class="sub"><?php echo $edo->nombre; ?></span>
+						<span class="sub2"><?php echo $municipio->nombre; ?>, <?php echo $edo->nombre; ?></span>
 						</td>
 						<?php if($acl['externas']['eliminar'] || $acl['externas']['editar']){ ?>
 						<td style="text-align:center">
@@ -88,7 +87,7 @@
 							<a href="<?php echo $path . 'externas/editar/' . $dependencia->id?>"
 							   title="Editar datos de la dependencia ">
 							   <img src="<?php echo $path?>public/img/system/editar.png" />
-							</a> 
+							</a>
 							<?php } ?>
 							<?php if($acl['externas']['editar']){ ?>
 							<a href="<?php echo $path . 'externas/eliminar/' . $dependencia->id?>"
@@ -99,7 +98,7 @@
 						</td>
 						<?php } ?>
 					</tr>
-					<?php 
+					<?php
 						$i++;
 					}
 					?>
@@ -110,13 +109,13 @@
 					No hay registros que mostrar
 				</p>
 		<?php } ?>
-		<div class="pages"> 
+		<div class="pages">
 			<?php foreach($paginador->botones() as $boton){ ?>
-				 <a  href="<?php echo $path . $boton->url() ?>" 
+				 <a  href="<?php echo $path . $boton->url() ?>"
 					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
 					class="<?php echo $boton->estilo() ?>">
 					<?php echo $boton->etiqueta() ?>
-				</a> 
+				</a>
 			<?php }?>
 		</div>
 	</div>

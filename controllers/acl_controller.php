@@ -65,6 +65,9 @@ class AclController extends ApplicationController {
 				'control',
 				'ver'
 				),
+		   'dependencias' => array (
+                'index'
+                ),
             'externas' => array (
                 'agregar',
                 'editar',
@@ -234,9 +237,6 @@ class AclController extends ApplicationController {
 
 				$this->privilegios['administradores'][] = array (
 			'dependencias' => array (
-				'agregar',
-                'editar',
-                'eliminar',
                 'index'
 				)
 				);
