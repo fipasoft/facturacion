@@ -6,10 +6,10 @@
 
 class InicioController extends ApplicationController {
 	 public $template = "system";
-	 	 
+
 	 function index(){
-		//$this->redirect('movimientos', 0);
+		$this->redirect('facturas', 0);
 	 }
-	 
+
 }
 ?>
