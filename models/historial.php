@@ -29,7 +29,13 @@
                 'facturas',
                 'externas'
 			);
-		}
+		}else if( in_array('consulta',  $usr_grupos)){
+            $controladores = array(
+                'ejercicios',
+                'facturas',
+                'externas'
+            );
+        }
 		return $controladores;
 
  	}
