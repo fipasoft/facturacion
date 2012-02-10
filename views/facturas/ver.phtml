@@ -1,10 +1,9 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
 	<div class="content">
-		<h1>Editar factura</h1>
-		<h2>Folio: <?php echo $factura->folio; ?></h2>
+		<h1>Factura <?php echo $factura->folio; ?></h2>
+        <h2><?php echo $factura->razon; ?></h2>
         <h2>RFC: <?php echo $factura->rfc; ?></h2>
-        <h2>Razon social: <?php echo $factura->razon; ?></h2>
 		<div id="options-bar">
 			<div id="options">
 				<a href="<?php echo $path ?>facturas">Volver
@@ -28,7 +27,7 @@
                     Imprimir
                     <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/>
                 </a>
-            
+
 			</div>
 		</div>
 		<?php switch($option) {
@@ -41,7 +40,7 @@
 						<legend>Fiscal</legend>
 						<?php $festados = $factura->estado(); ?>
                         <span class="sub2">Estado: </span> <?php echo $festados->singular; ?><br/>
-                        
+
 						<span class="sub2">Folio: </span> <?php echo $factura->folio ?><br/>
                         <span class="sub2">Creaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->saved_at) ?><br/>
                         <span class="sub2">Facturaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?><br/>
@@ -126,8 +125,8 @@
                         </table>
                         </div>
 					</fieldset>
-					
-					                   
+
+
                     <fieldset>
                         <legend>Observaciones</legend>
                         <?php echo $factura -> observaciones; ?> <br/>
