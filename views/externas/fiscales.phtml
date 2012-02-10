@@ -1,24 +1,48 @@
 <?php $path = KUMBIA_PATH; ?>
-		<?php switch($option) { 
+		<?php switch($option) {
 				case 'captura': ?>
 				<?php $fiscal = $dependencia->fiscal(); ?>
                 <?php $municipio = $fiscal->municipio(); ?>
                 <?php $edo = $municipio->edo(); ?>
-				RFC: <?php echo $fiscal -> rfc; ?> <br/>
-                Razón social: <?php echo $fiscal -> razon; ?> <br/>
-                Domicilio: <?php echo $fiscal -> domicilio; ?> <br/>
-                Colonia: <?php echo $fiscal -> colonia; ?> <br/>
-                C.P.: <?php echo $fiscal -> cp; ?> <br/>
-                Municipio: <?php echo $municipio -> nombre; ?> <br/>
-                Estado: <?php echo $edo -> nombre; ?> <br/>
+                <table>
+                    <tr>
+                        <th>RFC:</th>
+                        <td><?php echo $fiscal -> rfc; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Razón social:</th>
+                        <td><?php echo $fiscal -> razon; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Domicilio:</th>
+                        <td><?php echo $fiscal -> domicilio; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Colonia:</th>
+                        <td><?php echo $fiscal -> colonia; ?></td>
+                    </tr>
+                    <tr>
+                        <th>C.P.:</th>
+                        <td><?php echo $fiscal -> cp; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Municipio:</th>
+                        <td><?php echo $municipio -> nombre; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Estado:</th>
+                        <td><?php echo $edo -> nombre; ?></td>
+                    </tr>
+                </table>
+
 			<?php  break; ?>
 			<?php case 'exito': ?>
 				<p class="info">
 					<br />
 					La dependencia se elimin&oacute; correctamente.</p>
 			<?php  break; ?>
-			<?php case 'error': 
-				  default: 
+			<?php case 'error':
+				  default:
 			?>
 				<p class="error">
 					Ha ocurrido un error al intentar eliminar la dependencia.
