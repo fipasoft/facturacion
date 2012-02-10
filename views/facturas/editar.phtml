@@ -14,7 +14,7 @@
 					Agregar otra factura
 					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
 				</a> /
-				
+
                 <a href="<?php echo $path ?>facturas/ver/<?php echo $factura->id; ?>" title="Ver factura">
                     Ver factura
                     <img src="<?php echo $path?>public/img/system/ver.png" alt="ver"/>
@@ -27,7 +27,7 @@
                     Imprimir
                     <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/>
                 </a>
-                
+
 			</div>
 		</div>
 		<?php switch($option) {
@@ -40,12 +40,12 @@
 						<legend>Fiscal</legend>
 						<label for="clave">Fecha</label>
                         <br/>
-                        <input name="fecha" 
-                               id="fecha" 
-                               value="<?php echo Utils::convierteFecha(substr($factura->fecha,0,10)); ?>" 
-                               size="10" 
-                               maxlength="10" 
-                               class="_fecha_" 
+                        <input name="fecha"
+                               id="fecha"
+                               value="<?php echo Utils::convierteFecha(substr($factura->fecha,0,10)); ?>"
+                               size="10"
+                               maxlength="10"
+                               class="_fecha_"
                                readonly="readonly" />
                         <br/>
                         <br/>
@@ -105,7 +105,7 @@
                                 <td class="centro">
                                     <input type="text" size="70" maxlength="300"
                                             name="concepto[]" class="concepto"
-                                            value="<?php echo $concepto->descripcion; ?>"/>
+                                            value="<?php echo htmlentities( utf8_decode( $concepto->descripcion ) ); ?>"/>
 
                                 </td>
 
@@ -174,8 +174,8 @@
                         </table>
                         </div>
 					</fieldset>
-					
-					                   
+
+
                     <fieldset>
                         <legend>Observaciones</legend>
                             <textarea name="observaciones" id="observaciones" cols="100" rows="5" class="_opcional_"><?php echo $factura->observaciones; ?></textarea>
