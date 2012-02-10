@@ -98,6 +98,7 @@
 				<th class="centro" style="width:70px;">Subtotal</th>
 				<th class="centro" style="width:65px;">IVA</th>
 				<th class="centro" style="width:70px;">Total</th>
+                <th class="centro" >Observaciones</th>
 			</tr>
 
 			<?php
@@ -166,6 +167,11 @@
 							<?php echo ( $monto == '0.00' ? '-' : $monto ) ?>
 						</strong>
 					</td>
+                    <td class="centro">
+                        <span class="sub2">
+                            <?php echo ( $factura->observaciones ? $factura->observaciones : '-' ); ?>
+                        </span>
+                    </td>
 				</tr>
 			<?php
 			$i++;
