@@ -87,16 +87,15 @@
 			<?php } ?>
 		</div>
 		<br />
-		<table style="margin-left:-80px;width:1050px;">
+		<table style="width:850px;">
 			<tr>
-				<th class="centro" style="width:150px;">Folio</th>
+				<th class="centro" style="width:20px;">Folio</th>
 				<th class="centro" style="width:150px;">Fecha</th>
 				<th class="centro" style="width:350px;">Dependencia</th>
 				<!-- <th class="centro" style="width:200px;">Datos fiscales</th>-->
 				<th class="centro" style="width:70px;">Subtotal</th>
 				<th class="centro" style="width:65px;">IVA</th>
 				<th class="centro" style="width:70px;">Total</th>
-				<th class="centro">Opciones</th>
 			</tr>
 
 			<?php
@@ -107,57 +106,34 @@
 			<?php foreach($facturas as $factura){ ?>
 
 				<tr class="<?php echo (($i %2) == 0 ? 'odd' : ''); ?>">
-					<td class="centro">
-						<?php echo $factura->folio; ?>
+					<?php $st = $factura->estado() ?>
+					<td class="centro <?php echo $st->clave ?>" title="<?php echo $st->nombre ?>">
+                        <span class="main">
+						  <?php echo $factura->folio; ?>
+                        </span>
 						<br />
+                        <a  class="sw-op" title="Opciones de la factura">
+                            <img src="<?php echo $path?>public/img/system/opciones.png" alt="ver opciones"/>
+                        </a>
+                        <br />
+                        <div class="div-op" style="display:none; width:20px; margin:0 auto">
 
-						<?php $st = $factura->estado() ?>
-						<?php switch( $st->clave ){
-								case 'CAN': ?>
-									<span class="false">
-										Cancelada
-									</span>
-									<?php break;?>
-								<?php case 'PAG': ?>
-									<div id="dcontenedor_<?php echo $factura->id; ?>">
-									<span class="sub">
-										<a class="epagado" id="epagado_<?php echo $factura->id; ?>"  style="color:#99AA00;">
-											Pagada
-										</a>
-									</span>
-									</div>
-									<div class="fspin" style="display:none;" id="dspin_<?php echo $factura->id; ?>">
-										<img alt="cargando" src="<?php echo $path ?>public/img/system/spin.gif">
-									</div>
-									 <?php echo  "$" . number_format($factura->montoPagado(), 2, ".", ","); ?>
+                            <a href="<?php echo $path; ?>facturas/ver/<?php echo $factura->id; ?>"  title="Ver">
+                            <img src="<?php echo $path ?>public/img/system/ver.png" alt="ver"/></a>
 
-									<?php break;?>
-									<?php case 'PPG': ?>
-									<div id="dcontenedor_<?php echo $factura->id; ?>">
-									<span class="sub">
-										<a class="epagado" id="epagado_<?php echo $factura->id; ?>"  style="color:#e1ba20;">
-											Parcialmente Pagada
-										</a>
-									</span>
-									</div>
-									<div style="display:none;" id="dspin_<?php echo $factura->id; ?>">
-										<img alt="cargando" src="<?php echo $path ?>public/img/system/spin.gif">
-									</div>
-									<span class="sub2">
-									Pagado </span><?php echo "$" . number_format($factura->montoPagado(), 2, ".", ","); ?>
-									<br/>
-									<span class="sub2">
-									Restante </span><?php echo "$" . number_format(($factura->total - $factura->montoPagado()), 2, ".", ","); ?>
+                            <?php if($factura->editable()){ ?>
+                                <a href="<?php echo $path; ?>facturas/editar/<?php echo $factura->id; ?>"  title="Editar">
+                                <img src="<?php echo $path ?>public/img/system/editar.png" alt="editar"/></a>
+                            <?php } ?>
 
+                            <a href="<?php echo $path; ?>facturas/control/<?php echo $factura->id; ?>"  title="Cambiar estado">
+                            <img src="<?php echo $path ?>public/img/system/estado.png" alt="estados"/></a>
 
-									<?php break;?>
-								<?php default: ?>
-									<span class="sub2">
-										<?php echo $st->nombre ?>
-									</span>
+                            <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
+                            <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/></a>
 
-									<?php break;?>
-						<?php }?>
+                        </div>
+
 					</td>
 					<td class="centro">
                         <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?>
@@ -185,23 +161,6 @@
 						<strong>
 							<?php echo ( $monto == '0.00' ? '-' : $monto ) ?>
 						</strong>
-					</td>
-					<td class="centro">
-
-                       <a href="<?php echo $path; ?>facturas/ver/<?php echo $factura->id; ?>"  title="Ver">
-                        <img src="<?php echo $path ?>public/img/system/ver.png" alt="ver"/></a>
-
-					<?php if($factura->editable()){ ?>
-                       <a href="<?php echo $path; ?>facturas/editar/<?php echo $factura->id; ?>"  title="Editar">
-                        <img src="<?php echo $path ?>public/img/system/editar.png" alt="editar"/></a>
-                    <?php } ?>
-
-					   <a href="<?php echo $path; ?>facturas/control/<?php echo $factura->id; ?>"  title="Estados">
-                        <img src="<?php echo $path ?>public/img/system/estado.png" alt="estados"/></a>
-
-                        <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
-                        <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/></a>
-
 					</td>
 				</tr>
 			<?php

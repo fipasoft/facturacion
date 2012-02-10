@@ -1,0 +1,19 @@
+/* en proceso */
+div.content td.act {
+background-color:#D3DBFF;
+}
+/* en revision */
+div.content td.ent {
+background-color: #FFFFC4;
+}
+/* aprobada o en tramite */
+div.content td.par{
+background-color:#CAFFB3;
+}
+div.content td.pag{
+background-color:#CCFF77;
+}
+/* pagada */
+div.content td.can {
+background-color:#FF9595;
+}
