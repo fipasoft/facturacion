@@ -85,7 +85,18 @@ class Dependencia extends ActiveRecord{
 		$fiscal = $fiscal->find_all_by_sql(
     		"SELECT " .
                 "fiscal.*, " .
-                "CONCAT( TRIM( municipio.nombre ), ', ' , TRIM( edo.nombre ) ) AS ciudad " .
+                "CONCAT( " .
+		            // para simular la funcion ucfirst
+		            "CONCAT( " .
+		                "UPPER( SUBSTRING( TRIM( municipio.nombre ), 1, 1) ), " .
+                        "LOWER( SUBSTRING( TRIM( municipio.nombre ), 2   ) ) " .
+		            "), " .
+                    "', ' , " .
+                    "CONCAT( " .
+                        "UPPER( SUBSTRING( TRIM( edo.nombre ), 1, 1) ), " .
+                        "LOWER( SUBSTRING( TRIM( edo.nombre ), 2   ) ) " .
+                    ") " .
+                ") AS ciudad " .
             "FROM " .
                 "fiscal " .
                 "Inner Join municipio ON fiscal.municipio_id = municipio.id " .

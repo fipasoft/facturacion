@@ -58,6 +58,18 @@ class Factura extends ActiveRecord{
 
 	}
 
+	public function leyendaDeEfectosFiscales(){
+
+	    $dependencias = new Dependencia();
+	    $dependencias = $dependencias->find(
+	       "conditions: clave = 'DGM'" // TODO: Obtener las dependencias de un config
+	    );
+
+	    return
+	       count( $dependencias ) > 0;
+
+	}
+
 
 	public function montoConLetra(){
 
