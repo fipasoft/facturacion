@@ -43,22 +43,25 @@
 					<fieldset>
 						<legend>Fiscal</legend>
 						<?php $festados = $factura->estado(); ?>
-                        <span class="sub2">Estado: </span> <?php echo $festados->singular; ?><br/>
+                        <table>
+                            <tr><th><span class="sub2">Estado: </span></th><td class="centrar <?php echo $festados->clave; ?>"> <?php echo $festados->singular; ?></td></tr>
+    						<tr><th><span class="sub2">Folio: </span></th><td class="centrar"> <?php echo $factura->folio ?></td></tr>
+                            <tr><th><span class="sub2">Fecha: </span></th><td class="centrar"> <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?></td></tr>
 
-						<span class="sub2">Folio: </span> <?php echo $factura->folio ?><br/>
-                        <span class="sub2">Creaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->saved_at) ?><br/>
-                        <span class="sub2">Facturaci&oacute;n: </span> <?php echo Utils::fecha_convertir_hibrida_corta($factura->fecha) ?><br/>
-                        <?php $dependencia = $factura->dependencia(); ?>
-                        <?php $fiscal = $dependencia->fiscal(); ?>
-                        <?php $municipio = $fiscal->municipio(); ?>
-                        <?php $edo = $municipio->edo(); ?>
-                        <span class="sub2">RFC: </span> <?php echo $fiscal -> rfc; ?> <br/>
-                        <span class="sub2">Razón social: </span> <?php echo $fiscal -> razon; ?> <br/>
-                        <span class="sub2">Domicilio: </span> <?php echo $fiscal -> domicilio; ?> <br/>
-                        <span class="sub2">Colonia: </span> <?php echo $fiscal -> colonia; ?> <br/>
-                        <span class="sub2">C.P.: </span> <?php echo $fiscal -> cp; ?> <br/>
-                        <span class="sub2">Municipio: </span> <?php echo $municipio -> nombre; ?> <br/>
-                        <span class="sub2">Estado: </span> <?php echo $edo -> nombre; ?> <br/>
+                            <?php $dependencia = $factura->dependencia(); ?>
+                            <?php $fiscal = $dependencia->fiscal(); ?>
+                            <?php $municipio = $fiscal->municipio(); ?>
+                            <?php $edo = $municipio->edo(); ?>
+                            <tr><th><span class="sub2">Razón social: </span></th><td class="centrar"> <?php echo $fiscal -> razon; ?> </td></tr>
+                            <tr><th><span class="sub2">RFC: </span></th><td class="centrar"> <?php echo $fiscal -> rfc; ?> </td></tr>
+                            <tr><th><span class="sub2">Domicilio: </span></th><td class="centrar"> <?php echo $fiscal -> domicilio; ?> </td></tr>
+                            <tr><th><span class="sub2">Colonia: </span></th><td class="centrar"> <?php echo $fiscal -> colonia; ?> </td></tr>
+                            <tr><th><span class="sub2">C.P.: </span></th><td class="centrar"> <?php echo $fiscal -> cp; ?> </td></tr>
+                            <tr><th><span class="sub2">Estado: </span></th><td class="centrar"> <?php echo $edo -> nombre; ?> </td></tr>
+                            <tr><th><span class="sub2">Municipio: </span></th><td class="centrar"> <?php echo $municipio -> nombre; ?> </td></tr>
+                            <tr><th><span class="sub2">Creaci&oacute;n: </span></th><td class="centrar"> <?php echo Utils::fecha_convertir_hibrida_corta($factura->saved_at) ?></td></tr>
+                            <tr><th><span class="sub2">Observaciones: </span></th><td class="centrar"><?php echo ( $factura->observaciones ? $factura->observaciones : '-' ); ?></td></tr>
+                        </table>
 
 					</fieldset>
 					<div class="divisor"></div>
@@ -70,9 +73,9 @@
 					        <tr>
                                 <th>Clave</th>
                                 <th>Descripción</th>
-					            <th>Cantidad</th>
-                                <th>Unitario</th>
-                                <th>Monto</th>
+					            <th style="width: 90px">Cantidad</th>
+                                <th style="width: 90px">Precio unitario</th>
+                                <th style="width: 90px">Monto</th>
 					        </tr>
 					        <?php
 					           $conceptos = $factura->conceptos();
@@ -92,13 +95,12 @@
                                     <?php echo $concepto->cantidad; ?>
                                 </td>
 
-
-                                <td class="centro">
-                                    <?php echo $concepto->unitario; ?>
+                                <td class="numero">
+                                    <?php echo number_format( $concepto->unitario, 2, '.', ',' ); ?>
                                 </td>
 
-                                <td class="centro">
-                                    <?php echo $concepto->monto; ?>
+                                <td class="numero">
+                                    <?php echo number_format( $concepto->monto, 2, '.', ',' ); ?>
                                 </td>
 					        </tr>
 					        <?php } ?>
@@ -107,35 +109,28 @@
 					    </div>
 
                         <div>
-                        <table style="margin-left: 622px">
+                        <table style="margin-left: 605px">
                             <tr>
                                 <th>Subtotal</th>
-                                <td>
-                                    <?php echo $factura->subtotal; ?>
+                                <td  style="width: 90px" class="numero">
+                                    <?php echo number_format( $factura->subtotal, 2, '.', ',' ); ?>
                                 </td>
                             </tr>
                             <tr>
                                 <th>IVA</th>
-                                <td>
-                                    <?php echo $factura->iva; ?>
+                                <td class="numero">
+                                    <?php echo number_format( $factura->iva, 2, '.', ',' );  ?>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Total</th>
-                                <td>
-                                    <?php echo $factura->total; ?>
+                                <td class="numero">
+                                    <?php echo number_format( $factura->total, 2, '.', ',' );  ?>
                                 </td>
                             </tr>
                         </table>
                         </div>
 					</fieldset>
-
-
-                    <fieldset>
-                        <legend>Observaciones</legend>
-                        <?php echo $factura -> observaciones; ?> <br/>
-
-                    </fieldset>
 
 				</form>
 			<?php  break; ?>
