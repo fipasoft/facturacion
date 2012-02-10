@@ -110,8 +110,8 @@ $menu = Session :: get_data('usr.menu');
 	<div id="footer">
 		<div class="content">
 			<span class="sub2">
-				Universidad de Guadalajara <?php echo $year ?>
-			</span>
+			    <?php echo Session :: get_data( 'sys.dependencia' ) ?> <?php echo $year ?>
+		    </span>
 		</div>
 	</div>
 </div>
