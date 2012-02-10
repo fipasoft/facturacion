@@ -153,7 +153,10 @@ class FacturasController extends ApplicationController{
             $ejercicio_id = Session :: get_data( 'eje.id' );
 
             $dependencias = new Dependencia();
-            $dependencias = $dependencias->find();
+            $dependencias = $dependencias->find(
+                "conditions: ejercicio_id = '" . Session :: get_data( 'eje.id' ) . "'",
+                "order: nombre"
+            );
             $this->dependencias = $dependencias;
             $this->ejercicio_id = $ejercicio_id;
 
@@ -186,7 +189,10 @@ class FacturasController extends ApplicationController{
                 }
 
                 $dependencias = new Dependencia();
-                $dependencias = $dependencias->find();
+                $dependencias = $dependencias->find(
+                    "conditions: ejercicio_id = '" . $factura->ejercicio_id . "'",
+                    "order: nombre"
+                );
 
                 $this->dependencias = $dependencias;
                 $this->factura = $factura;
