@@ -61,13 +61,13 @@
     							<?php echo $dependencia->clave ?>
                             </span>
 						</td>
-						<td>
+						<td class="centrar">
 							<?php echo $dependencia->nombre ?>
 						</td>
 						<td style="text-align:center">
+                            <?php $fiscal = $dependencia->fiscal(); ?>
     						<?php echo $fiscal->razon; ?>
                             <br />
-                            <?php $fiscal = $dependencia->fiscal(); ?>
                             <span class="sub">
                                 <?php  echo $fiscal->rfc; ?>
                             </span>
