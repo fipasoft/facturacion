@@ -11,12 +11,14 @@
 				<a href="#" id="aSearch" title="Buscar" >
 					Buscar
 					<img src="<?php echo $path?>public/img/system/buscar.png"/>
-				</a> /
-				<a href="<?php echo $path ?>facturas/agregar" title="Agregar factura">
-					Agregar factura
-					<img src="<?php echo $path?>public/img/system/nuevo.png"/>
 				</a>
-
+                <?php if( $acl[ 'facturas' ][ 'agregar' ] ){ ?>
+                     /
+    				<a href="<?php echo $path ?>facturas/agregar" title="Agregar factura">
+    					Agregar factura
+    					<img src="<?php echo $path?>public/img/system/nuevo.png"/>
+    				</a>
+                <?php } ?>
 
 			</div>
 			<div id="search"  id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?> >
@@ -121,13 +123,15 @@
                             <a href="<?php echo $path; ?>facturas/ver/<?php echo $factura->id; ?>"  title="Ver">
                             <img src="<?php echo $path ?>public/img/system/ver.png" alt="ver"/></a>
 
-                            <?php if($factura->editable()){ ?>
+                            <?php if( $factura->editable() && $acl[ 'facturas' ][ 'editar' ] ){ ?>
                                 <a href="<?php echo $path; ?>facturas/editar/<?php echo $factura->id; ?>"  title="Editar">
                                 <img src="<?php echo $path ?>public/img/system/editar.png" alt="editar"/></a>
                             <?php } ?>
 
-                            <a href="<?php echo $path; ?>facturas/control/<?php echo $factura->id; ?>"  title="Cambiar estado">
-                            <img src="<?php echo $path ?>public/img/system/estado.png" alt="estados"/></a>
+                            <?php if( $acl[ 'facturas' ][ 'control' ] ){ ?>
+                                <a href="<?php echo $path; ?>facturas/control/<?php echo $factura->id; ?>"  title="Cambiar estado">
+                                <img src="<?php echo $path ?>public/img/system/estado.png" alt="estados"/></a>
+                            <?php } ?>
 
                             <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
                             <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/></a>

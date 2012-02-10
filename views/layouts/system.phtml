@@ -87,7 +87,9 @@ $menu = Session :: get_data('usr.menu');
 					</form>
 				</div> /
 				<a href="<?php echo $path ?>sistema/configuracion">Configuraci&oacute;n</a> /
-				<a href="<?php echo $path ?>sistema">Sistema</a> /
+                <?php if( $acl_global[ 'sistema' ][ 'index' ] ){ ?>
+				    <a href="<?php echo $path ?>sistema">Sistema</a> /
+                <?php } ?>
 				<!--<a href="<?php echo $path ?>sistema/ayuda">Ayuda</a> /-->
 				<a href="<?php echo $path ?>sesion/cerrar">Cerrar sesi&oacute;n</a>
 			</div>

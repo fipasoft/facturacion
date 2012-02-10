@@ -42,7 +42,7 @@ class ApplicationControllerBase {
 			$usr->login = Session :: get_data('usr.login');
 			$usr->nombre = Session :: get_data('usr.nombre');
 		}
-		
+
 		$this->usr = $usr;
 		$acl = new gacl();
 		if( !$acl->acl_check('ALL',         'ALL',   'usuarios',  $usr->login) &&
@@ -66,6 +66,7 @@ class ApplicationControllerBase {
 			$ejs = new Ejercicio();
 			$this->_ejes = $ejs->find('order: annio DESC');
 			$this->_eje = $ejs->find( Session :: get_data ('eje.id') );
+			$this->acl_global = Session :: get_data( 'acl.global' );
 		}
 	}
 
@@ -79,30 +80,30 @@ class ApplicationControllerBase {
 		);
  		return true;
  	}
- 	
+
 	function error( $msg = '', $obj = '', $exc = '' ){
 		$controlador = $this->controlador;
 		$accion = $this->accion;
-		
+
 		$this->option = 'error';
-		
+
 		if( $msg != '' ){
 			$this->error = $this->_msg = $msg;
 		}else{
 			$var = '_' . $controlador . '_error';
-			$this->error = $this->_msg = $this->$var ;		
+			$this->error = $this->_msg = $this->$var ;
 		}
-		
+
 		if( $obj != '' ){
-			
+
 			try{
 				$obj->show_message();
 			}catch( Exception $ex ){
 				$this->_msg  .= ob_get_contents();
 			}
-			
+
 		}
-		
+
 		if( $exc != '' ){
 			$this->_msg .= $exc;
 		}
@@ -118,25 +119,25 @@ class ApplicationControllerBase {
 		);
 		$myLog->close();
 	}
-	
-	
+
+
 	function exito( $msj = '', $type = 'html' ){
-		
+
 		$this->modo( 'exito' );
-		
+
 		if( $type == 'html' ){
-			
+
 			$msj = htmlentities( utf8_decode( $msj ) );
-			
+
 		}
-		
+
 		$this->exito = $msj;
-		
+
 	}
-	
-	
+
+
 	function guardarEnHistorial( $msj, $eje_id = '' ){
-		
+
 		$historial = new Historial();
 		$historial->ejercicio_id    =   ( $eje_id != '' ? $eje_id : Session :: get_data( 'eje.id' ) );
 		$historial->usuario         =   Session :: get_data( 'usr.login' );
@@ -144,20 +145,20 @@ class ApplicationControllerBase {
 		$historial->controlador     =   $this->controlador;
 		$historial->accion          =   $this->accion;
 		$historial->save();
-		
+
 	}
-	
+
 	function modo( $s = '' ){
-		
+
 		if( $s != '' ){
-			
+
 			$this->option = $s;
-			
+
 		}
-		
+
 		return
 			$this->option;
-		
+
 	}
 
 	function not_found(){

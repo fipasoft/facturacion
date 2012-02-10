@@ -8,22 +8,26 @@
 			<div id="options">
 				<a href="<?php echo $path ?>facturas">Volver
 					<img src="<?php echo $path?>public/img/system/volver.png" alt="volver"/>
-				</a> /
-				<a href="<?php echo $path ?>facturas/agregar" title="Agregar factura">
-					Agregar otra factura
-					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
-				</a> /
-				<?php if($factura->editable()){ ?>
-                <a href="<?php echo $path ?>facturas/editar/<?php echo $factura->id; ?>" title="Editar factura">
-                    Editar factura
-                    <img src="<?php echo $path?>public/img/system/editar.png" alt="editar"/>
-                </a> /
+				</a>
+                <?php if( $acl[ 'facturas' ][ 'agregar' ] ){ ?>
+                     / <a href="<?php echo $path ?>facturas/agregar" title="Agregar factura">
+    					Agregar otra factura
+    					<img src="<?php echo $path?>public/img/system/nuevo.png" alt="nuevo"/>
+    				</a>
                 <?php } ?>
-                <a href="<?php echo $path ?>facturas/control/<?php echo $factura->id; ?>" title="Control factura">
-                    Cambiar estado
-                    <img src="<?php echo $path?>public/img/system/estado.png" alt="control"/>
-                </a> /
-                <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
+				<?php if( $factura->editable() && $acl[ 'facturas' ][ 'editar' ] ){ ?>
+                     / <a href="<?php echo $path ?>facturas/editar/<?php echo $factura->id; ?>" title="Editar factura">
+                        Editar factura
+                        <img src="<?php echo $path?>public/img/system/editar.png" alt="editar"/>
+                    </a>
+                <?php } ?>
+                <?php if( $acl[ 'facturas' ][ 'control' ] ){ ?>
+                    / <a href="<?php echo $path ?>facturas/control/<?php echo $factura->id; ?>" title="Control factura">
+                        Cambiar estado
+                        <img src="<?php echo $path?>public/img/system/estado.png" alt="control"/>
+                    </a>
+                <?php } ?>
+                / <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
                     Imprimir
                     <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/>
                 </a>
