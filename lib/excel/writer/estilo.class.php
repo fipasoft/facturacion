@@ -113,7 +113,7 @@ class XLSEstilo{
         $this->catalogo['TD.Borderside']['setLeft'] = '1';
         $this->catalogo['TD.Borderside']['setRight'] = '1';
         $this->catalogo['TD.Borderside']['setFontFamily'] = 'Arial';
-        $this->catalogo['TD.Borderside']['setSize'] = '10';
+        $this->catalogo['TD.Borderside']['setSize'] = '9';
         $this->catalogo['TD.Borderside']['setVAlign'] = 'top';
         $this->catalogo['TD.Borderside']['setTextWrap'] = '';
 
