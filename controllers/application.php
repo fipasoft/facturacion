@@ -59,7 +59,7 @@ class ApplicationControllerBase {
 				Logger :: WARNING
 			);
 			$myLog->close();
-			$this->redirect('sesion/restringir', 0);
+            $this->route_to('controller: sesion', 'action: restringir');
 		}else{
 			$gacl_x = new gacl_extra();
 			$gacl_x->dbReset();
