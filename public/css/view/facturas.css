@@ -10,10 +10,15 @@ background-color: #FFFFC4;
 div.content td.par{
 background-color:#CAFFB3;
 }
+/* pagada */
 div.content td.pag{
 background-color:#CCFF77;
 }
-/* pagada */
+/* verificada */
+div.content td.vrf{
+background-color:#CAFFB3;
+}
+/* cancelada */
 div.content td.can {
 background-color:#FF9595;
 }
