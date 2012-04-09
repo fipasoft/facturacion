@@ -6,17 +6,21 @@ background-color:#D3DBFF;
 div.content td.ent {
 background-color: #FFFFC4;
 }
-/* aprobada o en tramite */
+/* parcialmnte pagada */
 div.content td.par{
 background-color:#CAFFB3;
 }
 /* pagada */
 div.content td.pag{
-background-color:#CCFF77;
+background-color:#CAFFB3;
+}
+/* impresa */
+div.content td.imp{
+background-color:#E3CCEA;
 }
 /* verificada */
 div.content td.vrf{
-background-color:#CAFFB3;
+background-color:#CCFF77;
 }
 /* cancelada */
 div.content td.can {
