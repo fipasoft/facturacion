@@ -321,52 +321,7 @@ span.estado{
 font-size:8px;
 }
 
-span.e1{
-font-weight: bold;
-color: #99AA00;
-}
-
-span.e2{
-font-weight: bold;
-color: #99AA00;
-}
-
-span.e3{
-font-weight: bold;
-color: #99AA00;
-}
-
-span.e4{
-font-weight: bold;
-color: #99AA00;
-}
-
-span.e5{
-font-weight: bold;
-color: #99AA00;
-}
-
-span.e6{
-font-weight: bold;
-color: #99AA00;
-}
-
-span.e7{
-font-weight: bold;
-color: #99AA00;
-}
-
-span.e8{
-font-weight: bold;
-color: #99AA00;
-}
-
-span.e9{
-font-weight: bold;
-color: #99AA00;
-}
-
-span.e10{
+span.e1, span.e2, span.e3, span.e4, span.e5, span.e6, span.e7, span.e8, span.e9, span.e10  {
 font-weight: bold;
 color: #99AA00;
 }
