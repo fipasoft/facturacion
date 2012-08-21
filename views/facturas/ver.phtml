@@ -60,6 +60,15 @@
                             <tr><th><span class="sub2">Estado: </span></th><td class="centrar"> <?php echo $edo -> nombre; ?> </td></tr>
                             <tr><th><span class="sub2">Municipio: </span></th><td class="centrar"> <?php echo $municipio -> nombre; ?> </td></tr>
                             <tr><th><span class="sub2">Creaci&oacute;n: </span></th><td class="centrar"> <?php echo Utils::fecha_convertir_hibrida_corta($factura->saved_at) ?></td></tr>
+                            <tr>
+                            	<th><span class="sub2">M&eacute;todo de pago: </span>
+                            	<td class="centrar">
+									<?php echo utf8_encode( $factura->metodopago( 'nombre' ) ) ?>
+									<?php if( $factura->ctapago ){?>
+											CTA: <?php echo $factura->ctapago ?>
+									<?php } ?>
+                            	</td>
+                            </tr>
                             <tr><th><span class="sub2">Observaciones: </span></th><td class="centrar"><?php echo ( $factura->observaciones ? $factura->observaciones : '-' ); ?></td></tr>
                         </table>
 

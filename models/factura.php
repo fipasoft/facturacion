@@ -2,7 +2,9 @@
 class Factura extends ActiveRecord{
 
     public $ultimo;
-
+    
+    private $_metodopago;
+    
 	public function conceptos(){
 		$concepto = new Concepto();
 		$conceptos = $concepto->find("factura_id='".$this->id."'");
@@ -68,6 +70,29 @@ class Factura extends ActiveRecord{
 	    return
 	       count( $dependencias ) > 0;
 
+	}
+	
+	/**
+	 * Retorna el objeto metodopago ligado a la factura.
+	 * En caso de recibir el parametro var se retorna la propiedad especificada
+	 * del objeto metodopago.
+	 * 
+	 * @param string $var
+	 */
+	public function metodopago( $var = '' ){
+		
+		if( !isset( $this->_metodopago ) ){
+			
+			$metodo = new Metodopago();
+			$metodo = $metodo->find( $this->metodopago_id );
+			
+			$this->_metodopago = $metodo;
+			
+		}
+		
+		return
+			( $var ? $this->_metodopago->$var : $this->_metodopago );
+		
 	}
 
 

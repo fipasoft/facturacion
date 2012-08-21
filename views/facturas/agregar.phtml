@@ -19,12 +19,8 @@
 					<input type="hidden" name="ejercicio_id" id="ejercicio_id" value="<?php echo $ejercicio_id ?>" />
 
 					<fieldset>
-						<legend>Fiscal</legend>
-                        <label for="clave">Folio</label><br/>
 						<?php $factura = new Factura(); ?>
-						<?php echo $factura->obtenFolio(); ?>
-						<br/>
-						<br/>
+						<legend>Factura <?php echo $factura->obtenFolio(); ?></legend>
 						<?php $hoy = new Datetime(); ?>
                         <label for="clave">Fecha</label>
                         <br/>
@@ -37,7 +33,30 @@
                                 readonly="readonly" />
                         <br/>
                         <br/>
-						<label for="clave">RFC</label>
+                        <label for="metodopago_id">M&eacute;todo de pago</label>
+						<br />
+                        <select name="metodopago_id" id="metodopago_id" >
+						    <?php foreach ($metodospago as $metodo) { ?>
+								<option value="<?php echo $metodo->id ?>">
+								    <?php echo utf8_encode( $metodo->nombre ); ?></option>
+							<?php } ?>
+						</select>
+						<br />
+						<br />
+						<div id="ctapago_div" style="display:none">
+							<label for="ctapago">
+								N&uacute;mero de cuenta del pago
+								<span class="sub2">
+									(&Uacute;ltimos 4 d&iacute;gitos)
+								</span>
+							</label>
+							<br />
+	                        <input name="ctapago"
+	                               id="ctapago" 
+	                               size="4" 
+	                               maxlength="4" />
+						</div>
+						<label for="dependencia_id">Cliente</label>
 						<br />
 						<select name="dependencia_id" id="dependencia_id" >
 						    <option></option>

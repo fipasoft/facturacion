@@ -2,6 +2,8 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
+CREATE SCHEMA IF NOT EXISTS `facturacion` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci ;
+USE `facturacion` ;
 
 -- -----------------------------------------------------
 -- Table `facturacion`.`ejercicio`
@@ -140,6 +142,17 @@ COLLATE = utf8_spanish_ci;
 
 
 -- -----------------------------------------------------
+-- Table `facturacion`.`metodopago`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `facturacion`.`metodopago` (
+  `id` INT(10) NOT NULL ,
+  `clave` VARCHAR(8) NOT NULL COMMENT '	' ,
+  `nombre` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `facturacion`.`factura`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `facturacion`.`factura` (
@@ -147,6 +160,7 @@ CREATE  TABLE IF NOT EXISTS `facturacion`.`factura` (
   `ejercicio_id` INT(10) UNSIGNED NOT NULL ,
   `festados_id` INT(10) UNSIGNED NOT NULL ,
   `dependencia_id` INT(10) UNSIGNED NOT NULL ,
+  `metodopago_id` INT(10) NOT NULL DEFAULT 1 ,
   `folio` VARCHAR(32) NOT NULL ,
   `fecha` DATE NOT NULL DEFAULT '0000-00-00' ,
   `razon` VARCHAR(256) NOT NULL ,
@@ -157,6 +171,7 @@ CREATE  TABLE IF NOT EXISTS `facturacion`.`factura` (
   `subtotal` DOUBLE(11,2) NOT NULL DEFAULT '0.00' ,
   `iva` DOUBLE(11,2) NOT NULL DEFAULT '0.00' ,
   `total` DOUBLE(11,2) NOT NULL DEFAULT '0.00' ,
+  `ctapago` VARCHAR(18) NULL ,
   `observaciones` VARCHAR(254) NULL DEFAULT NULL ,
   `enviada` DATE NOT NULL DEFAULT '0000-00-00' ,
   `recibida` DATE NOT NULL DEFAULT '0000-00-00' ,
@@ -166,6 +181,7 @@ CREATE  TABLE IF NOT EXISTS `facturacion`.`factura` (
   INDEX `factura_FKIndex1` (`dependencia_id` ASC) ,
   INDEX `factura_FKIndex2` (`festados_id` ASC) ,
   INDEX `factura_FKIndex3` (`ejercicio_id` ASC) ,
+  INDEX `fk_factura_metodopago1` (`metodopago_id` ASC) ,
   CONSTRAINT `factura_ibfk_1`
     FOREIGN KEY (`dependencia_id` )
     REFERENCES `facturacion`.`dependencia` (`id` )
@@ -177,7 +193,12 @@ CREATE  TABLE IF NOT EXISTS `facturacion`.`factura` (
   CONSTRAINT `factura_ibfk_3`
     FOREIGN KEY (`ejercicio_id` )
     REFERENCES `facturacion`.`ejercicio` (`id` )
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_factura_metodopago1`
+    FOREIGN KEY (`metodopago_id` )
+    REFERENCES `facturacion`.`metodopago` (`id` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB
 AUTO_INCREMENT = 36
 DEFAULT CHARACTER SET = utf8

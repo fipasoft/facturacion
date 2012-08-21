@@ -2,9 +2,6 @@
 <div id="primary">
 	<div class="content">
 		<h1>Editar factura</h1>
-		<h2>Folio: <?php echo $factura->folio; ?></h2>
-        <h2>RFC: <?php echo $factura->rfc; ?></h2>
-        <h2>Razon social: <?php echo $factura->razon; ?></h2>
 		<div id="options-bar">
 			<div id="options">
 				<a href="<?php echo $path ?>facturas">Volver
@@ -37,7 +34,9 @@
 					<input type="hidden" name="fdependencia_id" id="fdependencia_id" value="<?php echo $factura->dependencia_id ?>" />
 
 					<fieldset>
-						<legend>Fiscal</legend>
+						<legend>
+							Factura <?php echo $factura->folio; ?>
+						</legend>
 						<label for="clave">Fecha</label>
                         <br/>
                         <input name="fecha"
@@ -49,7 +48,36 @@
                                readonly="readonly" />
                         <br/>
                         <br/>
-						<label for="clave">RFC</label>
+						<label for="metodopago_id">M&eacute;todo de pago</label>
+						<br />
+                        <select name="metodopago_id" id="metodopago_id" >
+						    <?php foreach ($metodospago as $metodo) { ?>
+								<option value="<?php echo $metodo->id ?>"
+									<?php if( $factura->metodopago_id == $metodo->id ){?>
+									selected="selected"
+									<?php } ?>>
+								    <?php echo utf8_encode( $metodo->nombre ); ?></option>
+							<?php } ?>
+						</select>
+						<br />
+						<br />
+						<div id="ctapago_div" 
+							 <?php if( $factura->metodopago_id <= 2 ){ ?>style="display:none"<?php } ?>>
+							<label for="ctapago">
+								N&uacute;mero de cuenta del pago
+								<span class="sub2">
+									(&Uacute;ltimos 4 d&iacute;gitos)
+								</span>
+							</label>
+							<br />
+	                        <input type="text"
+	                        	   name="ctapago"
+	                               id="ctapago" 
+	                               value="<?php echo $factura->ctapago ?>"
+	                               size="4" 
+	                               maxlength="4" />
+						</div>
+						<label for="dependencia_id">Cliente</label>
 						<br />
 						<select name="dependencia_id" id="dependencia_id" >
 						    <option></option>
