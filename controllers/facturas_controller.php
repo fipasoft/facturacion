@@ -362,10 +362,6 @@ class FacturasController extends ApplicationController{
         }
 	}
 
-	public function eliminar( $id = '' ){
-
-	}
-
     public function control( $id = '' ){
         try{
             $transaccion = false;
@@ -449,6 +445,35 @@ class FacturasController extends ApplicationController{
 
             $this->error( $e->getMessage(), $errvar, $e );
         }
+    }
+    
+    public function eliminar( $id = '' ){
+    
+    }
+    
+    public function prefactura( $id = '' ){
+    
+    	try{
+    
+    		$factura = new Factura();
+    		$factura = $factura->find( $id );
+    
+    		if( !$factura || $factura->id  == '' ){
+    
+    			throw new Exception( 'Id no valido' );
+    
+    		}
+    
+    		$this->factura = $factura;
+    		$this->exito();
+    		$this->set_response( 'view' );
+    
+    	}catch( Exception $e ){
+    
+    		$this->error( $e->getMessage(), $errvar, $e );
+    
+    	}
+    
     }
 
     public function imprimir( $id = '' ){

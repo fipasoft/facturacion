@@ -62,6 +62,7 @@ class AclController extends ApplicationController {
 				'imprimir',
 				'cancelar',
 				'editar',
+				'prefactura',
 				'control',
 				'ver'
 			),
@@ -292,6 +293,7 @@ class AclController extends ApplicationController {
                  'cancelar',
                  'editar',
                  'control',
+             	 'prefactura',
                  'ver'
              )
          );
@@ -324,6 +326,7 @@ class AclController extends ApplicationController {
             'facturas' => array (
                 'index',
                 'imprimir',
+            	'prefactura',
                 'ver'
             )
         );
