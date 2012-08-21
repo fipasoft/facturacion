@@ -94,6 +94,24 @@ class Factura extends ActiveRecord{
 			( $var ? $this->_metodopago->$var : $this->_metodopago );
 		
 	}
+	
+	/**
+	 * Obtiene el objeto metodo de pago y arma una cadena lista para imprimir
+	 * es útil para la factura impresa.
+	 * 
+	 * @return string
+	 */
+	public function mostrarMetodoDePago(){
+		
+		$metodo = $this->metodopago( 'nombre' );
+		
+		if( $this->ctapago ){
+			$metodo .= ' CTA: ' . $this->ctapago;
+		}
+		
+		return
+			$metodo;
+	}
 
 
 	public function montoConLetra(){
