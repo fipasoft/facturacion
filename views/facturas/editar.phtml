@@ -75,7 +75,10 @@
 	                               id="ctapago" 
 	                               value="<?php echo $factura->ctapago ?>"
 	                               size="4" 
-	                               maxlength="4" />
+	                               maxlength="4"
+	                               <?php if( $factura->metodopago_id <= 2 ){ ?>
+	                               	disabled="disabled" 
+	                               <?php } ?> />
 						</div>
 						<label for="dependencia_id">Cliente</label>
 						<br />
