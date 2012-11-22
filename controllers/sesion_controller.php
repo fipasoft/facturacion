@@ -56,6 +56,25 @@ class SesionController extends ApplicationController {
 			Session :: set_data( 'usr.acceso',        $gacl->get_user_acos($Usuario->login) );
 			Session :: set_data( 'usr.grupos',        $gacl->get_user_groups($Usuario->login) );
 
+			// datos fiscales
+			$fiscal = Config :: read( 'fiscal.ini' );
+			$fiscal = $fiscal->principal;
+			
+			$emisor = array(
+				$fiscal->nombre,
+				$fiscal->regimen,
+				$fiscal->domicilio,
+				$fiscal->colonia,
+				$fiscal->ciudad,
+				$fiscal->rfc
+			);
+			
+			Session :: set_data( 'fsc.emisor',      $emisor );
+			Session :: set_data( 'fsc.leyenda',     $fiscal->leyenda );
+			Session :: set_data( 'fsc.faprobacion', $fiscal->faprobacion );
+			Session :: set_data( 'fsc.naprobacion', $fiscal->naprobacion );
+			Session :: set_data( 'fsc.folioini',    $fiscal->folioini );
+			Session :: set_data( 'fsc.foliofin',    $fiscal->foliofin );
 
 			if( in_array('root', Session :: get_data('usr.grupos')) ){
 				Session :: set_data( 'usr.grupos', $gacl->get_all_groups() );
@@ -88,6 +107,12 @@ class SesionController extends ApplicationController {
 			'app.busqueda',
 			'app.paginador',
 			'eje.id',
+			'fsc.emisor',
+			'fsc.leyenda',
+			'fsc.faprobacion',
+			'fsc.naprobacion',
+			'fsc.folioini',
+			'fsc.foliofin',
 			'usr.id',
 			'usr.login',
 			'usr.nombre',
