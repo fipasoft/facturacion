@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<xls>
+	<!-- Describe la estructura de los campos principales en el documento de excel -->
+	<encabezados nivel="1">
+		<campo>
+			<id>clave</id>
+			<nombre>CLAVE</nombre>
+			<clase>A9cg</clase> 
+			<ancho>11.61</ancho>
+	   </campo>
+	   <campo>
+            <id>descripcion</id>
+            <nombre>DESCRIPCION</nombre>
+            <clase>A9cg</clase> 
+            <combinarColumnas>4</combinarColumnas>
+            <ancho>10.86</ancho>
+       </campo>
+       <campo>
+            <id>cantidad</id>
+            <nombre>CANTIDAD</nombre>
+            <clase>A9cg</clase> 
+            <ancho>9.43</ancho>
+       </campo>
+       <campo>
+            <id>unitario</id>
+            <nombre>COSTO UNITARIO</nombre>
+            <clase>A9cg</clase> 
+            <ancho>11.71</ancho>
+       </campo>
+       <campo>
+            <id>monto</id>
+            <nombre>IMPORTE</nombre>
+            <clase>A9cg</clase> 
+            <ancho>17</ancho>
+       </campo>
+		
+	</encabezados>
+	<contenido>
+	   <campo>
+            <id>clave</id>
+            <clase>TD.Borderside</clase> 
+       </campo>
+       <campo>
+            <id>descripcion</id>
+            <clase>TD.Borderside</clase> 
+            <combinarColumnas>4</combinarColumnas>
+       </campo>
+       <campo>
+            <id>cantidad</id>
+            <clase>TD.Borderside</clase> 
+       </campo>
+       <campo>
+            <id>unitario</id>
+            <clase>TD.BordersideNum</clase> 
+       </campo>
+       <campo>
+            <id>monto</id>
+            <clase>TD.BordersideNum</clase> 
+       </campo>
+	</contenido>
+</xls>

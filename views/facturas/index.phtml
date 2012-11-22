@@ -52,6 +52,20 @@
 						</div>
 
 						<div>
+							<label for="metodopago_id">M&eacute;todos de pago</label>
+							<select name="metodopago_id" id="metodopago_id">
+								<option></option>
+								<?php foreach($metodospago as $metodo){ ?>
+								<option value="<?php echo $metodo->id; ?>" <?php echo ($metodo->id==$busqueda->campo('metodopago_id')? ' selected="selected" ':'') ?>>
+									<?php echo utf8_encode( $metodo->nombre ); ?>
+								</option>
+								<?php } ?>
+							</select>
+							<label for="ctapago">N&uacute;mero de cuenta del pago</label>
+							<input type="text" name="ctapago" id="ctapago" value="<?php echo $busqueda->campo('ctapago') ?>" size="4" maxlength="4" />
+						</div>
+						
+						<div>
 							<label for="domicilio">Domicilio</label>
 							<input type="text" name="domicilio" id="domicilio" value="<?php echo $busqueda->campo('domicilio') ?>" size="40" maxlength="256" />
 							<label for="colonia">Colonia</label>
@@ -98,6 +112,7 @@
 				<th class="centro" style="width:70px;">Subtotal</th>
 				<th class="centro" style="width:65px;">IVA</th>
 				<th class="centro" style="width:70px;">Total</th>
+				<th class="centro" style="width:120px;">M&eacute;todo de pago</th>
                 <th class="centro" >Observaciones</th>
 			</tr>
 
@@ -133,6 +148,9 @@
                                 <a href="<?php echo $path; ?>facturas/control/<?php echo $factura->id; ?>"  title="Cambiar estado">
                                 <img src="<?php echo $path ?>public/img/system/estado.png" alt="estados"/></a>
                             <?php } ?>
+                            
+                            <a target="_BLANK" href="<?php echo $path; ?>facturas/prefactura/<?php echo $factura->id; ?>"  title="Factura preliminar">
+                            <img src="<?php echo $path ?>public/img/system/enviar.png" alt="enviar"/></a>
 
                             <a target="_BLANK" href="<?php echo $path; ?>facturas/imprimir/<?php echo $factura->id; ?>"  title="Imprimir">
                             <img src="<?php echo $path ?>public/img/system/imprimir.png" alt="imprimir"/></a>
@@ -166,6 +184,17 @@
 						<strong>
 							<?php echo ( $monto == '0.00' ? '-' : $monto ) ?>
 						</strong>
+					</td>
+					<td class="centro">
+						<span class="sub2 main">
+							<?php echo utf8_encode( $factura->metodopago( 'nombre' ) ) ?>
+						</span>
+						<?php if( $factura->ctapago ){?>
+							<br />
+							<span class="sub2">
+								CTA: <?php echo $factura->ctapago ?>
+							</span>	
+						<?php } ?>
 					</td>
                     <td class="centro">
                         <span class="sub2">

@@ -83,6 +83,7 @@ class FacturasController extends ApplicationController{
             $factura->ejercicio_id      =       $this->post("ejercicio_id");
             $factura->dependencia_id    =       $dependencia->id;
             $factura->festados_id       =       $activa->id;
+            $factura->metodopago_id     =       $this->post( 'metodopago_id' );
             $factura->folio             =       $factura->obtenFolio();
             $factura->fecha             =       Utils::convierteFechaMySql($this->post('fecha'));
             $factura->razon             =       $fiscal->razon;
@@ -94,6 +95,10 @@ class FacturasController extends ApplicationController{
             $factura->subtotal          =       $subtotal;
             $factura->iva               =       $iva;
             $factura->total             =       $total;
+            $factura->ctapago           =       ( $this->post( 'ctapago' ) ?
+            									  $this->post( 'ctapago' ) :
+            									  null
+            									);
             $factura->observaciones     =       trim($this->post("observaciones"));
             $factura->enviada           =       '0000-00-00';
             $factura->recibida          =       '0000-00-00';
@@ -157,7 +162,12 @@ class FacturasController extends ApplicationController{
                 "conditions: ejercicio_id = '" . Session :: get_data( 'eje.id' ) . "'",
                 "order: nombre"
             );
+            
+            $metodospago = new Metodopago();
+            $metodospago = $metodospago->find();
+            
             $this->dependencias = $dependencias;
+            $this->metodospago  = $metodospago;
             $this->ejercicio_id = $ejercicio_id;
 
         }
@@ -273,6 +283,7 @@ class FacturasController extends ApplicationController{
                 $factura->fecha             =       Utils::convierteFechaMySql($this->post('fecha'));
                 $factura->dependencia_id    =       $dependencia->id;
                 $factura->festados_id       =       $activa->id;
+                $factura->metodopago_id     =       $this->post( 'metodopago_id' );
                 $factura->razon             =       $fiscal->razon;
                 $factura->rfc               =       $fiscal->rfc;
                 $factura->domicilio         =       $fiscal->domicilio;
@@ -282,6 +293,10 @@ class FacturasController extends ApplicationController{
                 $factura->subtotal          =       $subtotal;
                 $factura->iva               =       $iva;
                 $factura->total             =       $total;
+                $factura->ctapago           =       ( $this->post( 'ctapago' ) ?
+									               	  $this->post( 'ctapago' ) :
+									               	  null
+									                );
                 $factura->observaciones     =       $this->post("observaciones");
 
                 if(!$factura->save()){
@@ -345,10 +360,6 @@ class FacturasController extends ApplicationController{
 
             $this->error( $e->getMessage(), $errvar, $e );
         }
-	}
-
-	public function eliminar( $id = '' ){
-
 	}
 
     public function control( $id = '' ){
@@ -435,6 +446,35 @@ class FacturasController extends ApplicationController{
             $this->error( $e->getMessage(), $errvar, $e );
         }
     }
+    
+    public function eliminar( $id = '' ){
+    
+    }
+    
+    public function prefactura( $id = '' ){
+    
+    	try{
+    
+    		$factura = new Factura();
+    		$factura = $factura->find( $id );
+    
+    		if( !$factura || $factura->id  == '' ){
+    
+    			throw new Exception( 'Id no valido' );
+    
+    		}
+    
+    		$this->factura = $factura;
+    		$this->exito();
+    		$this->set_response( 'view' );
+    
+    	}catch( Exception $e ){
+    
+    		$this->error( $e->getMessage(), $errvar, $e );
+    
+    	}
+    
+    }
 
     public function imprimir( $id = '' ){
 
@@ -476,22 +516,25 @@ class FacturasController extends ApplicationController{
         $b->campos();
 
         // genera las condiciones
-        $b->establecerCondicion(
-            'festados_id',
-            "festados_id = '" . $b->campo( 'festados_id' ) . "'"
+        	$b->establecerCondicion(
+	            'festados_id',
+	            "festados_id = '" . $b->campo( 'festados_id' ) . "'"
             );
 
             $b->establecerCondicion(
-            'dependencia_id',
-            "dependencia_id = '" . $b->campo( 'dependencia_id' ) . "'"
+	            'dependencia_id',
+	            "dependencia_id = '" . $b->campo( 'dependencia_id' ) . "'"
+            );
+            
+            $b->establecerCondicion(
+            	'metodopago_id',
+           		"metodopago_id = '" . $b->campo( 'metodopago_id' ) . "'"
             );
 
             $b->establecerCondicion(
-            'fecha',
-            "fecha = '" . Utils :: fecha_convertir( $this->post('fecha') ) . "'"
+	            'fecha',
+	            "fecha = '" . Utils :: fecha_convertir( $this->post('fecha') ) . "'"
             );
-
-
 
             $c = "factura.ejercicio_id = '" . $ejercicio_id . "' ";
             $c .= ( $b->condicion() ? "AND " . $b->condicion() : '' );
@@ -516,11 +559,17 @@ class FacturasController extends ApplicationController{
             . $paginador->rpp()
             );
 
+            // catalogos
             $dependencias = new Dependencia();
             $dependencias = $dependencias->facturadas( $ejercicio_id );
 
             $festados = new Festados();
             $festados = $festados->find();
+            
+            $metodospago = new Metodopago();
+            $metodospago = $metodospago->find();
+            
+            
             $acl = new gacl_extra();
 
             // salida
@@ -536,12 +585,14 @@ class FacturasController extends ApplicationController{
               Session :: get_data( 'usr.login' )
             );
 
-            $this->busqueda = $b;
-            $this->paginador = $paginador;
-            $this->registros = $registros;
-            $this->facturas = $facturas;
-            $this->dependencias = $dependencias;
-            $this->festados = $festados;
+            $this->busqueda      =  $b;
+            $this->dependencias  =  $dependencias;
+            $this->facturas      =  $facturas;
+            $this->festados      =  $festados;
+            $this->paginador     =  $paginador;
+            $this->registros     =  $registros;
+            $this->metodospago   =  $metodospago;
+            
         }catch( Exception $e ){
             $this->error( $e->getMessage(), $errvar, $e );
 
