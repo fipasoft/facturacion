@@ -152,7 +152,7 @@ class FacturasController extends ApplicationController
                 $historial->save();
 
                 mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
-            }else{
+            } else {
                 $this->option = "captura";
                 $ejercicio_id = Session :: get_data('eje.id');
 
@@ -206,7 +206,7 @@ class FacturasController extends ApplicationController
 
                 $this->dependencias = $dependencias;
                 $this->factura = $factura;
-            }else{
+            } else {
                 mysql_query("BEGIN") or die("Error al iniciar la transaccion");
                 $transaccion = true;
 
@@ -382,7 +382,7 @@ class FacturasController extends ApplicationController
 
                 $this->factura = $factura;
                 $this->festados = $festados;
-            }else{
+            } else {
                 $this->option = 'exito';
                 mysql_query("BEGIN") or die("Error al iniciar la transaccion");
                 $transaccion = true;
