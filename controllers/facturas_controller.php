@@ -13,7 +13,7 @@ class FacturasController extends ApplicationController
 
     public function agregar()
     {
-        try{
+        try {
             $transaccion = false;
             if ($this->post("ejercicio_id") !="") {
                 mysql_query("BEGIN") or die("Error al iniciar la transaccion");
@@ -170,7 +170,7 @@ class FacturasController extends ApplicationController
                 $this->ejercicio_id = $ejercicio_id;
 
             }
-        }catch(Exception $e) {
+        } catch (Exception $e) {
 
             if ($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
@@ -181,7 +181,7 @@ class FacturasController extends ApplicationController
 
     public function editar($id = '')
     {
-        try{
+        try {
             $transaccion = false;
             if ($this->post('factura_id') == '') {
                 $this->option = "captura";
@@ -353,7 +353,7 @@ class FacturasController extends ApplicationController
 
 
             }
-        }catch(Exception $e) {
+        } catch (Exception $e) {
 
             if ($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
@@ -364,7 +364,7 @@ class FacturasController extends ApplicationController
 
     public function control($id = '')
     {
-        try{
+        try {
             $transaccion = false;
 
             if ($this->post('factura_id') == '') {
@@ -440,7 +440,7 @@ class FacturasController extends ApplicationController
                 mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
 
             }
-        }catch(Exception $e) {
+        } catch (Exception $e) {
             if ($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
 
@@ -455,7 +455,7 @@ class FacturasController extends ApplicationController
     public function prefactura($id = '')
     {
 
-        try{
+        try {
 
             $factura = new Factura();
             $factura = $factura->find($id);
@@ -470,7 +470,7 @@ class FacturasController extends ApplicationController
             $this->exito();
             $this->set_response('view');
 
-        }catch(Exception $e) {
+        } catch (Exception $e) {
 
             $this->error($e->getMessage(), $errvar, $e);
 
@@ -481,7 +481,7 @@ class FacturasController extends ApplicationController
     public function imprimir($id = '')
     {
 
-        try{
+        try {
 
             $factura = new Factura();
             $factura = $factura->find($id);
@@ -496,7 +496,7 @@ class FacturasController extends ApplicationController
             $this->exito();
             $this->set_response('view');
 
-        }catch(Exception $e) {
+        } catch (Exception $e) {
 
             $this->error($e->getMessage(), $errvar, $e);
 
@@ -507,7 +507,7 @@ class FacturasController extends ApplicationController
     public function index($pag = '')
     {
 
-        try{
+        try {
             // vars
             $controlador = $this->controlador;
             $accion = $this->accion;
@@ -597,7 +597,7 @@ class FacturasController extends ApplicationController
             $this->registros     =  $registros;
             $this->metodospago   =  $metodospago;
 
-        }catch(Exception $e) {
+        } catch (Exception $e) {
             $this->error($e->getMessage(), $errvar, $e);
 
         }
@@ -606,7 +606,7 @@ class FacturasController extends ApplicationController
 
     public function ver($id = '')
     {
-        try{
+        try {
             $this->option = "captura";
 
             $factura = new Factura();
@@ -618,7 +618,7 @@ class FacturasController extends ApplicationController
 
             $this->factura = $factura;
 
-        }catch(Exception $e) {
+        } catch (Exception $e) {
 
             if ($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
