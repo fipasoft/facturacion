@@ -97,7 +97,7 @@ class FacturasController extends ApplicationController
                 $factura->ctapago           =       ($this->post('ctapago') ?
                     $this->post('ctapago') :
                     null
-               );
+                );
                 $factura->observaciones     =       trim($this->post("observaciones"));
                 $factura->enviada           =       '0000-00-00';
                 $factura->recibida          =       '0000-00-00';
@@ -115,7 +115,7 @@ class FacturasController extends ApplicationController
                         trim($unitarios[$k]) == '' ||
                         trim($costos[$k]) == '') {
                             throw new Exception("Error los datos de los conceptos no son consistentes.");
-                        }
+                    }
 
                     $concepto -> factura_id        =   $factura->id;
                     $concepto -> cantidad           =   trim($cantidad);
@@ -146,12 +146,12 @@ class FacturasController extends ApplicationController
                     utf8_decode($factura->folio) . ' - ' .
                     utf8_decode($factura->rfc) . ' ' .
                     '[fac' . $factura->id . '] '
-               );
+                );
                 $historial->controlador     =   $this->controlador;
                 $historial->accion          =   $this->accion;
                 $historial->save();
 
-                mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
+                mysql_query("COMMIT") or die("Error al finalizar la transaccion");
             } else {
                 $this->option = "captura";
                 $ejercicio_id = Session :: get_data('eje.id');
@@ -160,7 +160,7 @@ class FacturasController extends ApplicationController
                 $dependencias = $dependencias->find(
                     "conditions: ejercicio_id = '" . Session :: get_data('eje.id') . "'",
                     "order: nombre"
-               );
+                );
 
                 $metodospago = new Metodopago();
                 $metodospago = $metodospago->find();
@@ -172,8 +172,9 @@ class FacturasController extends ApplicationController
             }
         } catch (Exception $e) {
 
-            if ($transaccion)
+            if ($transaccion) {
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
+            }
 
             $this->error($e->getMessage(), $errvar, $e);
         }
@@ -202,7 +203,7 @@ class FacturasController extends ApplicationController
                 $dependencias = $dependencias->find(
                     "conditions: ejercicio_id = '" . $factura->ejercicio_id . "'",
                     "order: nombre"
-               );
+                );
 
                 $this->dependencias = $dependencias;
                 $this->factura = $factura;
@@ -296,7 +297,7 @@ class FacturasController extends ApplicationController
                 $factura->ctapago           =       ($this->post('ctapago') ?
                     $this->post('ctapago') :
                     null
-               );
+                );
                 $factura->observaciones     =       $this->post("observaciones");
 
                 if (!$factura->save()) {
@@ -317,7 +318,7 @@ class FacturasController extends ApplicationController
                         trim($unitarios[$k]) == '' ||
                         trim($costos[$k]) == '') {
                             throw new Exception("Error los datos de los conceptos no son consistentes.");
-                        }
+                    }
 
                     $concepto -> factura_id        =   $factura->id;
                     $concepto -> cantidad           =   trim($cantidad);
@@ -340,7 +341,7 @@ class FacturasController extends ApplicationController
                     utf8_decode($factura->folio) . ' - ' .
                     utf8_decode($factura->rfc) . ' ' .
                     '[fac' . $factura->id . '] '
-               );
+                );
                 $historial->controlador     =   $this->controlador;
                 $historial->accion          =   $this->accion;
                 $historial->save();
@@ -355,8 +356,9 @@ class FacturasController extends ApplicationController
             }
         } catch (Exception $e) {
 
-            if ($transaccion)
+            if ($transaccion) {
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
+            }
 
             $this->error($e->getMessage(), $errvar, $e);
         }
@@ -432,17 +434,18 @@ class FacturasController extends ApplicationController
                     utf8_decode($factura->rfc) . ' .' .
                     'De '. $anterior->singular . ' a '. $edo->singular.' '.
                     '[fac' . $factura->id . '] '
-               );
+                );
                 $historial->controlador     =   $this->controlador;
                 $historial->accion          =   $this->accion;
                 $historial->save();
 
-                mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
+                mysql_query("COMMIT") or die("Error al finalizar la transaccion");
 
             }
         } catch (Exception $e) {
-            if ($transaccion)
+            if ($transaccion) {
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
+            }
 
             $this->error($e->getMessage(), $errvar, $e);
         }
@@ -523,22 +526,22 @@ class FacturasController extends ApplicationController
             $b->establecerCondicion(
                 'festados_id',
                 "festados_id = '" . $b->campo('festados_id') . "'"
-           );
+            );
 
             $b->establecerCondicion(
                 'dependencia_id',
                 "dependencia_id = '" . $b->campo('dependencia_id') . "'"
-           );
+            );
 
             $b->establecerCondicion(
                 'metodopago_id',
                 "metodopago_id = '" . $b->campo('metodopago_id') . "'"
-           );
+            );
 
             $b->establecerCondicion(
                 'fecha',
                 "fecha = '" . Utils :: fecha_convertir($this->post('fecha')) . "'"
-           );
+            );
 
             $c = "factura.ejercicio_id = '" . $ejercicio_id . "' ";
             $c .= ($b->condicion() ? "AND " . $b->condicion() : '');
@@ -561,7 +564,7 @@ class FacturasController extends ApplicationController
                 'order: folio DESC ',
                 'limit: ' . ($paginador->pagina() * $paginador->rpp()) . ', '
                 . $paginador->rpp()
-           );
+            );
 
             // catalogos
             $dependencias = new Dependencia();
@@ -587,7 +590,7 @@ class FacturasController extends ApplicationController
                    )
                ),
                 Session :: get_data('usr.login')
-           );
+            );
 
             $this->busqueda      =  $b;
             $this->dependencias  =  $dependencias;
@@ -620,8 +623,9 @@ class FacturasController extends ApplicationController
 
         } catch (Exception $e) {
 
-            if ($transaccion)
+            if ($transaccion) {
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
+            }
 
             $this->error($e->getMessage(), $errvar, $e);
         }
