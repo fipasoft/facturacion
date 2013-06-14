@@ -11,11 +11,11 @@
  */
 class FacturasController extends ApplicationController{
 
-	public $template = "system";
+    public $template = "system";
 
-	public function agregar(){
-	    try{
-	    $transaccion = false;
+    public function agregar(){
+        try{
+        $transaccion = false;
         if($this->post("ejercicio_id") !=""){
             mysql_query("BEGIN") or die("Error al iniciar la transaccion");
             $transaccion = true;
@@ -96,9 +96,9 @@ class FacturasController extends ApplicationController{
             $factura->iva               =       $iva;
             $factura->total             =       $total;
             $factura->ctapago           =       ( $this->post( 'ctapago' ) ?
-            									  $this->post( 'ctapago' ) :
-            									  null
-            									);
+                                                  $this->post( 'ctapago' ) :
+                                                  null
+                                                );
             $factura->observaciones     =       trim($this->post("observaciones"));
             $factura->enviada           =       '0000-00-00';
             $factura->recibida          =       '0000-00-00';
@@ -162,10 +162,10 @@ class FacturasController extends ApplicationController{
                 "conditions: ejercicio_id = '" . Session :: get_data( 'eje.id' ) . "'",
                 "order: nombre"
             );
-            
+
             $metodospago = new Metodopago();
             $metodospago = $metodospago->find();
-            
+
             $this->dependencias = $dependencias;
             $this->metodospago  = $metodospago;
             $this->ejercicio_id = $ejercicio_id;
@@ -178,9 +178,9 @@ class FacturasController extends ApplicationController{
 
             $this->error( $e->getMessage(), $errvar, $e );
         }
-	}
+    }
 
-	public function editar( $id = '' ){
+    public function editar( $id = '' ){
         try{
             $transaccion = false;
             if($this->post('factura_id') == ''){
@@ -294,9 +294,9 @@ class FacturasController extends ApplicationController{
                 $factura->iva               =       $iva;
                 $factura->total             =       $total;
                 $factura->ctapago           =       ( $this->post( 'ctapago' ) ?
-									               	  $this->post( 'ctapago' ) :
-									               	  null
-									                );
+                                                      $this->post( 'ctapago' ) :
+                                                      null
+                                                    );
                 $factura->observaciones     =       $this->post("observaciones");
 
                 if(!$factura->save()){
@@ -360,7 +360,7 @@ class FacturasController extends ApplicationController{
 
             $this->error( $e->getMessage(), $errvar, $e );
         }
-	}
+    }
 
     public function control( $id = '' ){
         try{
@@ -446,34 +446,34 @@ class FacturasController extends ApplicationController{
             $this->error( $e->getMessage(), $errvar, $e );
         }
     }
-    
+
     public function eliminar( $id = '' ){
-    
+
     }
-    
+
     public function prefactura( $id = '' ){
-    
-    	try{
-    
-    		$factura = new Factura();
-    		$factura = $factura->find( $id );
-    
-    		if( !$factura || $factura->id  == '' ){
-    
-    			throw new Exception( 'Id no valido' );
-    
-    		}
-    
-    		$this->factura = $factura;
-    		$this->exito();
-    		$this->set_response( 'view' );
-    
-    	}catch( Exception $e ){
-    
-    		$this->error( $e->getMessage(), $errvar, $e );
-    
-    	}
-    
+
+        try{
+
+            $factura = new Factura();
+            $factura = $factura->find( $id );
+
+            if( !$factura || $factura->id  == '' ){
+
+                throw new Exception( 'Id no valido' );
+
+            }
+
+            $this->factura = $factura;
+            $this->exito();
+            $this->set_response( 'view' );
+
+        }catch( Exception $e ){
+
+            $this->error( $e->getMessage(), $errvar, $e );
+
+        }
+
     }
 
     public function imprimir( $id = '' ){
@@ -501,9 +501,9 @@ class FacturasController extends ApplicationController{
 
     }
 
-	public function index( $pag = '' ){
+    public function index( $pag = '' ){
 
-	   try{
+       try{
         // vars
         $controlador = $this->controlador;
         $accion = $this->accion;
@@ -516,24 +516,24 @@ class FacturasController extends ApplicationController{
         $b->campos();
 
         // genera las condiciones
-        	$b->establecerCondicion(
-	            'festados_id',
-	            "festados_id = '" . $b->campo( 'festados_id' ) . "'"
+            $b->establecerCondicion(
+                'festados_id',
+                "festados_id = '" . $b->campo( 'festados_id' ) . "'"
             );
 
             $b->establecerCondicion(
-	            'dependencia_id',
-	            "dependencia_id = '" . $b->campo( 'dependencia_id' ) . "'"
-            );
-            
-            $b->establecerCondicion(
-            	'metodopago_id',
-           		"metodopago_id = '" . $b->campo( 'metodopago_id' ) . "'"
+                'dependencia_id',
+                "dependencia_id = '" . $b->campo( 'dependencia_id' ) . "'"
             );
 
             $b->establecerCondicion(
-	            'fecha',
-	            "fecha = '" . Utils :: fecha_convertir( $this->post('fecha') ) . "'"
+                'metodopago_id',
+                "metodopago_id = '" . $b->campo( 'metodopago_id' ) . "'"
+            );
+
+            $b->establecerCondicion(
+                'fecha',
+                "fecha = '" . Utils :: fecha_convertir( $this->post('fecha') ) . "'"
             );
 
             $c = "factura.ejercicio_id = '" . $ejercicio_id . "' ";
@@ -565,11 +565,11 @@ class FacturasController extends ApplicationController{
 
             $festados = new Festados();
             $festados = $festados->find();
-            
+
             $metodospago = new Metodopago();
             $metodospago = $metodospago->find();
-            
-            
+
+
             $acl = new gacl_extra();
 
             // salida
@@ -592,13 +592,13 @@ class FacturasController extends ApplicationController{
             $this->paginador     =  $paginador;
             $this->registros     =  $registros;
             $this->metodospago   =  $metodospago;
-            
+
         }catch( Exception $e ){
             $this->error( $e->getMessage(), $errvar, $e );
 
         }
 
-	}
+    }
 
     public function ver( $id = '' ){
         try{
