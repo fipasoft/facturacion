@@ -29,8 +29,8 @@ class EjerciciosController extends ApplicationController {
             $this->error = '';
             $existentes = new Ejercicio();
             if($existentes->count(
-                    "annio = '" . $this->post('annio') . "' "
-               ) == 0)
+                "annio = '" . $this->post('annio') . "' "
+            ) == 0)
             {
                 $ejercicio = new Ejercicio();
                 $ejercicio->annio           =   $this->post('annio');
@@ -44,10 +44,10 @@ class EjerciciosController extends ApplicationController {
                         $historial->ejercicio_id    =   null;
                         $historial->usuario         =   Session :: get_data( 'usr.login' );
                         $historial->descripcion     =   utf8_encode(
-                                                            'Agregó ' .
-                                                            utf8_decode( $ejercicio->ver() ) . ' ' .
-                                                            '[eje' . $ejercicio->id . '] '
-                                                        );
+                            'Agregó ' .
+                            utf8_decode( $ejercicio->ver() ) . ' ' .
+                            '[eje' . $ejercicio->id . '] '
+                        );
                         $historial->controlador     =   $this->controlador;
                         $historial->accion          =   $this->accion;
                         $historial->save();
@@ -107,9 +107,9 @@ class EjerciciosController extends ApplicationController {
             if( $ejercicio->id != '' ){
                 $existentes = new Ejercicio();
                 if($existentes->count(
-                        "annio = '" . $this->post('annio') . "' " .
-                        "AND id != '" . $ejercicio->id . "' "
-                   ) == 0)
+                    "annio = '" . $this->post('annio') . "' " .
+                    "AND id != '" . $ejercicio->id . "' "
+                ) == 0)
                 {
                     $ejercicio->annio           =   $this->post('annio');
 
@@ -121,10 +121,10 @@ class EjerciciosController extends ApplicationController {
                         $historial->ejercicio_id    =   null;
                         $historial->usuario         =   Session :: get_data( 'usr.login' );
                         $historial->descripcion     =   utf8_encode(
-                                                            'Editó ' .
-                                                            utf8_decode( $ejercicio->ver() ) . ' ' .
-                                                            '[eje' . $ejercicio->id . '] '
-                                                        );
+                            'Editó ' .
+                            utf8_decode( $ejercicio->ver() ) . ' ' .
+                            '[eje' . $ejercicio->id . '] '
+                        );
                         $historial->controlador     =   $this->controlador;
                         $historial->accion          =   $this->accion;
                         $historial->save();
@@ -179,10 +179,10 @@ class EjerciciosController extends ApplicationController {
                     $historial->ejercicio_id    =   null;
                     $historial->usuario         =   Session :: get_data( 'usr.login' );
                     $historial->descripcion     =   utf8_encode(
-                                                        'Eliminó ' .
-                                                        utf8_decode( $_ejercicio->info ) . ' ' .
-                                                        '[eje' . $_ejercicio->id . '] '
-                                                    );
+                        'Eliminó ' .
+                        utf8_decode( $_ejercicio->info ) . ' ' .
+                        '[eje' . $_ejercicio->id . '] '
+                    );
                     $historial->controlador     =   $this->controlador;
                     $historial->accion          =   $this->accion;
                     $historial->save();
@@ -196,7 +196,7 @@ class EjerciciosController extends ApplicationController {
                 }catch(dbException $e){
                     $this->option = 'error';
                     $this->error .= 'Error al intentar eliminar de la BD. ' .
-                                    'Posiblemente existan datos vinculados al ejercicio.';
+                        'Posiblemente existan datos vinculados al ejercicio.';
                 }
             }else{
                 $this->option = 'error';
@@ -231,9 +231,9 @@ class EjerciciosController extends ApplicationController {
         // ejecuta la consulta
         $this->ejercicios = $ejercicios->find(
             'limit: ' . ($paginador->pagina() * $paginador->rpp()) . ', '
-                      . $paginador->rpp(),
-            'order: annio DESC'
-        );
+            . $paginador->rpp(),
+                'order: annio DESC'
+            );
 
     }
 
