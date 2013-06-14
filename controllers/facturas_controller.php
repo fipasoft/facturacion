@@ -15,7 +15,7 @@ class FacturasController extends ApplicationController
     {
         try{
             $transaccion = false;
-            if($this->post("ejercicio_id") !=""){
+            if ($this->post("ejercicio_id") !="") {
                 mysql_query("BEGIN") or die("Error al iniciar la transaccion");
                 $transaccion = true;
 
@@ -34,42 +34,42 @@ class FacturasController extends ApplicationController
                 $total = $this->post("total");
 
 
-                if($dependencia_id == "" ){
+                if ($dependencia_id == "") {
                     throw new Exception("Error no se especifico el cliente.");
                 }
 
-                if(!is_array($cantidades) || count($cantidades) == 0){
+                if (!is_array($cantidades) || count($cantidades) == 0) {
                     throw new Exception("Error las cantidades no son validas.");
                 }
 
-                if(!is_array($unitarios) || count($unitarios) == 0){
+                if (!is_array($unitarios) || count($unitarios) == 0) {
                     throw new Exception("Error los unitarios no son validos.");
                 }
 
-                if(!is_array($cantidades) || count($cantidades) == 0){
+                if (!is_array($cantidades) || count($cantidades) == 0) {
                     throw new Exception("Error las cantidades no son validas.");
                 }
 
-                if(!is_array($costos) || count($costos) == 0){
+                if (!is_array($costos) || count($costos) == 0) {
                     throw new Exception("Error los costos no son validos.");
                 }
 
-                if(!is_array($claves) || count($claves) == 0){
+                if (!is_array($claves) || count($claves) == 0) {
                     throw new Exception("Error las claves no son validos.");
                 }
 
-                if($subtotal == "" ){
+                if ($subtotal == "") {
                     throw new Exception("Error no se especifico el subtotal.");
                 }
 
-                if($iva == "" ){
+                if ($iva == "") {
                     throw new Exception("Error no se especifico el iva.");
                 }
 
                 $activa = new Festados();
                 $activa = $activa->find_first("clave='act'");
 
-                if($activa->id == ''){
+                if ($activa->id == '') {
                     throw new Exception("Error no se ha dado de alta el estado 'activo' de la factura.");
                 }
 
@@ -82,7 +82,7 @@ class FacturasController extends ApplicationController
                 $factura->ejercicio_id      =       $this->post("ejercicio_id");
                 $factura->dependencia_id    =       $dependencia->id;
                 $factura->festados_id       =       $activa->id;
-                $factura->metodopago_id     =       $this->post( 'metodopago_id' );
+                $factura->metodopago_id     =       $this->post('metodopago_id');
                 $factura->folio             =       $factura->obtenFolio();
                 $factura->fecha             =       Utils::convierteFechaMySql($this->post('fecha'));
                 $factura->razon             =       $fiscal->razon;
@@ -94,15 +94,15 @@ class FacturasController extends ApplicationController
                 $factura->subtotal          =       $subtotal;
                 $factura->iva               =       $iva;
                 $factura->total             =       $total;
-                $factura->ctapago           =       ( $this->post( 'ctapago' ) ?
-                    $this->post( 'ctapago' ) :
+                $factura->ctapago           =       ($this->post('ctapago') ?
+                    $this->post('ctapago') :
                     null
-                );
+               );
                 $factura->observaciones     =       trim($this->post("observaciones"));
                 $factura->enviada           =       '0000-00-00';
                 $factura->recibida          =       '0000-00-00';
 
-                if(!$factura->save()){
+                if (!$factura->save()) {
                     throw new Exception("Error al guardar la factura.");
                 }
 
@@ -110,10 +110,10 @@ class FacturasController extends ApplicationController
 
                     $concepto = new Concepto();
 
-                    if(trim($cantidad) == '' ||
+                    if (trim($cantidad) == '' ||
                         trim($conceptos[$k]) == '' ||
                         trim($unitarios[$k]) == '' ||
-                        trim($costos[$k]) == ''){
+                        trim($costos[$k]) == '') {
                             throw new Exception("Error los datos de los conceptos no son consistentes.");
                         }
 
@@ -124,7 +124,7 @@ class FacturasController extends ApplicationController
                     $concepto -> monto              =   trim($costos[$k]);
                     $concepto -> clave              =   trim($claves[$k]);
 
-                    if(!$concepto->save()){
+                    if (!$concepto->save()) {
                         throw new Exception("Error al guardar el concepto.");
                     }
 
@@ -133,20 +133,20 @@ class FacturasController extends ApplicationController
                 $festado = new Festado();
                 $festado->factura_id = $factura->id;
                 $festado->festados_id = $activa->id;
-                if(!$festado->save()){
+                if (!$festado->save()) {
                     throw new Exception("Error al guardar el festado.");
                 }
 
 
                 $historial = new Historial();
                 $historial->ejercicio_id    =   $dependencia->ejercicio_id;
-                $historial->usuario         =   Session :: get_data( 'usr.login' );
+                $historial->usuario         =   Session :: get_data('usr.login');
                 $historial->descripcion     =   utf8_encode(
                     'Agrego la factura ' .
-                    utf8_decode( $factura->folio ) . ' - ' .
-                    utf8_decode( $factura->rfc ) . ' ' .
+                    utf8_decode($factura->folio) . ' - ' .
+                    utf8_decode($factura->rfc) . ' ' .
                     '[fac' . $factura->id . '] '
-                );
+               );
                 $historial->controlador     =   $this->controlador;
                 $historial->accion          =   $this->accion;
                 $historial->save();
@@ -154,13 +154,13 @@ class FacturasController extends ApplicationController
                 mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
             }else{
                 $this->option = "captura";
-                $ejercicio_id = Session :: get_data( 'eje.id' );
+                $ejercicio_id = Session :: get_data('eje.id');
 
                 $dependencias = new Dependencia();
                 $dependencias = $dependencias->find(
-                    "conditions: ejercicio_id = '" . Session :: get_data( 'eje.id' ) . "'",
+                    "conditions: ejercicio_id = '" . Session :: get_data('eje.id') . "'",
                     "order: nombre"
-                );
+               );
 
                 $metodospago = new Metodopago();
                 $metodospago = $metodospago->find();
@@ -170,30 +170,30 @@ class FacturasController extends ApplicationController
                 $this->ejercicio_id = $ejercicio_id;
 
             }
-        }catch(Exception $e){
+        }catch(Exception $e) {
 
-            if($transaccion)
+            if ($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
 
-            $this->error( $e->getMessage(), $errvar, $e );
+            $this->error($e->getMessage(), $errvar, $e);
         }
     }
 
-    public function editar( $id = '' )
+    public function editar($id = '')
     {
         try{
             $transaccion = false;
-            if($this->post('factura_id') == ''){
+            if ($this->post('factura_id') == '') {
                 $this->option = "captura";
 
                 $factura = new Factura();
                 $factura = $factura->find($id);
 
-                if($factura->id == ''){
+                if ($factura->id == '') {
                     throw new Exception("Error la factura no es valida.");
                 }
 
-                if(!$factura->editable() ){
+                if (!$factura->editable()) {
                     throw new Exception("Error la factura no esta en estado activada.");
 
                 }
@@ -202,7 +202,7 @@ class FacturasController extends ApplicationController
                 $dependencias = $dependencias->find(
                     "conditions: ejercicio_id = '" . $factura->ejercicio_id . "'",
                     "order: nombre"
-                );
+               );
 
                 $this->dependencias = $dependencias;
                 $this->factura = $factura;
@@ -225,42 +225,42 @@ class FacturasController extends ApplicationController
                 $total = $this->post("total");
 
 
-                if($dependencia_id == "" ){
+                if ($dependencia_id == "") {
                     throw new Exception("Error no se especifico el cliente.");
                 }
 
-                if(!is_array($cantidades) || count($cantidades) == 0){
+                if (!is_array($cantidades) || count($cantidades) == 0) {
                     throw new Exception("Error las cantidades no son validas.");
                 }
 
-                if(!is_array($unitarios) || count($unitarios) == 0){
+                if (!is_array($unitarios) || count($unitarios) == 0) {
                     throw new Exception("Error los unitarios no son validos.");
                 }
 
-                if(!is_array($cantidades) || count($cantidades) == 0){
+                if (!is_array($cantidades) || count($cantidades) == 0) {
                     throw new Exception("Error las cantidades no son validas.");
                 }
 
-                if(!is_array($costos) || count($costos) == 0){
+                if (!is_array($costos) || count($costos) == 0) {
                     throw new Exception("Error los costos no son validos.");
                 }
 
-                if(!is_array($claves) || count($claves) == 0){
+                if (!is_array($claves) || count($claves) == 0) {
                     throw new Exception("Error las claves no son validos.");
                 }
 
-                if($subtotal == "" ){
+                if ($subtotal == "") {
                     throw new Exception("Error no se especifico el subtotal.");
                 }
 
-                if($iva == "" ){
+                if ($iva == "") {
                     throw new Exception("Error no se especifico el iva.");
                 }
 
                 $activa = new Festados();
                 $activa = $activa->find_first("clave='act'");
 
-                if($activa->id == ''){
+                if ($activa->id == '') {
                     throw new Exception("Error no se ha dado de alta el estado 'activo' de la factura.");
                 }
 
@@ -271,11 +271,11 @@ class FacturasController extends ApplicationController
                 $factura = new Factura();
                 $factura = $factura -> find($this->post('factura_id'));
 
-                if($factura->id == ''){
+                if ($factura->id == '') {
                     throw new Exception("Error la factura no es valida.");
                 }
 
-                if(!$factura->editable() ){
+                if (!$factura->editable()) {
                     throw new Exception("Error la factura no esta en estado activada.");
 
                 }
@@ -283,7 +283,7 @@ class FacturasController extends ApplicationController
                 $factura->fecha             =       Utils::convierteFechaMySql($this->post('fecha'));
                 $factura->dependencia_id    =       $dependencia->id;
                 $factura->festados_id       =       $activa->id;
-                $factura->metodopago_id     =       $this->post( 'metodopago_id' );
+                $factura->metodopago_id     =       $this->post('metodopago_id');
                 $factura->razon             =       $fiscal->razon;
                 $factura->rfc               =       $fiscal->rfc;
                 $factura->domicilio         =       $fiscal->domicilio;
@@ -293,18 +293,18 @@ class FacturasController extends ApplicationController
                 $factura->subtotal          =       $subtotal;
                 $factura->iva               =       $iva;
                 $factura->total             =       $total;
-                $factura->ctapago           =       ( $this->post( 'ctapago' ) ?
-                    $this->post( 'ctapago' ) :
+                $factura->ctapago           =       ($this->post('ctapago') ?
+                    $this->post('ctapago') :
                     null
-                );
+               );
                 $factura->observaciones     =       $this->post("observaciones");
 
-                if(!$factura->save()){
+                if (!$factura->save()) {
                     throw new Exception("Error al guardar la factura.");
                 }
 
                 $elimina = new Concepto();
-                if(!$elimina->delete("factura_id = '".$factura->id."'")){
+                if (!$elimina->delete("factura_id = '".$factura->id."'")) {
                     throw new Exception("Error al eliminar los conceptos.");
                 }
 
@@ -312,10 +312,10 @@ class FacturasController extends ApplicationController
 
                     $concepto = new Concepto();
 
-                    if(trim($cantidad) == '' ||
+                    if (trim($cantidad) == '' ||
                         trim($conceptos[$k]) == '' ||
                         trim($unitarios[$k]) == '' ||
-                        trim($costos[$k]) == ''){
+                        trim($costos[$k]) == '') {
                             throw new Exception("Error los datos de los conceptos no son consistentes.");
                         }
 
@@ -326,7 +326,7 @@ class FacturasController extends ApplicationController
                     $concepto -> monto              =   trim($costos[$k]);
                     $concepto -> clave              =   trim($claves[$k]);
 
-                    if(!$concepto->save()){
+                    if (!$concepto->save()) {
                         throw new Exception("Error al guardar el concepto.");
                     }
 
@@ -334,13 +334,13 @@ class FacturasController extends ApplicationController
 
                 $historial = new Historial();
                 $historial->ejercicio_id    =   $dependencia->ejercicio_id;
-                $historial->usuario         =   Session :: get_data( 'usr.login' );
+                $historial->usuario         =   Session :: get_data('usr.login');
                 $historial->descripcion     =   utf8_encode(
                     'Edito la factura ' .
-                    utf8_decode( $factura->folio ) . ' - ' .
-                    utf8_decode( $factura->rfc ) . ' ' .
+                    utf8_decode($factura->folio) . ' - ' .
+                    utf8_decode($factura->rfc) . ' ' .
                     '[fac' . $factura->id . '] '
-                );
+               );
                 $historial->controlador     =   $this->controlador;
                 $historial->accion          =   $this->accion;
                 $historial->save();
@@ -353,27 +353,27 @@ class FacturasController extends ApplicationController
 
 
             }
-        }catch(Exception $e){
+        }catch(Exception $e) {
 
-            if($transaccion)
+            if ($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
 
-            $this->error( $e->getMessage(), $errvar, $e );
+            $this->error($e->getMessage(), $errvar, $e);
         }
     }
 
-    public function control( $id = '' )
+    public function control($id = '')
     {
         try{
             $transaccion = false;
 
-            if($this->post('factura_id') == ''){
+            if ($this->post('factura_id') == '') {
                 $this->option = "captura";
 
                 $factura = new Factura();
                 $factura = $factura->find($id);
 
-                if($factura->id == ''){
+                if ($factura->id == '') {
                     throw new Exception("Error la factura no es valida.");
                 }
 
@@ -391,14 +391,14 @@ class FacturasController extends ApplicationController
                 $factura = new Factura();
                 $factura = $factura->find($this->post("factura_id"));
 
-                if($factura->id == ''){
+                if ($factura->id == '') {
                     throw new Exception("Error la factura no es valida.");
                 }
 
                 $edo = new Festados();
                 $edo = $edo->find($this->post("festados_id"));
 
-                if($factura->id == ''){
+                if ($factura->id == '') {
                     throw new Exception("Error el estado no es valida.");
                 }
 
@@ -411,7 +411,7 @@ class FacturasController extends ApplicationController
                 $factura->enviada = ($factura->enviada == '0000-00-00'? $hoy->format("Y-m-d") : $factura->enviada);
                 $factura->recibida = ($factura->recibida == '0000-00-00'? $hoy->format("Y-m-d") : $factura->recibida);
 
-                if(!$factura->save()){
+                if (!$factura->save()) {
                     throw new Exception("Error al guardar la factura.");
                 }
 
@@ -419,20 +419,20 @@ class FacturasController extends ApplicationController
                 $festado = new Festado();
                 $festado->factura_id = $factura->id;
                 $festado->festados_id = $edo->id;
-                if(!$festado->save()){
+                if (!$festado->save()) {
                     throw new Exception("Error al guardar el festado.");
                 }
 
                 $historial = new Historial();
-                $historial->ejercicio_id    =   Session :: get_data( 'eje.id');
-                $historial->usuario         =   Session :: get_data( 'usr.login' );
+                $historial->ejercicio_id    =   Session :: get_data('eje.id');
+                $historial->usuario         =   Session :: get_data('usr.login');
                 $historial->descripcion     =   utf8_encode(
                     'Cambio estado de la factura ' .
-                    utf8_decode( $factura->folio ) . ' - ' .
-                    utf8_decode( $factura->rfc ) . ' .' .
+                    utf8_decode($factura->folio) . ' - ' .
+                    utf8_decode($factura->rfc) . ' .' .
                     'De '. $anterior->singular . ' a '. $edo->singular.' '.
                     '[fac' . $factura->id . '] '
-                );
+               );
                 $historial->controlador     =   $this->controlador;
                 $historial->accion          =   $this->accion;
                 $historial->save();
@@ -440,71 +440,71 @@ class FacturasController extends ApplicationController
                 mysql_query("COMMIT") or die("Error al finalizar la transaccion");;
 
             }
-        }catch(Exception $e){
-            if($transaccion)
+        }catch(Exception $e) {
+            if ($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
 
-            $this->error( $e->getMessage(), $errvar, $e );
+            $this->error($e->getMessage(), $errvar, $e);
         }
     }
 
-    public function eliminar( $id = '' )
+    public function eliminar($id = '')
     {
     }
 
-    public function prefactura( $id = '' )
-    {
-
-        try{
-
-            $factura = new Factura();
-            $factura = $factura->find( $id );
-
-            if( !$factura || $factura->id  == '' ){
-
-                throw new Exception( 'Id no valido' );
-
-            }
-
-            $this->factura = $factura;
-            $this->exito();
-            $this->set_response( 'view' );
-
-        }catch( Exception $e ){
-
-            $this->error( $e->getMessage(), $errvar, $e );
-
-        }
-
-    }
-
-    public function imprimir( $id = '' )
+    public function prefactura($id = '')
     {
 
         try{
 
             $factura = new Factura();
-            $factura = $factura->find( $id );
+            $factura = $factura->find($id);
 
-            if( !$factura || $factura->id  == '' ){
+            if (!$factura || $factura->id  == '') {
 
-                throw new Exception( 'Id no valido' );
+                throw new Exception('Id no valido');
 
             }
 
             $this->factura = $factura;
             $this->exito();
-            $this->set_response( 'view' );
+            $this->set_response('view');
 
-        }catch( Exception $e ){
+        }catch(Exception $e) {
 
-            $this->error( $e->getMessage(), $errvar, $e );
+            $this->error($e->getMessage(), $errvar, $e);
 
         }
 
     }
 
-    public function index( $pag = '' )
+    public function imprimir($id = '')
+    {
+
+        try{
+
+            $factura = new Factura();
+            $factura = $factura->find($id);
+
+            if (!$factura || $factura->id  == '') {
+
+                throw new Exception('Id no valido');
+
+            }
+
+            $this->factura = $factura;
+            $this->exito();
+            $this->set_response('view');
+
+        }catch(Exception $e) {
+
+            $this->error($e->getMessage(), $errvar, $e);
+
+        }
+
+    }
+
+    public function index($pag = '')
     {
 
         try{
@@ -513,7 +513,7 @@ class FacturasController extends ApplicationController
             $accion = $this->accion;
             $path = $this->path = KUMBIA_PATH;
 
-            $ejercicio_id = Session :: get_data( 'eje.id' );
+            $ejercicio_id = Session :: get_data('eje.id');
 
             // busqueda
             $b = new Busqueda($controlador, $accion);
@@ -522,50 +522,50 @@ class FacturasController extends ApplicationController
             // genera las condiciones
             $b->establecerCondicion(
                 'festados_id',
-                "festados_id = '" . $b->campo( 'festados_id' ) . "'"
-            );
+                "festados_id = '" . $b->campo('festados_id') . "'"
+           );
 
             $b->establecerCondicion(
                 'dependencia_id',
-                "dependencia_id = '" . $b->campo( 'dependencia_id' ) . "'"
-            );
+                "dependencia_id = '" . $b->campo('dependencia_id') . "'"
+           );
 
             $b->establecerCondicion(
                 'metodopago_id',
-                "metodopago_id = '" . $b->campo( 'metodopago_id' ) . "'"
-            );
+                "metodopago_id = '" . $b->campo('metodopago_id') . "'"
+           );
 
             $b->establecerCondicion(
                 'fecha',
-                "fecha = '" . Utils :: fecha_convertir( $this->post('fecha') ) . "'"
-            );
+                "fecha = '" . Utils :: fecha_convertir($this->post('fecha')) . "'"
+           );
 
             $c = "factura.ejercicio_id = '" . $ejercicio_id . "' ";
-            $c .= ( $b->condicion() ? "AND " . $b->condicion() : '' );
+            $c .= ($b->condicion() ? "AND " . $b->condicion() : '');
 
             // cuenta todos los registros
             $facturas = new Factura();
-            $registros = $facturas->count( ( $c == "" ? "" : $c ) );
+            $registros = $facturas->count(($c == "" ? "" : $c));
 
             // paginacion
-            $paginador = new Paginador( $controlador, $accion );
-            if( $pag != '' ){
-                $paginador->guardarPagina( $pag );
+            $paginador = new Paginador($controlador, $accion);
+            if ($pag != '') {
+                $paginador->guardarPagina($pag);
             }
-            $paginador->estableceRegistros( $registros );
+            $paginador->estableceRegistros($registros);
             $paginador->generar();
 
             // ejecuta la consulta
             $facturas = $facturas->find(
                 "conditions: " . $c,
                 'order: folio DESC ',
-                'limit: ' . ( $paginador->pagina() * $paginador->rpp() ) . ', '
+                'limit: ' . ($paginador->pagina() * $paginador->rpp()) . ', '
                 . $paginador->rpp()
-            );
+           );
 
             // catalogos
             $dependencias = new Dependencia();
-            $dependencias = $dependencias->facturadas( $ejercicio_id );
+            $dependencias = $dependencias->facturadas($ejercicio_id);
 
             $festados = new Festados();
             $festados = $festados->find();
@@ -584,10 +584,10 @@ class FacturasController extends ApplicationController
                         'control',
                         'editar',
                         'eliminar'
-                    )
-                ),
-                Session :: get_data( 'usr.login' )
-            );
+                   )
+               ),
+                Session :: get_data('usr.login')
+           );
 
             $this->busqueda      =  $b;
             $this->dependencias  =  $dependencias;
@@ -597,14 +597,14 @@ class FacturasController extends ApplicationController
             $this->registros     =  $registros;
             $this->metodospago   =  $metodospago;
 
-        }catch( Exception $e ){
-            $this->error( $e->getMessage(), $errvar, $e );
+        }catch(Exception $e) {
+            $this->error($e->getMessage(), $errvar, $e);
 
         }
 
     }
 
-    public function ver( $id = '' )
+    public function ver($id = '')
     {
         try{
             $this->option = "captura";
@@ -612,18 +612,18 @@ class FacturasController extends ApplicationController
             $factura = new Factura();
             $factura = $factura->find($id);
 
-            if($factura->id == ''){
+            if ($factura->id == '') {
                 throw new Exception("Error la factura no es valida.");
             }
 
             $this->factura = $factura;
 
-        }catch(Exception $e){
+        }catch(Exception $e) {
 
-            if($transaccion)
+            if ($transaccion)
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
 
-            $this->error( $e->getMessage(), $errvar, $e );
+            $this->error($e->getMessage(), $errvar, $e);
         }
     }
 }
