@@ -33,7 +33,6 @@ class FacturasController extends ApplicationController
                 $iva = $this->post("iva");
                 $total = $this->post("total");
 
-
                 if ($dependencia_id == "") {
                     throw new Exception("Error no se especifico el cliente.");
                 }
@@ -76,7 +75,6 @@ class FacturasController extends ApplicationController
                 $dependencia = new Dependencia();
                 $dependencia = $dependencia->find($dependencia_id);
                 $fiscal = $dependencia->fiscal();
-
 
                 $factura = new Factura();
                 $factura->ejercicio_id      =       $this->post("ejercicio_id");
@@ -137,7 +135,6 @@ class FacturasController extends ApplicationController
                     throw new Exception("Error al guardar el festado.");
                 }
 
-
                 $historial = new Historial();
                 $historial->ejercicio_id    =   $dependencia->ejercicio_id;
                 $historial->usuario         =   Session :: get_data('usr.login');
@@ -168,14 +165,11 @@ class FacturasController extends ApplicationController
                 $this->dependencias = $dependencias;
                 $this->metodospago  = $metodospago;
                 $this->ejercicio_id = $ejercicio_id;
-
             }
         } catch (Exception $e) {
-
             if ($transaccion) {
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
             }
-
             $this->error($e->getMessage(), $errvar, $e);
         }
     }
@@ -196,7 +190,6 @@ class FacturasController extends ApplicationController
 
                 if (!$factura->editable()) {
                     throw new Exception("Error la factura no esta en estado activada.");
-
                 }
 
                 $dependencias = new Dependencia();
@@ -224,7 +217,6 @@ class FacturasController extends ApplicationController
                 $subtotal = $this->post("subtotal");
                 $iva = $this->post("iva");
                 $total = $this->post("total");
-
 
                 if ($dependencia_id == "") {
                     throw new Exception("Error no se especifico el cliente.");
@@ -278,7 +270,6 @@ class FacturasController extends ApplicationController
 
                 if (!$factura->editable()) {
                     throw new Exception("Error la factura no esta en estado activada.");
-
                 }
 
                 $factura->fecha             =       Utils::convierteFechaMySql($this->post('fecha'));
@@ -310,7 +301,6 @@ class FacturasController extends ApplicationController
                 }
 
                 foreach ($cantidades as $k => $cantidad) {
-
                     $concepto = new Concepto();
 
                     if (trim($cantidad) == '' ||
@@ -330,7 +320,6 @@ class FacturasController extends ApplicationController
                     if (!$concepto->save()) {
                         throw new Exception("Error al guardar el concepto.");
                     }
-
                 }
 
                 $historial = new Historial();
@@ -346,12 +335,9 @@ class FacturasController extends ApplicationController
                 $historial->accion          =   $this->accion;
                 $historial->save();
 
-
-
                 mysql_query("COMMIT") or die("Error al finalizar la transaccion");
 
                 $this->factura = $factura;
-
 
             }
         } catch (Exception $e) {
@@ -389,7 +375,6 @@ class FacturasController extends ApplicationController
                 mysql_query("BEGIN") or die("Error al iniciar la transaccion");
                 $transaccion = true;
 
-
                 $factura = new Factura();
                 $factura = $factura->find($this->post("factura_id"));
 
@@ -416,7 +401,6 @@ class FacturasController extends ApplicationController
                 if (!$factura->save()) {
                     throw new Exception("Error al guardar la factura.");
                 }
-
 
                 $festado = new Festado();
                 $festado->factura_id = $factura->id;
@@ -457,16 +441,12 @@ class FacturasController extends ApplicationController
 
     public function prefactura($id = '')
     {
-
         try {
-
             $factura = new Factura();
             $factura = $factura->find($id);
 
             if (!$factura || $factura->id  == '') {
-
                 throw new Exception('Id no valido');
-
             }
 
             $this->factura = $factura;
@@ -474,25 +454,18 @@ class FacturasController extends ApplicationController
             $this->set_response('view');
 
         } catch (Exception $e) {
-
             $this->error($e->getMessage(), $errvar, $e);
-
         }
-
     }
 
     public function imprimir($id = '')
     {
-
         try {
-
             $factura = new Factura();
             $factura = $factura->find($id);
 
             if (!$factura || $factura->id  == '') {
-
                 throw new Exception('Id no valido');
-
             }
 
             $this->factura = $factura;
@@ -500,16 +473,12 @@ class FacturasController extends ApplicationController
             $this->set_response('view');
 
         } catch (Exception $e) {
-
             $this->error($e->getMessage(), $errvar, $e);
-
         }
-
     }
 
     public function index($pag = '')
     {
-
         try {
             // vars
             $controlador = $this->controlador;
@@ -576,7 +545,6 @@ class FacturasController extends ApplicationController
             $metodospago = new Metodopago();
             $metodospago = $metodospago->find();
 
-
             $acl = new gacl_extra();
 
             // salida
@@ -602,9 +570,7 @@ class FacturasController extends ApplicationController
 
         } catch (Exception $e) {
             $this->error($e->getMessage(), $errvar, $e);
-
         }
-
     }
 
     public function ver($id = '')
@@ -620,13 +586,10 @@ class FacturasController extends ApplicationController
             }
 
             $this->factura = $factura;
-
         } catch (Exception $e) {
-
             if ($transaccion) {
                 mysql_query("ROLLBACK") or die("Error al cancelar la transaccion");
             }
-
             $this->error($e->getMessage(), $errvar, $e);
         }
     }
