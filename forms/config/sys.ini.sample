@@ -10,4 +10,4 @@ nombre = "Finanzas"
 iva = 1.16
 
 [facturacion]
-folio_ini = 253
+folio_ini = 1
