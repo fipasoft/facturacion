@@ -11,16 +11,16 @@ interactive = Off
 
 [development]
 database.host = localhost
-database.username = root
-database.password = root
+database.username = user
+database.password = password
 database.name = facturacion
 database.type = mysql
 database.port = 3306
 
 [production]
 database.host = localhost
-database.username = root
-database.password = root
+database.username = user
+database.password = password
 database.name = facturacion
 database.type = mysql
 database.port = 3306

@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * ACL
  * Creado el 03/07/2008
@@ -10,63 +8,63 @@
 Kumbia :: import('lib.phpgacl.main');
 
 class AclController extends ApplicationController {
-	public $template = "sesion";
+    public $template = "sesion";
 
-	public function crear(){
-		$acl = new gacl_api();
+    public function crear(){
+        $acl = new gacl_api();
 
-		$this->privilegios = array ();
-		$this->acl_section = array ();
-		$this->aco = array ();
-		$this->aco_section = array ();
-		$this->aro = array ();
-		$this->aro_section = array ();
-		$this->grupos = array ();
-		$this->privilegios = array ();
-		$this->lista_acl = array ();
-		$this->grupos_asignados = array ();
+        $this->privilegios = array ();
+        $this->acl_section = array ();
+        $this->aco = array ();
+        $this->aco_section = array ();
+        $this->aro = array ();
+        $this->aro_section = array ();
+        $this->grupos = array ();
+        $this->privilegios = array ();
+        $this->lista_acl = array ();
+        $this->grupos_asignados = array ();
 
-		/* BD reset
-		 * Limpia la base de datos ACL, los registros de la tabla ACLSection no se eliminan...
-		 */
-		$acl->clear_database();
+        /* BD reset
+         * Limpia la base de datos ACL, los registros de la tabla ACLSection no se eliminan...
+         */
+        $acl->clear_database();
 
-		$val = $this->acl_section['value'] = 'sistema';
-		$this->acl_section['id'] = $acl->add_object_section($val, $val, 0, 0, 'ACL');
+        $val = $this->acl_section['value'] = 'sistema';
+        $this->acl_section['id'] = $acl->add_object_section($val, $val, 0, 0, 'ACL');
 
-		/* ACOs, Creacion de los Access Control Objects
-		 * El arreglo posee la siguiente forma
-		 * array( ACO_Section1 =<> array(ACO_1, ..., ACO_N), ... ACO_SectionN => array(...))
-		 */
-		// El menu
-		$acos = array (
-		// comunes
-			'ALL' => array (
-				 'ALL'
-			),
-			'sesion' => array (
-				'abrir',
-				'autenticar',
-				'cerrar',
-				'index',
-				'restringir'
-			),
-				// System
-			'inicio' => array (
-				'index'
-			),
-			'facturas' => array(
-				'agregar',
-				'eliminar',
-				'index',
-				'imprimir',
-				'cancelar',
-				'editar',
-				'prefactura',
-				'control',
-				'ver'
-			),
-		    'dependencias' => array (
+        /* ACOs, Creacion de los Access Control Objects
+         * El arreglo posee la siguiente forma
+         * array( ACO_Section1 =<> array(ACO_1, ..., ACO_N), ... ACO_SectionN => array(...))
+         */
+        // El menu
+        $acos = array (
+        // comunes
+            'ALL' => array (
+                 'ALL'
+            ),
+            'sesion' => array (
+                'abrir',
+                'autenticar',
+                'cerrar',
+                'index',
+                'restringir'
+            ),
+                // System
+            'inicio' => array (
+                'index'
+            ),
+            'facturas' => array(
+                'agregar',
+                'eliminar',
+                'index',
+                'imprimir',
+                'cancelar',
+                'editar',
+                'prefactura',
+                'control',
+                'ver'
+            ),
+            'dependencias' => array (
                 'index'
             ),
             'externas' => array (
@@ -76,105 +74,106 @@ class AclController extends ApplicationController {
                 'index',
                 'fiscales'
             ),
-			'ejercicios' => array (
-				'agregar',
-				'editar',
-				'eliminar',
-				'index'
-			),
-			'directorio' => array (
-				'index'
-			),
-			'sistema' => array(
-				'ayuda',
-				'autocompletar',
-				'configuracion',
-				'password',
-			    'index'
-			),
-			'usuarios' => array (
-				'agregar',
-				'editar',
-				'eliminar',
-				'index',
-				'password',
-				'validarLogin',
-				'verAcceso',
-				'ver',
-			),
-			'historial' => array(
-				'buscar',
-				'exportar',
-				'index',
-				'ver'
-			),
-			'contactos' => array (
-				'agregar',
-				'editar',
-				'campo',
-				'eliminar',
-				'index'
-			),
-			'dependencias' => array (
-				'agregar',
-				'editar',
-				'eliminar',
-				'index',
-				'contactos'
-			),
+            'ejercicios' => array (
+                'agregar',
+                'editar',
+                'eliminar',
+                'index',
+                'seleccionar'
+            ),
+            'directorio' => array (
+                'index'
+            ),
+            'sistema' => array(
+                'ayuda',
+                'autocompletar',
+                'configuracion',
+                'password',
+                'index'
+            ),
+            'usuarios' => array (
+                'agregar',
+                'editar',
+                'eliminar',
+                'index',
+                'password',
+                'validarLogin',
+                'verAcceso',
+                'ver',
+            ),
+            'historial' => array(
+                'buscar',
+                'exportar',
+                'index',
+                'ver'
+            ),
+            'contactos' => array (
+                'agregar',
+                'editar',
+                'campo',
+                'eliminar',
+                'index'
+            ),
+            'dependencias' => array (
+                'agregar',
+                'editar',
+                'eliminar',
+                'index',
+                'contactos'
+            ),
             'localizacion' => array (
                 'inicia',
                 'editar',
                 'estados',
                 'municipios'
             ),
-		 );
+         );
 
-		$i = 0;
-		foreach ($acos as $section => $objects) {
-			$this->aco_section[$section] = $acl->add_object_section($section, $section, $i, 0, 'ACO');
-			$j = 0;
-			foreach ($objects as $sect => $obj) {
-				$this->aco[$section][$obj] = $acl->add_object($section, $obj, $obj, $j, 0, 'ACO');
-			}
-			$i++;
-		}
+        $i = 0;
+        foreach ($acos as $section => $objects) {
+            $this->aco_section[$section] = $acl->add_object_section($section, $section, $i, 0, 'ACO');
+            $j = 0;
+            foreach ($objects as $sect => $obj) {
+                $this->aco[$section][$obj] = $acl->add_object($section, $obj, $obj, $j, 0, 'ACO');
+            }
+            $i++;
+        }
 
-		/* AROs creacion de los Access Request Objects
-		 * El arreglo tiene la siguiente forma:
-		 * array(ARO_Section1 => array(GROUP => ARO, ..., GROUP_N => ARO_N), ..., ARO_SectionN => array(..))
-		 */
+        /* AROs creacion de los Access Request Objects
+         * El arreglo tiene la siguiente forma:
+         * array(ARO_Section1 => array(GROUP => ARO, ..., GROUP_N => ARO_N), ..., ARO_SectionN => array(..))
+         */
 
-		  $aros = $lista = array (
-			'usuarios' => array (
-				'usuarios' => array(
-					'anonimo'
-				),
-				'root' => array(
-					'root'
-				),
-				'administradores' => array(
-					'admin', 'lcardona', 'clopez', 'jlopez', 'gabita', 'mimex', 'admin'
-				),
-				'consulta' => array(
+          $aros = $lista = array (
+            'usuarios' => array (
+                'usuarios' => array(
+                    'anonimo'
+                ),
+                'root' => array(
+                    'root'
+                ),
+                'administradores' => array(
+                    'admin', 'lcardona', 'clopez', 'jlopez', 'gabita', 'mimex', 'admin'
+                ),
+                'consulta' => array(
                     'consulta', 'lulu'
                 ),
-				'autenticados' => array(
-					'_'
-				)
-			 )
-		  );
+                'autenticados' => array(
+                    '_'
+                )
+             )
+          );
 
         $i = 0;
         foreach ($lista as $section => $objects) {
-        	$this->aro_section[$section] = $acl->add_object_section($section, $section, $i, 0, 'ARO');
-        	$j = 0;
-        	foreach ($objects as $objs) {
-        		foreach($objs as $obj){
-        			$this->aro[$obj] = $acl->add_object($section, $obj, $obj, $j, 0, 'ARO');
-        		}
-        	}
-        	$i++;
+            $this->aro_section[$section] = $acl->add_object_section($section, $section, $i, 0, 'ARO');
+            $j = 0;
+            foreach ($objects as $objs) {
+                foreach($objs as $obj){
+                    $this->aro[$obj] = $acl->add_object($section, $obj, $obj, $j, 0, 'ARO');
+                }
+            }
+            $i++;
         }
 
         // Grupos
@@ -186,15 +185,15 @@ class AclController extends ApplicationController {
          */
 
         $lista = array (
-        	'usuarios' => 0,
-        	'autenticados' => 'usuarios',
-        	'root' => 'autenticados',
-        	'administradores' => 'autenticados',
-        	'consulta' => 'autenticados'
+            'usuarios' => 0,
+            'autenticados' => 'usuarios',
+            'root' => 'autenticados',
+            'administradores' => 'autenticados',
+            'consulta' => 'autenticados'
         );
         $this->grupos[0] = 0; // trick para generar la raiz
         foreach ($lista as $group => $parent) {
-        	$this->grupos[$group] = $acl->add_group($group, $group, $this->grupos[$parent], 'aro');
+            $this->grupos[$group] = $acl->add_group($group, $group, $this->grupos[$parent], 'aro');
         }
 
         /* Privilegios
@@ -205,12 +204,12 @@ class AclController extends ApplicationController {
          // ACL Usuarios
          $this->privilegios['usuarios'][] = array (
                 'sesion' => array(
-        			'abrir',
-        			'autenticar',
-        			'cerrar',
-        			'index',
-        			'restringir'
-        	    )
+                    'abrir',
+                    'autenticar',
+                    'cerrar',
+                    'index',
+                    'restringir'
+                )
          );
 
          // ACL root
@@ -221,16 +220,16 @@ class AclController extends ApplicationController {
          // ACL Autenticados
          $this->privilegios['autenticados'][] = array (
             'inicio' => array (
-        	     'index'
-        	 )
+                 'index'
+             )
          );
          $this->privilegios['autenticados'][] = array (
              'sistema' => array (
-        	    'ayuda',
-        	    'autocompletar',
-        	    'configuracion',
-        	    'password'
-        	  )
+                'ayuda',
+                'autocompletar',
+                'configuracion',
+                'password'
+              )
          );
 
         // ACL Administradores
@@ -243,46 +242,47 @@ class AclController extends ApplicationController {
             )
         );
         $this->privilegios['administradores'][] = array (
-        	'dependencias' => array (
+            'dependencias' => array (
                 'index'
-        	)
+            )
         );
         $this->privilegios['administradores'][] = array (
             'externas' => array (
-        		'agregar',
-        		'editar',
-        		'eliminar',
-        		'index',
+                'agregar',
+                'editar',
+                'eliminar',
+                'index',
                 'fiscales'
-        	)
+            )
         );
         $this->privilegios['administradores'][] = array (
             'ejercicios' => array (
-        		'agregar',
-        		'editar',
-        		'eliminar',
-        		'index'
-        	)
+                'agregar',
+                'editar',
+                'eliminar',
+                'index',
+                'seleccionar'
+            )
         );
         $this->privilegios['administradores'][] = array (
-        	'historial' => array(
-        		'buscar',
-        		'exportar',
-        		'index',
-        		'ver'
-        	)
+            'historial' => array(
+                'buscar',
+                'exportar',
+                'index',
+                'ver'
+            )
         );
         $this->privilegios['administradores'][] = array (
-        	 'usuarios' => array (
-        		 'agregar',
-        		 'editar',
-        		 'eliminar',
-        		 'index',
-        		 'password',
-        		 'validarLogin',
-        		 'verAcceso',
-        		 'ver'
-        	 )
+             'usuarios' => array (
+                 'agregar',
+                 'editar',
+                 'eliminar',
+                 'index',
+                 'password',
+                 'validarLogin',
+                 'verAcceso',
+                 'ver'
+             )
         );
         $this->privilegios['administradores'][] = array (
              'facturas' => array (
@@ -293,7 +293,7 @@ class AclController extends ApplicationController {
                  'cancelar',
                  'editar',
                  'control',
-             	 'prefactura',
+                 'prefactura',
                  'ver'
              )
          );
@@ -326,7 +326,7 @@ class AclController extends ApplicationController {
             'facturas' => array (
                 'index',
                 'imprimir',
-            	'prefactura',
+                'prefactura',
                 'ver'
             )
         );
@@ -334,32 +334,31 @@ class AclController extends ApplicationController {
         // carga los permisos en la lista acl
         $i = 0;
         foreach ($this->privilegios as $grupo => $lst) {
-        	foreach ($lst as $_acos) {
-        		$id = $acl->add_acl($_acos, NULL, array (
-        		$this->grupos[$grupo]
-        		));
-        		if ($id !== FALSE) {
-        			$this->lista_acl[$id] = $grupo . ' ACL ' . $id;
-        		} else {
-        			$this->lista_acl[$i] = 'ERROR!';
-        			$i++;
-        		}
-        	}
+            foreach ($lst as $_acos) {
+                $id = $acl->add_acl($_acos, NULL, array (
+                $this->grupos[$grupo]
+                ));
+                if ($id !== FALSE) {
+                    $this->lista_acl[$id] = $grupo . ' ACL ' . $id;
+                } else {
+                    $this->lista_acl[$i] = 'ERROR!';
+                    $i++;
+                }
+            }
         }
 
         // asigna usuarios a los grupos
         foreach ($aros as $sec => $lista) {
-        	foreach ($lista as $grp => $aros) {
-        		foreach($aros as $aro){
-        			$this->grupos_asignados[$grp . ' ' . $sec . '-' . $aro] = $acl->add_group_object($this->grupos[$grp], $sec, $aro);
-        		}
-        	}
+            foreach ($lista as $grp => $aros) {
+                foreach($aros as $aro){
+                    $this->grupos_asignados[$grp . ' ' . $sec . '-' . $aro] = $acl->add_group_object($this->grupos[$grp], $sec, $aro);
+                }
+            }
         }
 
-	}
+    }
 
-	public function actualizar(){
+    public function actualizar(){
 
-	}
+    }
 }
-?>
