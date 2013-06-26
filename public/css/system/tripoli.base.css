@@ -503,7 +503,9 @@ CONTENT */
 {
   margin-bottom:0;
 }
-
+.content a {
+  text-decoration: none;
+}
 /*
 _______________________________
 END */
