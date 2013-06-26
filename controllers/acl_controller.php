@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * ACL
  * Creado el 03/07/2008
@@ -80,7 +78,8 @@ class AclController extends ApplicationController {
                 'agregar',
                 'editar',
                 'eliminar',
-                'index'
+                'index',
+                'seleccionar'
             ),
             'directorio' => array (
                 'index'
@@ -261,7 +260,8 @@ class AclController extends ApplicationController {
                 'agregar',
                 'editar',
                 'eliminar',
-                'index'
+                'index',
+                'seleccionar'
             )
         );
         $this->privilegios['administradores'][] = array (
@@ -362,4 +362,3 @@ class AclController extends ApplicationController {
 
     }
 }
-?>
