@@ -10,6 +10,7 @@ margin-bottom:0;
 }
 div.content fieldset{
 -moz-border-radius:14px;
+border-radius:14px;
 background-color: #F5F5F5;
 line-height:165%;
 margin:0.3em auto;
@@ -126,6 +127,7 @@ padding:0;
 }
 p.error,p.tip,p.info,p.msj,div.error,div.tip,div.info,div.msj{
 -moz-border-radius:14px;
+border-radius:14px;
 text-align: center;
 vertical-align: middle;
 line-height: 150%;
@@ -332,6 +334,6 @@ color: #c00;
 }
 
 td.cancelado
-{	
+{
 background-color:#FBDBC4;
 }

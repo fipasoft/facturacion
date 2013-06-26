@@ -8,6 +8,7 @@ border-width: 0 1px;
 #menu
 {
 -moz-border-radius:0 0 6px 6px;
+border-radius:0 0 6px 6px;
 background: repeat-x url('../../img/system/boton.png');
 border-top: 0px solid #333333;
 border-bottom: 1px solid #aaaaaa;
@@ -29,6 +30,7 @@ text-decoration: none;
 #menu a:hover, #menu a:active, #menu a:focus
 {
 -moz-border-radius:5px;
+border-radius:5px;
 background: repeat-x url('../../img/system/boton_over.png');
 border: 0px solid #aaaaaa;
 border-bottom-color:#EEC6FF;
@@ -50,6 +52,7 @@ padding: 0px;
 #menu #active a
 {
 -moz-border-radius:5px;
+border-radius:5px;
 color: #EEEEEE;
 background: repeat-x url('../../img/system/boton_over.png');
 border-color: #aaaaaa;
@@ -59,6 +62,7 @@ border-bottom-color: #FFF982;
 #menu #active a:hover, #menu #active a:focus
 {
 -moz-border-radius:5px;
+border-radius:5px;
 background-color: #FFDE6F;
 border-color: #aaaaaa;
 border-top-color: #FFDE6F;
@@ -70,6 +74,7 @@ border-bottom-color: #FFDE6F;
 #control
 {
 -moz-border-radius:5px;
+border-radius:5px;
 background-color: white;
 border: 1px solid #cccccc;
 float:right;
